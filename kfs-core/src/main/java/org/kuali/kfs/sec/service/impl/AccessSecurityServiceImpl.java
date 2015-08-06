@@ -50,7 +50,7 @@ import org.kuali.rice.kim.api.KimConstants;
 import org.kuali.rice.kim.api.common.template.Template;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.permission.Permission;
-import org.kuali.rice.kim.api.permission.PermissionService;
+import org.kuali.kfs.kim.api.permission.PermissionService;
 import org.kuali.rice.kim.api.role.RoleService;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.service.DataDictionaryService;

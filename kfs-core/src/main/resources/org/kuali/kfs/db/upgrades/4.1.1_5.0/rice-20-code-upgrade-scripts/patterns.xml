@@ -282,7 +282,7 @@ import org.kuali.rice.kim.api.type.KimTypeInfoService">SpringContext.getBean(Kim
 		<pattern>
 			<match>KIMServiceLocator\.getPermissionService\(\)</match>
 			<replacement addImport="org.kuali.kfs.sys.context.SpringContext:org.kuali.kfs.sys.context.SpringContext;
-import org.kuali.rice.kim.api.permission.PermissionService">SpringContext.getBean(PermissionService.class)</replacement>
+import org.kuali.kfs.kim.api.permission.PermissionService">SpringContext.getBean(PermissionService.class)</replacement>
 		</pattern>
 <!-- 
 		<pattern fileType="java">

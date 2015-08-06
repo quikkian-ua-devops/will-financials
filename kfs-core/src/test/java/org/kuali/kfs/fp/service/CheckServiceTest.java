@@ -37,7 +37,7 @@ import org.kuali.kfs.sys.context.KualiTestBase;
 import org.kuali.kfs.sys.context.SpringContext;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
-import org.kuali.rice.kim.impl.permission.PermissionServiceImpl;
+import org.kuali.kfs.kim.impl.permission.PermissionServiceImpl;
 import org.kuali.rice.kim.impl.role.RoleServiceImpl;
 import org.kuali.rice.kim.service.impl.IdentityManagementServiceImpl;
 import org.kuali.rice.krad.service.BusinessObjectService;
