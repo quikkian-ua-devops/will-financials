@@ -28,7 +28,6 @@ import org.kuali.kfs.module.cab.businessobject.GeneralLedgerEntry;
 import org.kuali.kfs.module.cab.businessobject.PurchasingAccountsPayableDocument;
 import org.kuali.kfs.module.cab.businessobject.PurchasingAccountsPayableItemAsset;
 import org.kuali.kfs.module.cab.businessobject.PurchasingAccountsPayableLineAssetAccount;
-import org.kuali.kfs.module.purap.businessobject.PurchaseOrderAccount;
 import org.kuali.kfs.sys.ConfigureContext;
 import org.kuali.kfs.sys.context.SpringContext;
 import org.kuali.kfs.sys.fixture.UserNameFixture;
@@ -91,10 +90,9 @@ public class BatchExtractServiceTest extends BatchTestBase {
         assertEquals(17, allCabAccts.size());
     }
 
-
-    public void testFindPreTaggablePOAccounts() throws Exception {
-        Collection<PurchaseOrderAccount> preTaggablePOAccounts = batchExtractService.findPreTaggablePOAccounts();
-        assertEquals(6, preTaggablePOAccounts.size());
-        batchExtractService.savePreTagLines(preTaggablePOAccounts);
-    }
+//    public void testFindPreTaggablePOAccounts() throws Exception {
+//        Collection<PurchaseOrderAccount> preTaggablePOAccounts = batchExtractService.findPreTaggablePOAccounts();
+//        assertEquals(6, preTaggablePOAccounts.size());
+//        batchExtractService.savePreTagLines(preTaggablePOAccounts);
+//    }
 }
