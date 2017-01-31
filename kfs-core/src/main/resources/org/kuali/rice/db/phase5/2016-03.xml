@@ -2,7 +2,7 @@
 <!--
    - The Kuali Financial System, a comprehensive financial management system for higher education.
    -
-   - Copyright 2005-2016 The Kuali Foundation
+   - Copyright 2005-2017 Kuali, Inc.
    -
    - This program is free software: you can redistribute it and/or modify
    - it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,7 @@
    - along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="kfs" context="bootstrap,demo" id="FINI-1502">
+    <changeSet author="kfs" context="bootstrap,demo,unit" id="FINI-1502">
         <insert tableName="krcr_nmspc_t">
             <column name="NMSPC_CD"><![CDATA[KR-LOC]]></column>
             <column name="OBJ_ID"><![CDATA[0738DD6D96C83105E0506E0AC31D4281]]></column>
