@@ -1353,6 +1353,11 @@
                 <bean parent="filteredEntity" p:filteredEntity="CCVN"/>
                 <bean parent="filteredEntity" p:filteredEntity="CCTY"/>
 
+                <!-- PDP -->
+                <bean parent="filteredEntity" p:filteredEntity="ACTC"/>
+                <bean parent="filteredEntity" p:filteredEntity="ACTR"/>
+                <bean parent="filteredEntity" p:filteredEntity="PMTP"/>
+
                 <!-- AR -->
                 <bean parent="filteredEntity" p:filteredEntity="CATY" />
                 <bean parent="filteredEntity" p:filteredEntity="CTY" />
@@ -1663,6 +1668,47 @@
 
                 <!-- PDP -->
                 <bean parent="filteredField" p:filteredField="PaymentAccountDetail.projectCode"/>
+                <bean parent="filteredField" p:filteredField="Batch.fileProcessTimestamp"/>
+                <bean parent="filteredField" p:filteredField="Batch.paymentFileName"/>
+                <bean parent="filteredField" p:filteredField="Batch.submiterUserId"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.address1"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.address2"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.address3"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.address4"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.city"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.contactFullName"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.customerDescription"/>
+                <bean parent="filteredField" p:filteredField="CustomerProfile.zipCode"/>
+                <bean parent="filteredField" p:filteredField="GlPendingTransaction.fdocApprovedCd"/>
+                <bean parent="filteredField" p:filteredField="GlPendingTransaction.acctSfFinObjCd"/>
+                <bean parent="filteredField" p:filteredField="GlPendingTransaction.trnEntrOfstCd"/>
+                <bean parent="filteredField" p:filteredField="GlPendingTransaction.processInd"/>
+                <bean parent="filteredField" p:filteredField="PaymentAccountHistory.accountingChangeCode"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.alternatePayeeId"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.alternatePayeeIdTypeCd"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.physCampusProcessCd"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.taxablePayment"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.epicPaymentCancelledExtractedDate"/>
+                <bean parent="filteredField" p:filteredField="PaymentGroup.epicPaymentPaidExtractedDate"/>
+                <bean parent="filteredField" p:filteredField="PaymentProcess.processTimestamp"/>
+                <bean parent="filteredField" p:filteredField="PaymentProcess.processUserId"/>
+                <bean parent="filteredField" p:filteredField="PaymentProcess.extractedInd"/>
+                <bean parent="filteredField" p:filteredField="ProcessSummary.endDisbursementNbr"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankOfficeCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankServiceNumber"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankTypeCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankNewRoutingNumber"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankStreetAddress"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankCityName"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankStateCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankZipCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankPhoneAreaCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankPhonePrefixNumber"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankPhoneSuffixNumber"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankInstitutionStatusCode"/>
+                <bean parent="filteredField" p:filteredField="ACHBank.bankDataViewCode"/>
+                <bean parent="filteredField" p:filteredField="PayeeACHAccount.autoInactivationIndicator"/>
+
                 <!-- SYS -->
                 <bean parent="filteredField" p:filteredField="SourceAccountingLine.projectCode"/>
                 <bean parent="filteredField" p:filteredField="TargetAccountingLine.projectCode"/>
