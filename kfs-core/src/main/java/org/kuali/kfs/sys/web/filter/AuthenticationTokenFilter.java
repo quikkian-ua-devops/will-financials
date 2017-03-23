@@ -51,10 +51,11 @@ public class AuthenticationTokenFilter implements Filter {
     private ConfigurationService configurationService;
     private JwtService jwtService;
     private CoreApiKeyAuthenticationService coreApiKeyAuthenticationService;
+    private FilterConfig filterConfig;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        this.filterConfig = filterConfig;
     }
 
     @Override
@@ -79,6 +80,7 @@ public class AuthenticationTokenFilter implements Filter {
 
             Cookie financialsAuthCookie = new Cookie(FIN_AUTH_TOKEN_COOKIE_NAME, coreToken.get());
             financialsAuthCookie.setSecure(request.isSecure());
+            financialsAuthCookie.setPath(filterConfig.getServletContext().getContextPath());
             response.addCookie(financialsAuthCookie);
         }
 
@@ -108,6 +110,7 @@ public class AuthenticationTokenFilter implements Filter {
 
         Cookie financialsAuthCookie = new Cookie(FIN_AUTH_TOKEN_COOKIE_NAME, token);
         financialsAuthCookie.setSecure(request.isSecure());
+        financialsAuthCookie.setPath(filterConfig.getServletContext().getContextPath());
         response.addCookie(financialsAuthCookie);
 
         filterChain.doFilter(request, response);
