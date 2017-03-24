@@ -1658,7 +1658,7 @@
 
                 <!-- PDP -->
                 <bean parent="filteredField" p:filteredField="PaymentAccountDetail.projectCode"/>
-                <bean parent="filteredField" p:filteredField="Batch.fileProcessTimestamp"/>
+                <bean parent="filteredField" p:filteredField="Batch.fileProcessTimestamp" p:audit="true"/>
                 <bean parent="filteredField" p:filteredField="Batch.paymentFileName"/>
                 <bean parent="filteredField" p:filteredField="Batch.submiterUserId"/>
                 <bean parent="filteredField" p:filteredField="CustomerProfile.address1"/>
@@ -1680,7 +1680,7 @@
                 <bean parent="filteredField" p:filteredField="PaymentGroup.taxablePayment"/>
                 <bean parent="filteredField" p:filteredField="PaymentGroup.epicPaymentCancelledExtractedDate"/>
                 <bean parent="filteredField" p:filteredField="PaymentGroup.epicPaymentPaidExtractedDate"/>
-                <bean parent="filteredField" p:filteredField="PaymentProcess.processTimestamp"/>
+                <bean parent="filteredField" p:filteredField="PaymentProcess.processTimestamp" p:audit="true"/>
                 <bean parent="filteredField" p:filteredField="PaymentProcess.processUserId"/>
                 <bean parent="filteredField" p:filteredField="PaymentProcess.extractedInd"/>
                 <bean parent="filteredField" p:filteredField="ProcessSummary.endDisbursementNbr"/>
@@ -1703,6 +1703,42 @@
                 <bean parent="filteredField" p:filteredField="SourceAccountingLine.projectCode"/>
                 <bean parent="filteredField" p:filteredField="TargetAccountingLine.projectCode"/>
                 <bean parent="filteredField" p:filteredField="GeneralLedgerPendingEntry.projectCode"/>
+                <bean parent="filteredField" p:filteredField="FinancialSystemDocumentHeader.processedDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="FinancialSystemDocumentHeader.alternateBuildingCode"/>
+                <bean parent="filteredField" p:filteredField="SystemOptions.universityFiscalYearStartYr"/>
+                <bean parent="filteredField" p:filteredField="SystemOptions.eliminationsFinBalanceTypeCd"/>
+                <bean parent="filteredField" p:filteredField="SystemOptions.universityFinChartOfAcctCd"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.financialSystemServerName"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.financialSystemDatabaseName"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.financialSystemDatabaseDesc"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextCapitalAssetNumber"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextNonCapitalAssetNumber"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextContractsAndGrantsAgencyNumber"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextContractsAndGrantsSubcontractorNumber"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextDisbVchrPayeeIdNbr"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.nextFdocAttachmentIdentifier"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.acctRcvbNextCustomerNumber"/>
+                <bean parent="filteredField" p:filteredField="OriginationCode.financialDocumentNextItemIdentifier"/>
+                <bean parent="filteredField" p:filteredField="Room.buildingRoomType"/>
+                <bean parent="filteredField" p:filteredField="Room.buildingRoomDepartment"/>
+                <bean parent="filteredField" p:filteredField="Room.buildingRoomDescription"/>
+                <bean parent="filteredField" p:filteredField="ElectronicPaymentClaim.financialDocumentPostingPeriodCode"/>
+                <bean parent="filteredField" p:filteredField="UnitOfMeasure.itemUnitOfMeasureDescription"/>
+                <bean parent="filteredField" p:filteredField="TaxRegion.taxRegionUseTaxIndicator"/>
+                <bean parent="filteredField" p:filteredField="Bank.bankName"/>
+                <bean parent="filteredField" p:filteredField="Bank.bankShortName"/>
+                <bean parent="filteredField" p:filteredField="Bank.bankAccountDescription"/>
+                <bean parent="filteredField" p:filteredField="TaxRegionType.taxRegionTypeName"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.bankName"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.bankCityName"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.attentionLineText"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.additionalWireText"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.payeeAccountNumber"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.currencyTypeName"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.currencyTypeCode"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.payeeAccountName"/>
+                <bean parent="filteredField" p:filteredField="PaymentSourceWireTransfer.automatedClearingHouseProfileNumber"/>
+
                 <!-- AR -->
                 <bean parent="filteredField" p:filteredField="AccountsReceivableDocumentHeader.entryDate" p:audit="true"/>
                 <bean parent="filteredField" p:filteredField="AccountsReceivableDocumentHeader.financialDocumentExplanationText"/>
