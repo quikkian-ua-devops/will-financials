@@ -26,6 +26,7 @@ public class FieldDTO {
     private int length;
     private boolean required;
     private String fieldType;
+    private boolean cascadeSource;
 
     public String getCode() {
         return code;
@@ -73,6 +74,14 @@ public class FieldDTO {
 
     public void setFieldType(String fieldType) {
         this.fieldType = fieldType;
+    }
+
+    public boolean isCascadeSource() {
+        return cascadeSource;
+    }
+
+    public void setCascadeSource(boolean cascadeSource) {
+        this.cascadeSource = cascadeSource;
     }
 
     @Override

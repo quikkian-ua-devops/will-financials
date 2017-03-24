@@ -23,8 +23,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.kuali.kfs.kns.service.KNSServiceLocator;
-import org.kuali.kfs.kns.util.KNSConstants;
+import org.kuali.kfs.krad.bo.PersistableBusinessObject;
 import org.kuali.kfs.krad.bo.PersistableBusinessObjectExtension;
 import org.kuali.kfs.krad.datadictionary.exception.AttributeValidationException;
 import org.kuali.kfs.krad.datadictionary.exception.CompletionException;
@@ -38,6 +37,8 @@ import org.kuali.kfs.krad.uif.view.View;
 import org.kuali.kfs.krad.util.ObjectUtils;
 import org.kuali.kfs.krad.util.ResourceLoaderUtil;
 import org.springframework.beans.PropertyValues;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
@@ -776,4 +777,34 @@ public class DataDictionary {
         }
     }
 
+    public boolean isParent(Class<? extends PersistableBusinessObject> tableClass, String fieldName, Map<String, String> beanNameExceptions) {
+        String beanName = tableClass.getSimpleName() + "-" + fieldName;
+        if (beanNameExceptions.containsKey(beanName)) {
+            beanName = beanNameExceptions.get(beanName);
+        }
+
+        try {
+            BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
+            BeanDefinition parentBeanDefinition = ddBeans.getBeanDefinition(beanName + "-parentBean");
+
+            if (isValidPotentialParentBeanDefinition(parentBeanDefinition) || isValidPotentialParentBeanDefinition(beanDefinition)) {
+                return ddIndex.hasChildren(beanName);
+            }
+        } catch (NoSuchBeanDefinitionException exception) {
+            LOG.warn("BeanDefinition does not exist for " + beanName + " or " + beanName + "-parentBean");
+        }
+
+        return false;
+    }
+
+    private boolean isValidPotentialParentBeanDefinition(BeanDefinition beanDefinition) {
+        if (beanDefinition == null) {
+            return false;
+        }
+
+        String parentName = beanDefinition.getParentName();
+        return (parentName.equals("AttributeDefinition")|| parentName.startsWith("GenericAttributes") || parentName.startsWith("CommonAttributes") ||
+            parentName.startsWith("AccountAttribute") || parentName.startsWith("SubAccountAttribute") || parentName.startsWith("SubObjectAttribute") ||
+            parentName.startsWith("ObjectCodeAttribute") || parentName.startsWith("ChartAttribute"));
+    }
 }
