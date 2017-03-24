@@ -1,3 +1,56 @@
+************************* 2017-03-24 *************************
+commit b6365d49a5efd8ef287d90e7fdc38ad1f2a0556b
+Author: James Smith <jksmith@kuali.co>
+Date:   2017-03-24 08:40:24 -0600
+
+    Revert "FINI-3480 migrate whether a dd field is a “cascade source” (parent) o…"
+
+:100644 100644 62aa9e0... cbea1c9... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/FieldDTO.java
+:100644 100644 163823f... 1cc34f3... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImpl.java
+:100644 100644 af744eb... 250d767... M	kfs-core/src/main/resources/org/kuali/kfs/coa/businessobject/datadictionary/Organization.xml
+:100644 100644 4a2daa1... b0dcef2... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+:100644 100644 d197b9a... f6ffae0... M	kfs-core/src/test/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImplTest.java
+:100644 100644 aed9f87... 344669b... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionary.java
+:100644 100644 a1257d5... 40384c0... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionaryIndex.java
+
+commit ef587fbbd99b822b56a743d891b1d92e884ad83e
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-03-23 18:01:03 -0400
+
+    FINP-1275 Make sure auth cookie is always created at top of context path (#1087)
+
+:100644 100644 04e07f1... d2c3d6a... M	kfs-core/src/main/java/org/kuali/kfs/sys/web/filter/AuthenticationTokenFilter.java
+:100644 100644 984b070... 50b2d27... M	kfs-core/src/test/java/org/kuali/kfs/sys/web/filter/AuthenticationTokenFilterTest.java
+
+commit b8ed82ba890afc6f6d2b3caa5f7558e7a1a0a648
+Author: lmarkes <lmarkes@users.noreply.github.com>
+Date:   2017-03-23 17:00:54 -0500
+
+    FINP-1245: remove bc and tem from web.xml (#1088)
+
+:100644 100644 902854a... 675a4d7... M	kfs-web/src/main/webapp/WEB-INF/web.xml
+
+commit 6320d3d6fb7363b8e943bde938349f4344b1df34
+Author: tfoxley <travisfoxley@gmail.com>
+Date:   2017-03-23 15:59:04 -0600
+
+    FINI-3480 migrate whether a dd field is a “cascade source” (parent) or not
+
+:100644 100644 cbea1c9... 62aa9e0... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/FieldDTO.java
+:100644 100644 1cc34f3... 163823f... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImpl.java
+:100644 100644 250d767... af744eb... M	kfs-core/src/main/resources/org/kuali/kfs/coa/businessobject/datadictionary/Organization.xml
+:100644 100644 72d8c6e... 80339fa... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+:100644 100644 f6ffae0... d197b9a... M	kfs-core/src/test/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImplTest.java
+:100644 100644 344669b... aed9f87... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionary.java
+:100644 100644 40384c0... a1257d5... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionaryIndex.java
+
+commit 6bf3e390179572b5ac19bb3538586c659193373b
+Author: smith750 <jksmith@kuali.co>
+Date:   2017-03-23 12:32:45 -0600
+
+    FINP-1248
+
+:100644 100644 72d8c6e... ca3ac3e... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
 ************************* 2017-03-23 *************************
 commit f78d6541f1c890917221c529e5aa3a29af191495
 Author: lmarkes <lesley@kuali.co>
