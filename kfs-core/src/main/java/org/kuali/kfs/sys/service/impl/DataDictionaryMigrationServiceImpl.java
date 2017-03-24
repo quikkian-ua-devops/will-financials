@@ -80,7 +80,6 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
     private List<DataDictionaryFilteredTable> filteredTables = new ArrayList<>();
     private List<DataDictionaryFilteredField> filteredFields = new ArrayList<>();
     private List<String> concerns = new ArrayList<>();
-    private Map<String, String> beanNameExceptions = new HashMap<>();
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DataDictionaryMigrationServiceImpl.class);
 
@@ -424,14 +423,13 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
             return null;
         }
         fieldDTO.setCode(persistenceStructureService.getColumnNameForFieldName(tableClass, fieldName));
-        fieldDTO.setName(attributeDefinition.getLabel().trim());
-        fieldDTO.setShortName(attributeDefinition.getShortLabel().trim());
+        fieldDTO.setName(attributeDefinition.getLabel());
+        fieldDTO.setShortName(attributeDefinition.getShortLabel());
         if (attributeDefinition.getMaxLength() != null) {
             fieldDTO.setLength(attributeDefinition.getMaxLength());
         }
         fieldDTO.setRequired(attributeDefinition.isRequired());
         fieldDTO.setFieldType(determineFieldType(tableClass, fieldName));
-        fieldDTO.setCascadeSource(dataDictionaryService.getDataDictionary().isParent(tableClass, fieldName, beanNameExceptions));
         return fieldDTO;
     }
 
@@ -544,13 +542,5 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
 
     public void setConcerns(List<String> concerns) {
         this.concerns = concerns;
-    }
-
-    public Map<String, String> getBeanNameExceptions() {
-        return beanNameExceptions;
-    }
-
-    public void setBeanNameExceptions(Map<String, String> beanNameExceptions) {
-        this.beanNameExceptions = beanNameExceptions;
     }
 }
