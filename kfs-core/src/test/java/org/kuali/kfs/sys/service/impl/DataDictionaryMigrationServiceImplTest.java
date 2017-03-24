@@ -256,6 +256,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(dataDictionary.getBusinessObjectEntry("org.kuali.kfs.coa.businessobject.Chart")).andReturn(businessObjectEntry);
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("chartOfAccountsCode")).andReturn(chartOfAccountsAttributeDefinition);
         EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(Chart.class, "chartOfAccountsCode")).andReturn("FIN_COA_CD");
+        EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
 
         EasyMock.replay(dataDictionaryService, dataDictionary, businessObjectEntry, persistenceStructureService);
 
@@ -818,6 +819,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("accountNumber")).andReturn(accountNumberAttributeDefinition);
         EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(Account.class, "accountNumber")).andReturn("ACCOUNT_NBR");
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("goodToBeOnTheRoadBackHome")).andReturn(null);
+        EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
 
         EasyMock.replay(dataDictionaryService, dataDictionary, businessObjectEntry, persistenceStructureService);
 
@@ -908,6 +910,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(Account.class, "accountNumber")).andReturn("ACCOUNT_NBR");
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("goodToBeOnTheRoadBackHome")).andReturn(null);
         EasyMock.expect(businessObjectEntry.getObjectLabel()).andReturn("Account").anyTimes();
+        EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
     }
 
     private void initializeExpectationsForVendorWithFields() {
@@ -946,6 +949,7 @@ public class DataDictionaryMigrationServiceImplTest {
     private void initializeExpectationsForVendor() {
         EasyMock.expect(persistenceStructureService.isPersistable(VendorDetail.class)).andReturn(true);
         EasyMock.expect(dataDictionary.getBusinessObjectEntry(VendorDetail.class.getName())).andReturn(businessObjectEntry).anyTimes();
+        EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
         EasyMock.expect(businessObjectEntry.getObjectLabel()).andReturn("Vendor");
         EasyMock.expect(persistenceStructureService.getTableName(VendorDetail.class)).andReturn("PUR_VNDR_DTL_T");
         initializeExpectationsForVendorWithFields();
