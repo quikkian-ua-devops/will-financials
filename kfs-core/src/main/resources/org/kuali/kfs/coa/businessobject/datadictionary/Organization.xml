@@ -291,7 +291,7 @@
     <bean id="Organization-organizationPlantAccountNumber-parentBean"
           abstract="true" parent="Account-accountNumber">
         <property name="name" value="organizationPlantAccountNumber"/>
-        <property name="label" value="Organization Plant Account Number"/>
+        <property name="label" value=" Organization Plant Account Number"/>
         <property name="shortLabel" value="Plant Acct"/>
         <property name="required" value="false"/>
         <property name="attributeSecurity" ref="ReadOnlyAttributeSecurity"/>

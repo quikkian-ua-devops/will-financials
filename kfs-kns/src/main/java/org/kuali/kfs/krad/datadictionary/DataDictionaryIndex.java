@@ -21,7 +21,6 @@ package org.kuali.kfs.krad.datadictionary;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.config.BeanDefinition;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,8 +50,6 @@ public class DataDictionaryIndex implements Runnable {
 
     // keyed by a class object, and the value is a set of classes that may block the class represented by the key from inactivation
     private Map<Class, Set<InactivationBlockingMetadata>> inactivationBlockersForClass;
-
-    private Set<String> parentAttributes;
 
     public DataDictionaryIndex(DefaultListableBeanFactory ddBeans) {
         this.ddBeans = ddBeans;
@@ -210,33 +207,5 @@ public class DataDictionaryIndex implements Runnable {
         LOG.info("Started DD Inactivation Blocking Index Building");
         buildDDInactivationBlockingIndices();
         LOG.info("Completed DD Inactivation Blocking Index Building");
-
-        LOG.info("Started building Attribute Parent set");
-        buildAttributeParentSet();
-        LOG.info("Completed building Attribute Parent set");
-    }
-
-    private void buildAttributeParentSet() {
-        parentAttributes = new HashSet<>();
-
-        for (String beanName : ddBeans.getBeanNamesForType(AttributeDefinition.class)) {
-            BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
-            if (beanDefinition != null && beanDefinition.getParentName() != null) {
-                addParentBeanDefinitionType(beanName);
-            }
-        }
-    }
-
-    private void addParentBeanDefinitionType(String beanName) {
-        BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
-        if (beanDefinition.getParentName().endsWith("-parentBean")) {
-            addParentBeanDefinitionType(beanDefinition.getParentName());
-        } else {
-            parentAttributes.add(beanDefinition.getParentName());
-        }
-    }
-
-    public boolean hasChildren(String fieldName) {
-        return parentAttributes.contains(fieldName);
     }
 }

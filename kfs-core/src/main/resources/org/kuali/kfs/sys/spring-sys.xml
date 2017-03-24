@@ -2304,43 +2304,6 @@
                 <value>FS_DOC_HEADER_T</value>
             </list>
         </property>
-        <property name="beanNameExceptions">
-            <map>
-                <entry key="CommodityContractManager-active" value="CommodityContractManger-active"/>
-                <entry key="LaborBenefitRateCategory-laborBenefitRateCategoryCode" value="LaborBenefitRateCategory-code"/>
-                <entry key="SecurityModelDefinition-definitionId" value="SecurityModelDefinition-modelDefinitionId"/>
-                <entry key="SecurityModelDefinition-constraintCode" value="AbstractSecurityModelDefinition-constraintCode"/>
-                <entry key="SecurityModelDefinition-operatorCode" value="AbstractSecurityModelDefinition-operatorCode"/>
-                <entry key="SecurityModelDefinition-attributeValue" value="AbstractSecurityModelDefinition-attributeValue"/>
-                <entry key="SecurityModelDefinition-overrideDeny" value="AbstractSecurityModelDefinition-overrideDeny"/>
-                <entry key="SecurityModelDefinition-active" value="AbstractSecurityModelDefinition-active"/>
-                <entry key="InvoiceTemplate-filename" value="TemplateBase-filename"/>
-                <entry key="InvoiceTemplate-restrictUseByChartOrg" value="TemplateBase-restrictUseByChartOrg"/>
-                <entry key="InvoiceTemplate-active" value="TemplateBase-active"/>
-                <entry key="InvoiceTemplate-uploadDate" value="TemplateBase-uploadDate"/>
-                <entry key="InvoiceTemplate-billByChartOfAccountCode" value="TemplateBase-billByChartOfAccountCode"/>
-                <entry key="InvoiceTemplate-billedByOrganizationCode" value="TemplateBase-billedByOrganizationCode"/>
-                <entry key="InstrumentType-instrumentTypeCode" value="CommonAttributes-instrumentTypeCode"/>
-                <entry key="AwardAccount-proposalNumber" value="Proposal-proposalNumber"/>
-                <entry key="DunningLetterTemplate-filename" value="TemplateBase-filename"/>
-                <entry key="DunningLetterTemplate-restrictUseByChartOrg" value="TemplateBase-restrictUseByChartOrg"/>
-                <entry key="DunningLetterTemplate-active" value="TemplateBase-active"/>
-                <entry key="DunningLetterTemplate-uploadDate" value="TemplateBase-uploadDate"/>
-                <entry key="DunningLetterTemplate-billByChartOfAccountCode" value="TemplateBase-billByChartOfAccountCode"/>
-                <entry key="DunningLetterTemplate-billedByOrganizationCode" value="TemplateBase-billedByOrganizationCode"/>
-                <entry key="SecurityPrincipalDefinition-definitionId" value="SecurityPrincipalDefinition-principalDefinitionId"/>
-                <entry key="SecurityPrincipalDefinition-constraintCode" value="AbstractSecurityModelDefinition-constraintCode"/>
-                <entry key="SecurityPrincipalDefinition-operatorCode" value="AbstractSecurityModelDefinition-operatorCode"/>
-                <entry key="SecurityPrincipalDefinition-attributeValue" value="AbstractSecurityModelDefinition-attributeValue"/>
-                <entry key="SecurityPrincipalDefinition-overrideDeny" value="AbstractSecurityModelDefinition-overrideDeny"/>
-                <entry key="SecurityPrincipalDefinition-active" value="AbstractSecurityModelDefinition-active"/>
-                <entry key="SubObjectCode-universityFiscalYear" value="ObjectCode-universityFiscalYear"/>
-                <entry key="SubObjectCode-chartOfAccountsCode" value="ObjectCode-chartOfAccountsCode"/>
-                <entry key="SubObjectCode-accountNumber" value="Account-accountNumber"/>
-                <entry key="SubObjectCode-financialObjectCode" value="ObjectCode-financialObjectCode"/>
-                <entry key="VendorHeader-vendorW8BenReceivedIndicator" value="VendorHeader-vendorW8ReceivedIndicator"/>
-            </map>
-        </property>
     </bean>
 
     <import resource="spring-sys-bus-exports.xml"/>
