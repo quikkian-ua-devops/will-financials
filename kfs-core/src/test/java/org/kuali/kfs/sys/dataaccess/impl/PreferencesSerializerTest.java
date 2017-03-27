@@ -696,6 +696,61 @@ public class PreferencesSerializerTest {
     }
 
     @Test
+    public void serializeNavLinkGroups_EmptyGroup() {
+        List<Map<String,Object>> navLinksGroups = new ArrayList<>();
+
+        Map<String,Object> navLinks = new HashMap<>();
+        Map<String,Object> navLinkGroup = new HashMap<>();
+        navLinkGroup.put("label", "FOO1");
+        navLinkGroup.put("links", navLinks);
+        navLinksGroups.add(navLinkGroup);
+
+        Map<String,List<Map<String,Object>>> result = PreferencesSerializer.serializeNavLinkGroups(navLinksGroups);
+
+        Assert.assertEquals(4, result.size());
+        Assert.assertTrue(result.containsKey("nav_lnk_perm_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_perm_dtl_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_grp_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_t"));
+
+        List<Map<String, Object>> rows = result.get("nav_lnk_grp_t");
+        Assert.assertEquals(1, rows.size());
+        Map<String,Object> row = rows.get(0);
+        Assert.assertEquals(3, row.size());
+        Assert.assertEquals("FOO1", row.get("LNK_GRP_LBL"));
+        Assert.assertEquals(0, row.get("POSN"));
+        Assert.assertTrue(row.containsKey("OBJ_ID"));
+    }
+
+    @Test
+    public void serializeNavLinkGroups_EmptyCategory() {
+        List<Map<String,Object>> navLinksGroups = new ArrayList<>();
+
+        Map<String,Object> navLinks = new HashMap<>();
+        navLinks.put("administration", new ArrayList<>());
+        Map<String,Object> navLinkGroup = new HashMap<>();
+        navLinkGroup.put("label", "FOO1");
+        navLinkGroup.put("links", navLinks);
+        navLinksGroups.add(navLinkGroup);
+
+        Map<String,List<Map<String,Object>>> result = PreferencesSerializer.serializeNavLinkGroups(navLinksGroups);
+
+        Assert.assertEquals(4, result.size());
+        Assert.assertTrue(result.containsKey("nav_lnk_perm_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_perm_dtl_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_grp_t"));
+        Assert.assertTrue(result.containsKey("nav_lnk_t"));
+
+        List<Map<String, Object>> rows = result.get("nav_lnk_grp_t");
+        Assert.assertEquals(1, rows.size());
+        Map<String,Object> row = rows.get(0);
+        Assert.assertEquals(3, row.size());
+        Assert.assertEquals("FOO1", row.get("LNK_GRP_LBL"));
+        Assert.assertEquals(0, row.get("POSN"));
+        Assert.assertTrue(row.containsKey("OBJ_ID"));
+    }
+
+    @Test
     public void serializeNavLinkGroups_givenEmptyNavLinkGroups_ReturnsMapOfEmptyLists() {
         Map<String,List<Map<String,Object>>> result = PreferencesSerializer.serializeNavLinkGroups(Lists.newArrayList());
 

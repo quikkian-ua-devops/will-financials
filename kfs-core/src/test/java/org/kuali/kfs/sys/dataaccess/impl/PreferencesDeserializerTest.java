@@ -1008,6 +1008,52 @@ public class PreferencesDeserializerTest {
     }
 
     @Test
+    public void deserializeLinkCategory_givenNoLinkCategories() {
+        // given a row without any links in it
+        Map<String, Object> row = new LinkedHashMap<String, Object>() {{
+            put(GROUP_LABEL_KEY, "Foo");
+            put(GROUP_POSITION_KEY, 0);
+            put(LINK_TYPE_KEY, "kfs");
+        }};
+
+        Map<String, Object> group = new LinkedHashMap<String, Object>() {{
+            put(LABEL_KEY, "Foo");
+        }};
+
+        PreferencesDeserializer.deserializeLinkCategory(row, group);
+
+        Assert.assertTrue(group.size() == 2);
+        Assert.assertTrue(group.containsKey(LINKS_KEY));
+        Map<String, Object> linkCategories = (Map<String, Object>) group.get(LINKS_KEY);
+        Assert.assertTrue(linkCategories.isEmpty());
+    }
+
+    @Test
+    public void deserializeLinkCategory_givenEmptyLinkCategory() {
+        // given a broken row with no actual link
+        Map<String, Object> row = new LinkedHashMap<String, Object>() {{
+            put(GROUP_LABEL_KEY, "Foo");
+            put(GROUP_POSITION_KEY, 0);
+            put(LINK_TYPE_KEY, "kfs");
+            put(LINK_CATEGORY_KEY, "administration");
+        }};
+
+        Map<String, Object> group = new LinkedHashMap<String, Object>() {{
+            put(LABEL_KEY, "Foo");
+        }};
+
+        PreferencesDeserializer.deserializeLinkCategory(row, group);
+
+        Assert.assertTrue(group.size() == 2);
+        Assert.assertTrue(group.containsKey(LINKS_KEY));
+        Map<String, Object> linkCategories = (Map<String, Object>) group.get(LINKS_KEY);
+        Assert.assertEquals(1, linkCategories.size());
+        Assert.assertTrue(linkCategories.containsKey("administration"));
+        List links = (List) linkCategories.get("administration");
+        Assert.assertTrue(links.isEmpty());
+    }
+
+    @Test
     public void deserializeLinkCategory_givenLinkCategoriesExistsButThisCategoryIsNew_NewCategoryGetsAddedTolinkCategories() {
         // given a typical row of nav link data
         Map<String, Object> row = new LinkedHashMap<String, Object>() {{

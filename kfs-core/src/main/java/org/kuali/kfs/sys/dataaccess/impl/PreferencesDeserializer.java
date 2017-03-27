@@ -93,47 +93,51 @@ class PreferencesDeserializer {
         }
 
         String linkCategoryName = (String) row.get("linkCategory");
-        List<Map<String,Object>> linkCategory = linkCategories.get(linkCategoryName);
-        if (linkCategory == null) {
-            linkCategory = new ArrayList<>();
-            linkCategories.put(linkCategoryName, linkCategory);
-        }
+        if (linkCategoryName != null) {
+            List<Map<String, Object>> linkCategory = linkCategories.get(linkCategoryName);
+            if (linkCategory == null) {
+                linkCategory = new ArrayList<>();
+                linkCategories.put(linkCategoryName, linkCategory);
+            }
 
-        deserializeLink(row, linkCategory);
+            deserializeLink(row, linkCategory);
+        }
     }
 
     static void deserializeLink(Map<String, Object> row, List<Map<String, Object>> linkCategory) {
         Integer linkPosition = (Integer) row.get("linkPosition");
-        Map<String,Object> link;
-        if (linkPosition > linkCategory.size() - 1) {
-            link = new HashMap<>();
-            link.put("linkType", row.get("linkType"));
-            String documentTypeCode = (String) row.get("documentTypeCode");
-            if (documentTypeCode != null) {
-                link.put("documentTypeCode", documentTypeCode);
+        if (linkPosition != null) {
+            Map<String, Object> link;
+            if (linkPosition > linkCategory.size() - 1) {
+                link = new HashMap<>();
+                link.put("linkType", row.get("linkType"));
+                String documentTypeCode = (String) row.get("documentTypeCode");
+                if (documentTypeCode != null) {
+                    link.put("documentTypeCode", documentTypeCode);
+                }
+                String businessObjectClass = (String) row.get("businessObjectClass");
+                if (businessObjectClass != null) {
+                    link.put("businessObjectClass", businessObjectClass);
+                }
+                String newTarget = (String) row.get("newTarget");
+                if (newTarget != null) {
+                    link.put("newTarget", "Y".equalsIgnoreCase(newTarget));
+                }
+                String linkLabel = (String) row.get("linkLabel");
+                if (linkLabel != null) {
+                    link.put("label", linkLabel);
+                }
+                String linkValue = (String) row.get("linkValue");
+                if (linkValue != null) {
+                    link.put("link", linkValue);
+                }
+                linkCategory.add(link);
+            } else {
+                link = linkCategory.get(linkPosition);
             }
-            String businessObjectClass = (String) row.get("businessObjectClass");
-            if (businessObjectClass != null) {
-                link.put("businessObjectClass", businessObjectClass);
-            }
-            String newTarget = (String) row.get("newTarget");
-            if (newTarget != null) {
-                link.put("newTarget", "Y".equalsIgnoreCase(newTarget));
-            }
-            String linkLabel = (String) row.get("linkLabel");
-            if (linkLabel != null) {
-                link.put("label", linkLabel);
-            }
-            String linkValue = (String) row.get("linkValue");
-            if (linkValue != null) {
-                link.put("link", linkValue);
-            }
-            linkCategory.add(link);
-        } else {
-            link = linkCategory.get(linkPosition);
-        }
 
-        deserializeLinkPermission(row, link);
+            deserializeLinkPermission(row, link);
+        }
     }
 
     static void deserializeLinkPermission(Map<String, Object> row, Map<String, Object> link) {
