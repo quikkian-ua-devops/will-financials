@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CellComparatorHelper {
-    private static Pattern SPAN_ENCLOSURE = Pattern.compile(".*<span class=\"actualValue\">([^<]*)</span>.*", Pattern.MULTILINE);
+    static private Pattern HREF_ENCLOSURE = Pattern.compile("<a [^>]+>([^<]*)</a>.*", Pattern.MULTILINE);
 
     /**
      * This method is intended to be used in conjunction with displaytag.
@@ -66,7 +66,7 @@ public class CellComparatorHelper {
 
         String sanitizedValue = staticValue;
 
-        Matcher matcher = SPAN_ENCLOSURE.matcher(staticValue);
+        Matcher matcher = HREF_ENCLOSURE.matcher(staticValue);
         if (matcher.matches()) {
             sanitizedValue = matcher.group(1).trim();
         }
