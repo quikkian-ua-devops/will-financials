@@ -1,3 +1,64 @@
+************************* 2017-03-28 *************************
+commit 6b4b70efea183649f5428e7b15ae444ce87a53cc
+Author: Kelly Davis <kldavis4@gmail.com>
+Date:   2017-03-27 18:01:04 -0400
+
+    FINP-1299 remove unused SPAN_ENCLOSURE pattern
+
+:100644 100644 45db973... cfad050... M	kfs-kns/src/main/java/org/kuali/kfs/kns/web/comparator/CellComparatorHelper.java
+
+commit d8c11dbdfa5fb89f3eb5df4ae614b981aa789f8f
+Author: Kelly Davis <kldavis4@gmail.com>
+Date:   2017-03-27 17:59:10 -0400
+
+    FINP-1299 Partial revert of FINP-1219
+
+:100644 100644 53f3095... 45db973... M	kfs-kns/src/main/java/org/kuali/kfs/kns/web/comparator/CellComparatorHelper.java
+:100644 100644 9563403... 41f9574... M	kfs-kns/src/test/java/org/kuali/kfs/kns/web/comparator/CellComparatorHelperTest.java
+
+commit 8dd7d5c8ed0f389f02d7a214d1948b8a274578db
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-03-27 09:36:38 -0400
+
+    FINP-1214 Show documents in current window (#1096)
+
+:100644 100644 f36c17c... 6fe3f80... M	kfs-web/src/main/webapp/kr/WEB-INF/jsp/KualiLookup.jsp
+
+commit f83a8ff4bdd8a850c2c420016f71678fb7b87156
+Author: Kelly Davis <kldavis4@users.noreply.github.com>
+Date:   2017-03-27 08:46:19 -0400
+
+    FINP-1281 Fix menu editing issues (#1093)
+    
+    * FINP-1281 Fix handling of link groups with no links
+    
+    * FINP-1281 Additional handling for case where there is a cat but no link
+
+:100644 100644 86ad719... 20b27b7... M	kfs-core/src/main/java/org/kuali/kfs/sys/dataaccess/impl/PreferencesDeserializer.java
+:100644 100644 e41d46e... 585d34c... M	kfs-core/src/test/java/org/kuali/kfs/sys/dataaccess/impl/PreferencesDeserializerTest.java
+:100644 100644 d22d8e9... bb07b91... M	kfs-core/src/test/java/org/kuali/kfs/sys/dataaccess/impl/PreferencesSerializerTest.java
+
+commit 7046d90fa858f3ee25bffc193f27ce258ddcda0d
+Author: smith750 <jksmith@kuali.co>
+Date:   2017-03-24 14:20:22 -0600
+
+    FINP-1249
+
+:100644 100644 b0dcef2... b4fa397... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+
+commit 1c116380e3f4700b3ef813e136843cfd58189e80
+Author: Kevin Kronenbitter <kevin@kuali.co>
+Date:   2017-03-24 12:01:11 -0600
+
+    Revert "Revert "FINI-3480 migrate whether a dd field is a “cascade source” (parent) o…""
+
+:100644 100644 cbea1c9... 62aa9e0... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/FieldDTO.java
+:100644 100644 1cc34f3... 163823f... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImpl.java
+:100644 100644 250d767... af744eb... M	kfs-core/src/main/resources/org/kuali/kfs/coa/businessobject/datadictionary/Organization.xml
+:100644 100644 b0dcef2... 4a2daa1... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+:100644 100644 f6ffae0... d197b9a... M	kfs-core/src/test/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImplTest.java
+:100644 100644 344669b... aed9f87... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionary.java
+:100644 100644 40384c0... a1257d5... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionaryIndex.java
 ************************* 2017-03-24 *************************
 commit b6365d49a5efd8ef287d90e7fdc38ad1f2a0556b
 Author: James Smith <jksmith@kuali.co>
