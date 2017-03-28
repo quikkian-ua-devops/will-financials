@@ -25,14 +25,12 @@ import org.kuali.kfs.krad.comparator.NumericValueComparator;
 import org.kuali.kfs.krad.comparator.StringValueComparator;
 import org.kuali.kfs.krad.comparator.TemporalValueComparator;
 import org.kuali.rice.core.api.util.type.TypeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 import java.util.Comparator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CellComparatorHelper {
-    static private Pattern HREF_ENCLOSURE = Pattern.compile("<a [^>]+>([^<]*)</a>.*", Pattern.MULTILINE);
-
     /**
      * This method is intended to be used in conjunction with displaytag.
      *
@@ -64,12 +62,7 @@ public class CellComparatorHelper {
         staticValue = StringUtils.replace(staticValue, "\n", "");
         staticValue = StringUtils.replace(staticValue, "\t", "");
 
-        String sanitizedValue = staticValue;
-
-        Matcher matcher = HREF_ENCLOSURE.matcher(staticValue);
-        if (matcher.matches()) {
-            sanitizedValue = matcher.group(1).trim();
-        }
+        String sanitizedValue = Jsoup.clean(staticValue, Whitelist.none());;
 
         // Strip off any "&nbsp;"s if they come at the end of the value.
         while (sanitizedValue.endsWith("&nbsp;")) {
