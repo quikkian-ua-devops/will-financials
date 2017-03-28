@@ -62,7 +62,7 @@ public class JwtServiceImplTest {
 
     @Test
     public void testGenerateJwt() {
-        EasyMock.expect(configurationService.getPropertyValueAsString("jwt.signing.key")).andReturn(KEY);
+        EasyMock.expect(configurationService.getPropertyValueAsString("jwt.encryption.key")).andReturn(KEY);
         EasyMock.replay(configurationService);
 
         JwtData data = new JwtData("khuntley", 100);
@@ -89,7 +89,7 @@ public class JwtServiceImplTest {
 
     @Test
     public void testDecideJwt() {
-        EasyMock.expect(configurationService.getPropertyValueAsString("jwt.signing.key")).andReturn(KEY);
+        EasyMock.expect(configurationService.getPropertyValueAsString("jwt.encryption.key")).andReturn(KEY);
         EasyMock.replay(configurationService);
 
         JwtData data = jwtService.decodeJwt(JWT);

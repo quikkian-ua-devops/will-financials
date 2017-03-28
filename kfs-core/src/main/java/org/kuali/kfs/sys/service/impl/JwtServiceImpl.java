@@ -37,7 +37,7 @@ import java.util.Base64;
 public class JwtServiceImpl implements JwtService {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(JwtServiceImpl.class);
 
-    private static final String JWT_SIGNING_KEY = "jwt.signing.key";
+    private static final String JWT_SIGNING_KEY = "jwt.encryption.key";
 
     protected ConfigurationService configurationService;
 
