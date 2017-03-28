@@ -1424,6 +1424,9 @@
                 <bean parent="filteredTable" p:filteredTable="AssetRepairHistory" p:audit="true"/>
                 <bean parent="filteredTable" p:filteredTable="PurchasingAccountsPayableActionHistory" p:audit="true"/>
 
+                <!-- EC -->
+                <bean parent="filteredTable" p:filteredTable="OutstandingCertificationsByReport" p:audit="true"/>
+
                 <!-- LD -->
                 <bean parent="filteredTable" p:filteredTable="ErrorCertification"/>
 
@@ -1439,6 +1442,7 @@
                 <bean parent="filteredField" p:filteredField="*.objectId"/>
                 <bean parent="filteredField" p:filteredField="*.versionNumber"/>
                 <bean parent="filteredField" p:filteredField="*.lastUpdatedTimestamp"/>
+
                 <!-- COA -->
                 <bean parent="filteredField" p:filteredField="Account.accountPhysicalCampusCode"/>
                 <bean parent="filteredField" p:filteredField="Account.financialHigherEdFunctionCd"/>
@@ -1481,6 +1485,7 @@
                 <bean parent="filteredField" p:filteredField="AccountDescription.organizationDescription"/>
                 <bean parent="filteredField" p:filteredField="AccountDescription.responsibilityCenterDescription"/>
                 <bean parent="filteredField" p:filteredField="AccountingPeriod.budgetRolloverIndicator"/>
+
                 <!-- FP -->
                 <bean parent="filteredField" p:filteredField="GECSourceAccountingLine.projectCode"/>
                 <bean parent="filteredField" p:filteredField="GECTargetAccountingLine.projectCode"/>
@@ -1624,6 +1629,7 @@
                 <bean parent="filteredField" p:filteredField="FunctionControlCode.financialSystemFunctionDescription"/>
                 <bean parent="filteredField" p:filteredField="CashieringItemInProcess.itemClosedDate" p:audit="true"/>
                 <bean parent="filteredField" p:filteredField="CashieringItemInProcess.itemDescription"/>
+
                 <!-- GL -->
                 <bean parent="filteredField" p:filteredField="OriginEntryFull.projectCode"/>
                 <bean parent="filteredField" p:filteredField="Entry.projectCode"/>
@@ -1885,6 +1891,20 @@
                 <bean parent="filteredField" p:filteredField="Pretag.organizationCode"/>
                 <bean parent="filteredField" p:filteredField="PretagDetail.organizationTagNumber"/>
                 <bean parent="filteredField" p:filteredField="PretagDetail.pretagTagCreateDate" p:audit="true"/>
+
+                <!-- EC -->
+                <bean parent="filteredField" p:filteredField="EffortCertificationReportType.effortCertificationReportDescription"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationPeriodStatusCode.effortCertificationReportPeriodStatusDescription"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationReportDefinition.effortCertificationReportPeriodTitle"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationReportDefinition.effortCertificationReportReturnDate"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationDetailBuild.costShareSourceSubAccountNumber"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationDocument.effortCertificationReportNumber"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationDocument.effortCertificationDocumentCode"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationDocument.universityFiscalYear"/>
+                <bean parent="filteredField" p:filteredField="OutstandingCertificationsByOrganization.effortCertificationReportNumber"/>
+                <bean parent="filteredField" p:filteredField="OutstandingCertificationsByOrganization.effortCertificationDocumentCode"/>
+                <bean parent="filteredField" p:filteredField="OutstandingCertificationsByOrganization.universityFiscalYear"/>
+                <bean parent="filteredField" p:filteredField="EffortCertificationDetail.costShareSourceSubAccountNumber"/>
 
                 <!-- LD -->
                 <bean parent="filteredField" p:filteredField="LedgerEntry.projectCode"/>
