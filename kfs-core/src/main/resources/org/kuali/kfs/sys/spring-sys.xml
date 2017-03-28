@@ -1424,6 +1424,9 @@
                 <bean parent="filteredTable" p:filteredTable="AssetRepairHistory" p:audit="true"/>
                 <bean parent="filteredTable" p:filteredTable="PurchasingAccountsPayableActionHistory" p:audit="true"/>
 
+                <!-- LD -->
+                <bean parent="filteredTable" p:filteredTable="ErrorCertification"/>
+
                 <!-- PURAP -->
                 <bean parent="filteredTable" p:filteredTable="PurchaseOrderQuoteListVendor" />
                 <bean parent="filteredTable" p:filteredTable="PurchaseOrderVendorQuote" />
@@ -1891,6 +1894,114 @@
                 <bean parent="filteredField" p:filteredField="LaborLedgerPendingEntry.projectCode"/>
                 <bean parent="filteredField" p:filteredField="LaborOriginEntry.projectCode"/>
                 <bean parent="filteredField" p:filteredField="LaborJournalVoucherDetail.projectCode"/>
+                <bean parent="filteredField" p:filteredField="BenefitsType.positionBenefitTypeDescription"/>
+                <bean parent="filteredField" p:filteredField="BenefitsType.positionBenefitRetirementIndicator"/>
+                <bean parent="filteredField" p:filteredField="LaborBenefitRateCategory.codeDesc"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.accountLineAnnualBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.financialBeginningBalanceLineAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.contractsGrantsBeginningBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month1Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month2Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month3Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month4Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month5Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month6Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month7Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month8Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month9Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month10Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month11Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month12Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.month13Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalance.transactionDateTimeStamp" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.accountLineAnnualBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.financialBeginningBalanceLineAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.contractsGrantsBeginningBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month1Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month2Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month3Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month4Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month5Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month6Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month7Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month8Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month9Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month10Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month11Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month12Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceHistory.month13Amount"/>
+                <bean parent="filteredField" p:filteredField="LaborObject.detailPositionRequiredIndicator"/>
+                <bean parent="filteredField" p:filteredField="LaborObject.financialObjectHoursRequiredIndicator"/>
+                <bean parent="filteredField" p:filteredField="LaborObject.financialObjectPayTypeCode"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.csfDeleteCode"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.csfAmount"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.csfFullTimeEmploymentQuantity"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.csfTimePercent"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.csfFundingStatusCode"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.employeeRecord"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.earnCode"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.additionalSequence"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.effectiveDate"/>
+                <bean parent="filteredField" p:filteredField="PositionFunding.effectiveSequence"/>
+                <bean parent="filteredField" p:filteredField="PositionData.jobCode"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionEffectiveStatus"/>
+                <bean parent="filteredField" p:filteredField="PositionData.description"/>
+                <bean parent="filteredField" p:filteredField="PositionData.shortDescription"/>
+                <bean parent="filteredField" p:filteredField="PositionData.businessUnit"/>
+                <bean parent="filteredField" p:filteredField="PositionData.departmentId"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionStatus"/>
+                <bean parent="filteredField" p:filteredField="PositionData.statusDate"/>
+                <bean parent="filteredField" p:filteredField="PositionData.budgetedPosition"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionRegularTemporary"/>
+                <bean parent="filteredField" p:filteredField="PositionData.standardHoursFrequency"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionFullTimeEquivalency"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionSalaryPlanDefault"/>
+                <bean parent="filteredField" p:filteredField="PositionData.positionGradeDefault"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.accountLineAnnualBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.financialBeginningBalanceLineAmount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.contractsGrantsBeginningBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month1Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month2Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month3Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month4Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month5Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month6Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month7Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month8Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month9Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month10Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month11Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month12Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.month13Amount"/>
+                <bean parent="filteredField" p:filteredField="AccountStatusBaseFunds.timestamp" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.csfDeleteCode"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.csfAmount"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.csfFullTimeEmploymentQuantity"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.csfTimePercent"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.csfFundingStatusCode"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.employeeRecord"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.earnCode"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.additionalSequence"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.effectiveDate"/>
+                <bean parent="filteredField" p:filteredField="LaborCalculatedSalaryFoundationTracker.effectiveSequence"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.accountLineAnnualBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.financialBeginningBalanceLineAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.contractsGrantsBeginningBalanceAmount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month1Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month2Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month3Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month4Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month5Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month6Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month7Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month8Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month9Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month10Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month11Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month12Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.month13Amount"/>
+                <bean parent="filteredField" p:filteredField="LedgerBalanceForEffortCertification.transactionDateTimeStamp" p:audit="true"/>
+
                 <!-- PURAP -->
                 <bean parent="filteredField" p:filteredField="PurchaseOrderAccount.projectCode"/>
                 <bean parent="filteredField" p:filteredField="PaymentRequestAccount.projectCode"/>
