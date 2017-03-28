@@ -37,6 +37,7 @@ import org.kuali.kfs.sys.KFSConstants;
 import org.kuali.kfs.sys.KFSPropertyConstants;
 import org.kuali.kfs.sys.businessobject.SystemOptions;
 import org.kuali.kfs.sys.context.SpringContext;
+import org.kuali.kfs.sys.util.TransactionalServiceUtils;
 import org.kuali.rice.core.api.parameter.ParameterEvaluator;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
@@ -878,6 +879,24 @@ public class BalanceDaoOjb extends PlatformAwareDaoBaseOjb implements BalanceDao
         query.addOrderByAscending(KFSPropertyConstants.OBJECT_TYPE_CODE);
 
         return getPersistenceBrokerTemplate().getIteratorByQuery(query);
+    }
+
+    /**
+     * @see org.kuali.kfs.gl.dataaccess.BalanceDao#findBalancesTotal(Map)
+     */
+    @Override
+    public KualiDecimal findBalancesTotal(Map fieldValues) {
+        Criteria criteria = OJBUtility.buildCriteriaFromMap(fieldValues, new Balance());
+
+        ReportQueryByCriteria reportQuery = QueryFactory.newReportQuery(Balance.class, criteria);
+        reportQuery.setAttributes(new String[]{"sum(" + KFSPropertyConstants.ACCOUNTING_LINE_ANNUAL_BALANCE_AMOUNT + ")"});
+
+        KualiDecimal rv = null;
+        Iterator iterator = getPersistenceBrokerTemplate().getReportQueryIteratorByQuery(reportQuery);
+        if (iterator.hasNext()) {
+            rv = (KualiDecimal) ((Object[]) TransactionalServiceUtils.retrieveFirstAndExhaustIterator(iterator))[0];
+        }
+        return (rv == null) ? KualiDecimal.ZERO : rv;
     }
 
     /**

@@ -215,4 +215,12 @@ public interface GeneralLedgerPendingEntryDao {
      */
     public Iterator findPendingLedgerEntriesForAccountBalance(Map fieldValues, boolean isApproved, String currentFiscalPeriodCode, int currentFiscalYear, List<String> encumbranceBalanceTypes);
 
+    /**
+     * Given a map of values, build a query out of those and find all the pending ledger entries that qualify and return the sum
+     * of the ledger entry amount.
+     *
+     * @param fieldValues       the input fields and values
+     * @return KualiDecimal     sum of all matching Balances or zero if no Balances match the query
+     */
+    KualiDecimal getPendingEntriesTotalLedgerEntryAmount(Map fieldValues);
 }

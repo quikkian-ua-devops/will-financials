@@ -30,6 +30,7 @@ import org.kuali.kfs.coa.service.ChartService;
 import org.kuali.kfs.coa.service.ObjectCodeService;
 import org.kuali.kfs.coa.service.ObjectConsService;
 import org.kuali.kfs.coa.service.ObjectLevelService;
+import org.kuali.kfs.gl.dataaccess.BalanceDao;
 import org.kuali.kfs.kns.document.MaintenanceDocument;
 import org.kuali.kfs.kns.maintenance.rules.MaintenanceDocumentRuleBase;
 import org.kuali.kfs.krad.service.BusinessObjectService;
@@ -37,10 +38,13 @@ import org.kuali.kfs.krad.util.GlobalVariables;
 import org.kuali.kfs.sys.KFSConstants;
 import org.kuali.kfs.sys.KFSKeyConstants;
 import org.kuali.kfs.sys.context.SpringContext;
+import org.kuali.kfs.sys.dataaccess.GeneralLedgerPendingEntryDao;
 import org.kuali.kfs.sys.service.UniversityDateService;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.parameter.ParameterEvaluatorService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -51,10 +55,10 @@ import java.util.Set;
  * This class implements the business rules for {@link ObjectCode}
  */
 public class ObjectCodeRule extends MaintenanceDocumentRuleBase {
-
     protected static ObjectLevelService objectLevelService;
     protected static ObjectCodeService objectCodeService;
     protected static ObjectConsService objectConsService;
+    protected static BalanceDao balanceDao;
 
     protected static ConfigurationService configService;
     protected static ChartService chartService;
@@ -72,10 +76,10 @@ public class ObjectCodeRule extends MaintenanceDocumentRuleBase {
             objectCodeService = SpringContext.getBean(ObjectCodeService.class);
             chartService = SpringContext.getBean(ChartService.class);
             objectConsService = SpringContext.getBean(ObjectConsService.class);
+            balanceDao = SpringContext.getBean(BalanceDao.class);
         }
         reportsTo = chartService.getReportsToHierarchy();
     }
-
 
     /**
      * This method calls the following rules on document save:
@@ -95,10 +99,8 @@ public class ObjectCodeRule extends MaintenanceDocumentRuleBase {
         Object maintainableObject = document.getNewMaintainableObject().getBusinessObject();
 
         success &= processObjectCodeRules((ObjectCode) maintainableObject);
-
-        if (isObjectCodeInactivating(document)) {
-            success &= checkForBlockingOffsetDefinitions((ObjectCode) maintainableObject);
-            success &= checkForBlockingIndirectCostRecoveryExclusionAccounts((ObjectCode) maintainableObject);
+        if (success) {
+            success &= validateObjectCodeInactivation(document, (ObjectCode) maintainableObject);
         }
 
         return success;
@@ -121,14 +123,23 @@ public class ObjectCodeRule extends MaintenanceDocumentRuleBase {
 
         Object maintainableObject = document.getNewMaintainableObject().getBusinessObject();
         success &= processObjectCodeRules((ObjectCode) maintainableObject);
-
-        if (isObjectCodeInactivating(document)) {
-            success &= checkForBlockingOffsetDefinitions((ObjectCode) maintainableObject);
-            success &= checkForBlockingIndirectCostRecoveryExclusionAccounts((ObjectCode) maintainableObject);
+        if (success) {
+            success &= validateObjectCodeInactivation(document, (ObjectCode) maintainableObject);
         }
 
         return success;
     }
+
+    private boolean validateObjectCodeInactivation(MaintenanceDocument document, ObjectCode maintainableObject) {
+        boolean success = true;
+        if (isObjectCodeInactivating(document)) {
+            success &= checkForBlockingOffsetDefinitions(maintainableObject);
+            success &= checkForBlockingIndirectCostRecoveryExclusionAccounts(maintainableObject);
+            success &= checkForBlockingGLBalances(maintainableObject);
+        }
+        return success;
+    }
+
 
     /**
      * This checks the following rules:
@@ -453,4 +464,37 @@ public class ObjectCodeRule extends MaintenanceDocumentRuleBase {
         return result;
     }
 
+    protected boolean checkForBlockingGLBalances(ObjectCode objectCode) {
+        boolean result = true;
+
+        final UniversityDateService universityDateService = SpringContext.getBean(UniversityDateService.class);
+        if (objectCode.getUniversityFiscalYear() != null && objectCode.getUniversityFiscalYear().equals(universityDateService.getCurrentFiscalYear())) {
+            final GeneralLedgerPendingEntryDao generalLedgerPendingEntryDao = SpringContext.getBean(GeneralLedgerPendingEntryDao.class);
+
+            Map<String, Object> fieldValues = new HashMap<>();
+            fieldValues.put("universityFiscalYear", String.valueOf(objectCode.getUniversityFiscalYear()));
+            fieldValues.put("objectCode", objectCode.getFinancialObjectCode());
+            fieldValues.put("balanceTypeCode", KFSConstants.BALANCE_TYPE_BASE_BUDGET);
+
+            KualiDecimal total = balanceDao.findBalancesTotal(fieldValues);
+
+            fieldValues.clear();
+            fieldValues.put("universityFiscalYear", objectCode.getUniversityFiscalYear());
+            fieldValues.put("financialObjectCode", objectCode.getFinancialObjectCode());
+            fieldValues.put("financialBalanceTypeCode", KFSConstants.BALANCE_TYPE_BASE_BUDGET);
+            fieldValues.put("financialDocumentApprovedCode", KFSConstants.PENDING_ENTRY_APPROVED_STATUS_CODE.APPROVED);
+
+            total = total.add(generalLedgerPendingEntryDao.getPendingEntriesTotalLedgerEntryAmount(fieldValues));
+
+            if (total.bigDecimalValue().compareTo(BigDecimal.ZERO) != 0) {
+                GlobalVariables.getMessageMap().putErrorForSectionId("Edit Object Code",
+                        KFSKeyConstants.ERROR_DOCUMENT_OBJECTMAINT_INACTIVATION_BLOCKING_GL,
+                        (objectCode.getUniversityFiscalYear() != null ? objectCode.getUniversityFiscalYear().toString() : ""),
+                                objectCode.getChartOfAccountsCode(), objectCode.getFinancialObjectCode());
+                result = false;
+            }
+        }
+
+        return result;
+    }
 }

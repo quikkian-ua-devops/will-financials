@@ -331,6 +331,7 @@ public class KFSKeyConstants {
     public static final String ERROR_DOCUMENT_GLOBAL_OBJECTMAINT_INACTIVATION_BLOCKING = "error.document.objectCodeGlobal.inactivationBlocking";
     public static final String ERROR_DOCUMENT_OBJECTMAINT_INACTIVATION_BLOCKING = "error.document.objectCode.inactivationBlocking";
     public static final String ERROR_DOCUMENT_BALANCETYPMAINT_INACTIVATION_BLOCKING = "error.document.balanceType.inactivationBlocking";
+    public static final String ERROR_DOCUMENT_OBJECTMAINT_INACTIVATION_BLOCKING_GL = "error.document.objectCode.inactivationBlocking.GLEntries";
     public static final String ERROR_DOCUMENT_OBJECTMAINT_BUDGET_CATEGORY_CODE = "error.document.objectCode.mustBeValid";
 
 

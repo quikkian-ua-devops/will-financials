@@ -23,6 +23,7 @@ import org.kuali.kfs.gl.businessobject.Balance;
 import org.kuali.kfs.gl.businessobject.Transaction;
 import org.kuali.kfs.sys.businessobject.SystemOptions;
 import org.kuali.rice.core.api.parameter.ParameterEvaluator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -257,4 +258,12 @@ public interface BalanceDao {
      * @return an iterator of the balances to process
      */
     public Iterator<Balance> findOrganizationReversionBalancesForFiscalYear(Integer year, boolean endOfYear, SystemOptions options, List<ParameterEvaluator> parameterEvaluators);
+
+    /**
+     * Given a map of values, build a query out of those and find all the balances that qualify and return the sum
+     *
+     * @param fieldValues   the input fields and values
+     * @return KualiDecimal sum of all matching Balances or zero if no Balances match the query
+     */
+    KualiDecimal findBalancesTotal(Map fieldValues);
 }

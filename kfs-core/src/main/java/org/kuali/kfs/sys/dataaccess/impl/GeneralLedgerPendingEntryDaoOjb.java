@@ -703,4 +703,22 @@ public class GeneralLedgerPendingEntryDaoOjb extends PlatformAwareDaoBaseOjb imp
     public void setBalanceTypeDao(BalanceTypeDao balanceTypeDao) {
         this.balanceTypeDao = balanceTypeDao;
     }
+
+    /**
+     * @see org.kuali.kfs.gl.dataaccess.BalanceDao#findBalancesTotal(Map)
+     */
+    @Override
+    public KualiDecimal getPendingEntriesTotalLedgerEntryAmount(Map fieldValues) {
+        Criteria criteria = OJBUtility.buildCriteriaFromMap(fieldValues, new GeneralLedgerPendingEntry());
+
+        ReportQueryByCriteria reportQuery = QueryFactory.newReportQuery(this.getEntryClass(), criteria);
+        reportQuery.setAttributes(new String[]{"sum(" + KFSConstants.TRANSACTION_LEDGER_ENTRY_AMOUNT + ")"});
+
+        KualiDecimal rv = null;
+        Iterator iterator = getPersistenceBrokerTemplate().getReportQueryIteratorByQuery(reportQuery);
+        if (iterator.hasNext()) {
+            rv = (KualiDecimal) ((Object[]) TransactionalServiceUtils.retrieveFirstAndExhaustIterator(iterator))[0];
+        }
+        return (rv == null) ? KualiDecimal.ZERO : rv;
+    }
 }
