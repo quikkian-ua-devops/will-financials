@@ -1367,6 +1367,12 @@
                 <bean parent="filteredEntity" p:filteredEntity="PVCF" />
                 <bean parent="filteredEntity" p:filteredEntity="PVCT" />
 
+                <!-- CAM -->
+                <bean parent="filteredEntity" p:filteredEntity="ACON"/>
+                <bean parent="filteredEntity" p:filteredEntity="DPRM"/>
+                <bean parent="filteredEntity" p:filteredEntity="ASLT"/>
+                <bean parent="filteredEntity" p:filteredEntity="APDT"/>
+
                 <!-- PURAP -->
                 <bean parent="filteredEntity" p:filteredEntity="PMSI" />
                 <bean parent="filteredEntity" p:filteredEntity="PMCA" />
@@ -1410,6 +1416,13 @@
                 <bean parent="filteredTable" p:filteredTable="VendorSupplierDiversity" p:workflow="true"/>
                 <bean parent="filteredTable" p:filteredTable="VendorTaxChange" />
                 <bean parent="filteredTable" p:filteredTable="W8TypeOwnershipType" />
+
+                <!-- CAM -->
+                <bean parent="filteredTable" p:filteredTable="AssetOrganization" />
+                <bean parent="filteredTable" p:filteredTable="AssetComponent" />
+                <bean parent="filteredTable" p:filteredTable="AssetWarranty" />
+                <bean parent="filteredTable" p:filteredTable="AssetRepairHistory" p:audit="true"/>
+                <bean parent="filteredTable" p:filteredTable="PurchasingAccountsPayableActionHistory" p:audit="true"/>
 
                 <!-- PURAP -->
                 <bean parent="filteredTable" p:filteredTable="PurchaseOrderQuoteListVendor" />
@@ -1763,9 +1776,113 @@
                 <bean parent="filteredField" p:filteredField="OrganizationAccountingDefault.writeoffProjectCode"/>
                 <bean parent="filteredField" p:filteredField="OrganizationOptions.cgBillerIndicator" p:unused="true"/>
                 <bean parent="filteredField" p:filteredField="OrganizationOptions.organization800PhoneNumber" p:unused="true"/>
+
                 <!-- CAM -->
                 <bean parent="filteredField" p:filteredField="AssetPayment.projectCode"/>
                 <bean parent="filteredField" p:filteredField="AssetPaymentDetail.projectCode"/>
+                <bean parent="filteredField" p:filteredField="AssetStatus.inventoryStatusName"/>
+                <bean parent="filteredField" p:filteredField="Asset.capitalAssetDescription"/>
+                <bean parent="filteredField" p:filteredField="Asset.conditionCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.receiveDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Asset.financialDocumentPostingPeriodCode" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Asset.vendorName"/>
+                <bean parent="filteredField" p:filteredField="Asset.salePrice"/>
+                <bean parent="filteredField" p:filteredField="Asset.estimatedSellingPrice"/>
+                <bean parent="filteredField" p:filteredField="Asset.campusCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.buildingCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.buildingRoomNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.buildingSubRoomNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.retirementChartOfAccountsCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.retirementAccountNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.retirementPeriodCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.retirementFiscalYear"/>
+                <bean parent="filteredField" p:filteredField="Asset.cashReceiptFinancialDocumentNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.transferOfFundsFinancialDocumentNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.campusTagNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.lastInventoryDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Asset.organizationInventoryName"/>
+                <bean parent="filteredField" p:filteredField="Asset.oldTagNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.manufacturerName"/>
+                <bean parent="filteredField" p:filteredField="Asset.manufacturerModelNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.serialNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.representativeUniversalIdentifier"/>
+                <bean parent="filteredField" p:filteredField="Asset.agencyNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.campusPoliceDepartmentCaseNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.inventoryScannedCode"/>
+                <bean parent="filteredField" p:filteredField="Asset.capitalAssetInServiceDate"/>
+                <bean parent="filteredField" p:filteredField="Asset.governmentTagNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.nationalStockNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.landCountyName"/>
+                <bean parent="filteredField" p:filteredField="Asset.landAcreageSize"/>
+                <bean parent="filteredField" p:filteredField="Asset.landParcelNumber"/>
+                <bean parent="filteredField" p:filteredField="Asset.depreciationDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Asset.fabricationEstimatedRetentionYears"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.accountNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.financialSystemOriginationCode"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.financialDocumentTypeCode"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.financialDocumentPostingYear"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.financialDocumentPostingPeriodCode"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.financialDocumentPostingDate"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.purchaseOrderNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.requisitionNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetPayment.accumulatedRoundingErrorInMillicents"/>
+                <bean parent="filteredField" p:filteredField="AssetPaymentDetail.purchaseOrderNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetPaymentDetail.requisitionNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetPaymentDetail.transferPaymentIndicator"/>
+                <bean parent="filteredField" p:filteredField="BarcodeInventoryErrorDocument.uploaderUniversalIdentifier" p:audit="true" p:kim="true"/>
+                <bean parent="filteredField" p:filteredField="BarcodeInventoryErrorDetail.correctorUniversalIdentifier" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="BarcodeInventoryErrorDetail.uploadScanTimestamp" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="BarcodeInventoryErrorDetail.assetConditionCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.campusCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.buildingCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.buildingRoomNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.buildingSubRoomNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusName"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusAddress"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusCityName"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusStateCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusZipCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.offCampusCountryCode"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.oldOrganizationOwnerChartOfAccountsCode" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="AssetTransferDocument.oldOrganizationOwnerAccountNumber" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerAddress"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerCityName"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStateCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerZipCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerCountryCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerPhoneNumber"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStorageCityName"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStorageStateCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStorageZipCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStorageCountryCode"/>
+                <bean parent="filteredField" p:filteredField="EquipmentLoanOrReturnDocument.borrowerStoragePhoneNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationContactName"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationInstitutionName"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationPhoneNumber"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationStreetAddress"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationCityName"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationStateCode"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationCountryCode"/>
+                <bean parent="filteredField" p:filteredField="AssetLocation.assetLocationZipCode"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.financialBalanceTypeCode"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.transactionLedgerEntrySequenceNumber" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.transactionLedgerEntryDescription" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.referenceFinancialSystemOriginationCode" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.organizationDocumentNumber" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.transactionPostingDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="GeneralLedgerEntry.transactionDateTimeStamp" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Pretag.capitalAssetTypeCode"/>
+                <bean parent="filteredField" p:filteredField="Pretag.manufacturerName"/>
+                <bean parent="filteredField" p:filteredField="Pretag.manufacturerModelNumber"/>
+                <bean parent="filteredField" p:filteredField="Pretag.vendorName"/>
+                <bean parent="filteredField" p:filteredField="Pretag.organizationText"/>
+                <bean parent="filteredField" p:filteredField="Pretag.organizationInventoryName"/>
+                <bean parent="filteredField" p:filteredField="Pretag.chartOfAccountsCode"/>
+                <bean parent="filteredField" p:filteredField="Pretag.pretagCreateDate" p:audit="true"/>
+                <bean parent="filteredField" p:filteredField="Pretag.organizationCode"/>
+                <bean parent="filteredField" p:filteredField="PretagDetail.organizationTagNumber"/>
+                <bean parent="filteredField" p:filteredField="PretagDetail.pretagTagCreateDate" p:audit="true"/>
+
                 <!-- LD -->
                 <bean parent="filteredField" p:filteredField="LedgerEntry.projectCode"/>
                 <bean parent="filteredField" p:filteredField="ExpenseTransferSourceAccountingLine.projectCode"/>
