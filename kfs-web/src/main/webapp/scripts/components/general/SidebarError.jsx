@@ -18,19 +18,16 @@
  */
 import React from 'react';
 
-var Link = React.createClass({
+var SidebarError = React.createClass({
     render: function() {
         return (
-            <a
-                href={this.props.url}
-                className={this.props.className}
-                target={this.props.target}
-                onClick={this.props.click}
-            >
-                {this.props.label}
-            </a>
-        )
+            <div id="sidebar-scroll">
+                <div className="error">
+                    There was an error loading the menu. Please refresh this page.
+                </div>
+            </div>
+        );
     }
 });
 
-export default Link;
+export default SidebarError;
