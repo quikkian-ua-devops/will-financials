@@ -99,5 +99,9 @@
             <match>org\.kuali\.rice\.core\.framework\.persistence\.ojb\.conversion</match>
             <replacement>org.kuali.kfs.core.framework.persistence.ojb.conversion</replacement>
         </pattern>
+        <pattern>
+            <match>org\.kuali\.rice\.kns\.workflow\.attribute\.DataDictionaryQualifierResolver</match>
+            <replacement>org.kuali.kfs.krad.workflow.attribute.DataDictionaryQualifierResolver</replacement>
+        </pattern>
     </rule>
 </rules>
