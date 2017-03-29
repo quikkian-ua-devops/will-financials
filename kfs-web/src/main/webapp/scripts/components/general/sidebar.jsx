@@ -18,18 +18,27 @@
  */
 import React from 'react';
 import { render } from 'react-dom';
-import Link from './link.jsx';
+import { convertLinks, addHeading, determineSublinkClass } from '../../sys/sidebar_utils.js';
 import UserPrefs from '../../sys/user_preferences.js';
 import KfsUtils from '../../sys/utils.js';
+import LinkFilter from './LinkFilter.jsx';
+import LinkGroupSublinks from './LinkGroupSublinks.jsx';
+import LinkGroup from './LinkGroup.jsx';
+import SidebarWaiting from './SidebarWaiting.jsx';
+import SidebarError from './SidebarError.jsx';
 
 var Sidebar = React.createClass({
     getInitialState() {
-        let userPreferences = {};
-        userPreferences.checkedLinkFilters = ["activities", "reference", "administration"];
         let sidebarOut = !$('#sidebar').hasClass('collapsed');
-        return { principalName: "",
+
+        return {
+            loadingData: true,
+            loadError: false,
+            principalName: "",
             institutionPreferences: {},
-            userPreferences: userPreferences,
+            userPreferences: {
+                checkedLinkFilters: ["activities", "reference", "administration"]
+            },
             expandedLinkGroup: "",
             expandedSearch: false,
             search: '',
@@ -56,7 +65,12 @@ var Sidebar = React.createClass({
                     let prefs = JSON.parse(preferencesString);
                     if ((prefs.sessionId == sessionId) && (prefs.principalName == principalName)) {
                         found = true;
-                        thisComponent.setState({backdoorId: backdoorId, institutionPreferences: prefs});
+                        thisComponent.setState({
+                            loadingData: false,
+                            loadError: false,
+                            backdoorId: backdoorId,
+                            institutionPreferences: prefs
+                        });
                     } else {
                         try {
                             localStorage.removeItem("institutionPreferences");
@@ -74,7 +88,12 @@ var Sidebar = React.createClass({
                         cache: false,
                         type: 'GET',
                         success: function (preferences) {
-                            thisComponent.setState({backdoorId: backdoorId, institutionPreferences: preferences});
+                            thisComponent.setState({
+                                loadingData: false,
+                                loadError: false,
+                                backdoorId: backdoorId,
+                                institutionPreferences: preferences
+                            });
                             preferences.sessionId = KfsUtils.getKualiSessionId();
                             try {
                                 localStorage.setItem("institutionPreferences", JSON.stringify(preferences));
@@ -84,12 +103,13 @@ var Sidebar = React.createClass({
                         }.bind(this),
                         error: function (xhr, status, err) {
                             console.error(status, err.toString());
+                            thisComponent.setState({loadError: true});
                         }.bind(this)
                     });
                 }
-
             }, function () {
                 console.error("Error retrieving principalName");
+                thisComponent.setState({loadError: true});
             })
         }, (status, message) => {console.error(status, message.toString());});
 
@@ -97,6 +117,7 @@ var Sidebar = React.createClass({
             thisComponent.setState({userPreferences: userPreferences});
         }, function (error) {
             console.log("error getting preferences: " + error);
+            thisComponent.setState({loadError: true});
         });
     },
     componentDidUpdate() {
@@ -197,8 +218,7 @@ var Sidebar = React.createClass({
         let thisComponent = this;
         let institutionLinksPath = KfsUtils.getUrlPathPrefix() + "sys/api/v1/preferences/institution-links/" + thisComponent.state.principalName;
 
-        $('.cover').show();
-        $('.sidebar-waiting').css('top',($(window).height() / 2) - 20).show();
+        thisComponent.setState({loadingData: true});
 
         KfsUtils.ajaxCall({
             url: institutionLinksPath,
@@ -209,19 +229,21 @@ var Sidebar = React.createClass({
                 xhr.setRequestHeader('cache-control', 'must-revalidate');
             },
             success: function (preferences) {
-                thisComponent.setState({institutionPreferences: preferences});
+                thisComponent.setState({
+                    loadingData: false,
+                    loadError: false,
+                    institutionPreferences: preferences
+                });
                 preferences.sessionId = KfsUtils.getKualiSessionId();
                 try {
                     localStorage.setItem("institutionPreferences", JSON.stringify(preferences));
                 } catch(err) {
                     // Ignore the error, some browsers don't support localStorage
                 }
-                $('.cover').hide();
-                $('.sidebar-waiting').hide();
             }.bind(this),
             error: function (xhr, status, err) {
-                $('#sidebar').removeClass('sidebar-dim');
                 console.error(status, err.toString());
+                thisComponent.setState({loadError: true});
             }.bind(this)
         });
     },
@@ -286,6 +308,17 @@ var Sidebar = React.createClass({
         this.setState({expandedSearch: false});
     },
     render() {
+        if ( this.state.loadError ) {
+            return (
+                <SidebarError/>
+            );
+        }
+        if ( this.state.loadingData ) {
+            return (
+                <SidebarWaiting/>
+            );
+        }
+
         let rootPath = KfsUtils.getUrlPathPrefix();
         let linkGroups = [];
         let linkGroupSublinks = [];
@@ -357,8 +390,6 @@ var Sidebar = React.createClass({
 
         return (
             <div>
-                <div className="cover"></div>
-                <div className="sidebar-waiting"><span className="waiting-icon glyphicon glyphicon-hourglass"></span></div>
                 <ul id="filters" className="nav list-group">
                     <li id="home-item">
                         <span id="home">
@@ -388,144 +419,6 @@ var Sidebar = React.createClass({
                 <div>
                     {linkGroupSublinks}
                 </div>
-            </div>
-        )
-    }
-});
-
-
-var convertLinks = function(links, type, backdoorId) {
-    if (!links) {
-        return "";
-    }
-    let backdoorIdAppender = KfsUtils.buildBackdoorIdAppender(backdoorId);
-    return links.map((link, i) => {
-        let target = null;
-        if ((link.linkType !== 'kfs' && link.linkType !== 'report' ) || link.newTarget) {
-            target = '_blank';
-        }
-        let url = link.linkType === 'rice' ? backdoorIdAppender(link.link) : link.link;
-        return <Link key={type + "_" + i} url={url} label={link.label} className="list-group-item" target={target} click={stayOnPage}/>
-    })
-};
-
-var buildDisplayLinks = function(links, type, checkedLinkFilters, backdoorId) {
-    let displayLinks = [];
-    if (links && links[type] && checkedLinkFilters && checkedLinkFilters.indexOf(type) != -1) {
-        displayLinks = convertLinks(links[type], type, backdoorId);
-    }
-    return displayLinks;
-};
-
-var addHeading = function(links, type) {
-    let newLinks = [];
-    if (links.length > 0) {
-        newLinks = newLinks.concat([<h4 key={type + "_label"}>{type}</h4>]).concat(links);
-    }
-    return newLinks;
-};
-
-var determineSublinkClass = function(links, headingCount, expanded) {
-    let sublinksClass = "sublinks collapse";
-    // 1400px is the width at which links in 3rd column start to clip (unzoomed)
-    let mq = window.matchMedia("screen and (min-width: 1400px)");
-    if (links.length > (36 - headingCount)) {
-        if (mq.matches) {
-            sublinksClass += " col-3";
-        } else {
-            sublinksClass += " col-2";
-        }
-    } else if (links.length > (18 - headingCount)) {
-        sublinksClass += " col-2";
-    }
-    if (expanded) {
-        sublinksClass += " active";
-    }
-    return sublinksClass;
-};
-
-var determinePanelClassName = function(expandedLinkGroup, label) {
-    let panelClassName = "panel list-item";
-    if (expandedLinkGroup === label) {
-        panelClassName += " active";
-    }
-    return panelClassName;
-};
-
-var LinkGroup = React.createClass({
-    render() {
-        let label = this.props.group.label;
-        let id = KfsUtils.buildKeyFromLabel(label);
-        let panelClassName = determinePanelClassName(this.props.expandedLinkGroup, label);
-
-        let links = this.props.group.links;
-        let linksCount = 0;
-        this.props.checkedLinkFilters.forEach(function(filter) {
-            if (links[filter]) {
-                linksCount += links[filter].length;
-            }
-        });
-
-        if (linksCount > 0) {
-            return (
-                <li className={panelClassName}>
-                    <a href="#d" onClick={this.props.handleClick.bind(null, label, id + '-menu')}>
-                        <span>{label}</span>
-                    </a>
-                </li>
-            )
-        } else {
-            return null
-        }
-    }
-});
-
-var LinkGroupSublinks = React.createClass({
-    render() {
-        let label = this.props.group.label;
-        let id = KfsUtils.buildKeyFromLabel(label);
-
-        let activitiesLinks = buildDisplayLinks(this.props.group.links, 'activities', this.props.checkedLinkFilters, this.props.backdoorId);
-        let referenceLinks = buildDisplayLinks(this.props.group.links, 'reference', this.props.checkedLinkFilters, this.props.backdoorId);
-        let administrationLinks = buildDisplayLinks(this.props.group.links, 'administration', this.props.checkedLinkFilters, this.props.backdoorId);
-
-        let links = addHeading(activitiesLinks, 'Activities');
-        links = links.concat(addHeading(referenceLinks, 'Reference'));
-        links = links.concat(addHeading(administrationLinks, 'Administration'));
-
-        let headingCount = links.length - (activitiesLinks.length + referenceLinks.length + administrationLinks.length);
-        if (headingCount > 0) {
-            headingCount--;
-        }
-
-        let sublinksClass = determineSublinkClass(links, headingCount, this.props.expandedLinkGroup === label);
-
-        if (links.length > 0) {
-            return (
-                <div id={id + "-menu"} className={sublinksClass}>
-                    <h3>{label}</h3>
-                    <div className="links-container">
-                        {links}
-                    </div>
-                    <button type="button" className="close" onClick={this.props.handleClick.bind(null, label, id + '-menu')}><span aria-hidden="true">&times;</span></button>
-                </div>
-            )
-        } else {
-            return null
-        }
-    }
-});
-
-var LinkFilter = React.createClass({
-    render() {
-        let activitiesChecked = !this.props.checkedLinkFilters || this.props.checkedLinkFilters.indexOf('activities') != -1;
-        let referenceChecked = !this.props.checkedLinkFilters || this.props.checkedLinkFilters.indexOf('reference') != -1;
-        let administrationChecked = !this.props.checkedLinkFilters || this.props.checkedLinkFilters.indexOf('administration') != -1;
-        return (
-            <div id="linkFilter">
-                <input onChange={this.props.modifyLinkFilter.bind(null, 'activities')} type="checkbox" id="activities" value="activities" name="linkFilter" checked={activitiesChecked}/><label htmlFor="activities">Activities</label>
-                <input onChange={this.props.modifyLinkFilter.bind(null, 'reference')} type="checkbox" id="reference" value="reference" name="linkFilter" checked={referenceChecked}/><label htmlFor="reference">Reference</label>
-                <input onChange={this.props.modifyLinkFilter.bind(null, 'administration')} type="checkbox" id="administration" value="administration" name="linkFilter" checked={administrationChecked}/><label htmlFor="administration">Administration</label>
             </div>
         )
     }
