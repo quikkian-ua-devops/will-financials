@@ -43,6 +43,7 @@ import org.kuali.kfs.krad.datadictionary.DocumentEntry;
 import org.kuali.kfs.krad.document.Document;
 import org.kuali.kfs.krad.service.KualiModuleService;
 import org.kuali.kfs.krad.service.PersistenceStructureService;
+import org.kuali.kfs.sys.batch.DataDictionaryFilter;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredEntity;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredField;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredTable;
@@ -292,10 +293,38 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
                         .noneMatch(filteredField -> filteredField.matches(entry.getDocumentTypeName()))));
 
          partitionedEntries.get(false).stream().forEach(entry -> {
-             LOG.warn("Filtered out Entity for " + entry.getDocumentTypeName() + ": " + retrieveObjectLabel((Class<? extends PersistableBusinessObject>)entry.getBusinessObjectClass()) );
+             final DataDictionaryFilteredEntity filteringEntity = filteredEntities.stream().filter(filteredField -> filteredField.matches(entry.getDocumentTypeName())).findFirst().get();
+             LOG.warn("Filtered out Entity for " + entry.getDocumentTypeName() + ": " + retrieveObjectLabel((Class<? extends PersistableBusinessObject>)entry.getBusinessObjectClass()) + buildUpFilteredBecause(filteringEntity) );
          });
 
          return partitionedEntries.get(true);
+    }
+
+    protected String buildUpFilteredBecause(DataDictionaryFilter filter) {
+        List<String> messages = new ArrayList<>();
+        if (filter.isAudit()) {
+            messages.add("audit");
+        }
+        if (filter.isKim()) {
+            messages.add("kim");
+        }
+        if (filter.isPdf()) {
+            messages.add("pdf");
+        }
+        if (filter.isUnused()) {
+            messages.add("completely unused");
+        }
+        if (filter.isWorkflow()) {
+            messages.add("workflow");
+        }
+        if (messages.size() > 0) {
+            final String formattedMessages = messages.stream()
+                    .map(message -> " " + message + " ")
+                    .collect(Collectors.joining(", "));
+            return " because it is only used for: "+formattedMessages;
+        } else {
+            return "";
+        }
     }
 
     protected void populateEntityDTO(MaintenanceDocumentEntry entry, EntityDTO entityDTO, Set<Class<? extends PersistableBusinessObject>> businessObjectsOwnedByEntities) {
@@ -360,7 +389,11 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
         if (persistenceStructureService.isPersistable(tableClass)) {
 
             if (isTableFiltered(tableClass)) {
-                LOG.warn("Filtered out Table for " + tableClass.getSimpleName());
+                final DataDictionaryFilteredTable filteringTable = filteredTables.stream()
+                        .filter(filteredTable -> filteredTable.matches(tableClass.getSimpleName()))
+                        .findFirst()
+                        .get();
+                LOG.warn("Filtered out Table for " + tableClass.getSimpleName() + buildUpFilteredBecause(filteringTable));
             } else {
                 TableDTO tableDTO = new TableDTO();
                 tableDTO.setCode(persistenceStructureService.getTableName(tableClass));
@@ -377,7 +410,11 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
         if (persistenceStructureService.isPersistable(tableClass)) {
 
             if (isTableFiltered(tableClass)) {
-                LOG.warn("Filtered out Table for " + tableClass.getSimpleName());
+                final DataDictionaryFilteredTable filteringTable = filteredTables.stream()
+                        .filter(filteredTable -> filteredTable.matches(tableClass.getSimpleName()))
+                        .findFirst()
+                        .get();
+                LOG.warn("Filtered out Table for " + tableClass.getSimpleName() + buildUpFilteredBecause(filteringTable));
             } else {
                 TableDTO tableDTO = new TableDTO();
                 tableDTO.setCode(persistenceStructureService.getTableName(tableClass));
@@ -400,10 +437,14 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
                                                                     .noneMatch(filteredField -> filteredField.matches(tableClass.getSimpleName(), (String)fieldName))));
 
         partitionedFields.get(false).stream().forEach(fieldName -> {
+            final DataDictionaryFilter filteringField = filteredFields.stream()
+                    .filter(filteredField -> filteredField.matches(tableClass.getSimpleName(), fieldName))
+                    .findFirst()
+                    .get();
             if (isAnyClassField(fieldName)) {
-                LOG.debug("Filtered out Field for " + tableClass.getSimpleName() + "." + fieldName);
+                LOG.debug("Filtered out Field for " + tableClass.getSimpleName() + "." + fieldName + buildUpFilteredBecause(filteringField));
             } else {
-                LOG.warn("Filtered out Field for " + tableClass.getSimpleName() + "." + fieldName);
+                LOG.warn("Filtered out Field for " + tableClass.getSimpleName() + "." + fieldName + buildUpFilteredBecause(filteringField));
             }
         });
 

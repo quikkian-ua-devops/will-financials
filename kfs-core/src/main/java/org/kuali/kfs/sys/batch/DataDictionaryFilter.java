@@ -19,33 +19,50 @@
 
 package org.kuali.kfs.sys.batch;
 
-public class DataDictionaryFilteredTable extends DataDictionaryFilter {
-    private String tableName;
+public abstract class DataDictionaryFilter {
     private boolean pdf;
     private boolean workflow;
     private boolean kim;
     private boolean audit;
     private boolean unused;
 
-    public DataDictionaryFilteredTable() {}
-
-    public DataDictionaryFilteredTable(String tableName) {
-        setFilteredTable(tableName);
+    public boolean isPdf() {
+        return pdf;
     }
 
-    public void setFilteredTable(String tableName) {
-       this.tableName = tableName;
+    public void setPdf(boolean pdf) {
+        this.pdf = pdf;
     }
 
-    public boolean matches(String tableName) {
-        return tableName.equals(this.getTableName());
+    public boolean isWorkflow() {
+        return workflow;
     }
 
-    public String getTableName() {
-        return tableName;
+    public void setWorkflow(boolean workflow) {
+        this.workflow = workflow;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public boolean isKim() {
+        return kim;
+    }
+
+    public void setKim(boolean kim) {
+        this.kim = kim;
+    }
+
+    public boolean isAudit() {
+        return audit;
+    }
+
+    public void setAudit(boolean audit) {
+        this.audit = audit;
+    }
+
+    public boolean isUnused() {
+        return unused;
+    }
+
+    public void setUnused(boolean unused) {
+        this.unused = unused;
     }
 }

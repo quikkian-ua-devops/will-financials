@@ -21,7 +21,7 @@ package org.kuali.kfs.sys.batch;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class DataDictionaryFilteredField {
+public class DataDictionaryFilteredField extends DataDictionaryFilter {
     private String businessObjectSimpleName;
     private String propertyName;
     private boolean pdf;
@@ -65,45 +65,5 @@ public class DataDictionaryFilteredField {
 
     public boolean matchesAnyClass() {
         return StringUtils.equals(businessObjectSimpleName, "*");
-    }
-
-    public boolean isPdf() {
-        return pdf;
-    }
-
-    public void setPdf(boolean pdf) {
-        this.pdf = pdf;
-    }
-
-    public boolean isWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(boolean workflow) {
-        this.workflow = workflow;
-    }
-
-    public boolean isKim() {
-        return kim;
-    }
-
-    public void setKim(boolean kim) {
-        this.kim = kim;
-    }
-
-    public boolean isAudit() {
-        return audit;
-    }
-
-    public void setAudit(boolean audit) {
-        this.audit = audit;
-    }
-
-    public boolean isUnused() {
-        return unused;
-    }
-
-    public void setUnused(boolean unused) {
-        this.unused = unused;
     }
 }

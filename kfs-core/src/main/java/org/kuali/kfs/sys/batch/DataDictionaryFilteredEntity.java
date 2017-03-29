@@ -19,15 +19,8 @@
 
 package org.kuali.kfs.sys.batch;
 
-import org.apache.commons.lang3.StringUtils;
-
-public class DataDictionaryFilteredEntity {
+public class DataDictionaryFilteredEntity extends DataDictionaryFilter {
     private String entityName;
-    private boolean pdf;
-    private boolean workflow;
-    private boolean kim;
-    private boolean audit;
-    private boolean unused;
 
     public DataDictionaryFilteredEntity() {}
 
@@ -45,46 +38,6 @@ public class DataDictionaryFilteredEntity {
 
     public String getEntityName() {
         return entityName;
-    }
-
-    public boolean isPdf() {
-        return pdf;
-    }
-
-    public void setPdf(boolean pdf) {
-        this.pdf = pdf;
-    }
-
-    public boolean isWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(boolean workflow) {
-        this.workflow = workflow;
-    }
-
-    public boolean isKim() {
-        return kim;
-    }
-
-    public void setKim(boolean kim) {
-        this.kim = kim;
-    }
-
-    public boolean isAudit() {
-        return audit;
-    }
-
-    public void setAudit(boolean audit) {
-        this.audit = audit;
-    }
-
-    public boolean isUnused() {
-        return unused;
-    }
-
-    public void setUnused(boolean unused) {
-        this.unused = unused;
     }
 
 }
