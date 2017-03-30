@@ -308,12 +308,12 @@ var Sidebar = React.createClass({
         this.setState({expandedSearch: false});
     },
     render() {
-        if ( this.state.loadError ) {
+        if ( this.state.sidebarOut && this.state.loadError ) {
             return (
                 <SidebarError/>
             );
         }
-        if ( this.state.loadingData ) {
+        if ( this.state.sidebarOut && this.state.loadingData ) {
             return (
                 <SidebarWaiting/>
             );
