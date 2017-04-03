@@ -18,29 +18,25 @@
  */
 package org.kuali.kfs.sys.batch;
 
-import org.quartz.CronTrigger;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 
-import java.text.ParseException;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+
 
 public class CronTriggerDescriptor extends TriggerDescriptor {
     private String cronExpression;
 
-    /**
-     * @see org.kuali.kfs.sys.batch.TriggerDescriptor#completeTriggerDescription(org.quartz.Trigger)
-     */
-    protected void completeTriggerDescription(Trigger trigger) {
+    protected Trigger completeTriggerDescription(TriggerBuilder triggerBuilder) {
         // prevent setting of the trigger information in test mode
-        try {
-            ((CronTrigger) trigger).setTimeZone(getDateTimeService().getCurrentCalendar().getTimeZone());
-            if (!isTestMode()) {
-                ((CronTrigger) trigger).setCronExpression(cronExpression);
-            } else {
-                ((CronTrigger) trigger).setCronExpression("0 59 23 31 12 ? 2099");
-            }
-        } catch (ParseException e) {
-            throw new RuntimeException("Caught exception while trying to set the cronExpression attribute of a CronTrigger: " + getJobName(), e);
+        triggerBuilder.withSchedule(cronSchedule(cronExpression).inTimeZone(getDateTimeService().getCurrentCalendar().getTimeZone()));
+        if (!isTestMode()) {
+            triggerBuilder.withSchedule(cronSchedule(cronExpression).inTimeZone(getDateTimeService().getCurrentCalendar().getTimeZone()));
+        } else {
+            triggerBuilder.withSchedule(cronSchedule("0 59 23 31 12 ? 2099").inTimeZone(getDateTimeService().getCurrentCalendar().getTimeZone()));
         }
+
+        return triggerBuilder.build();
     }
 
     /**

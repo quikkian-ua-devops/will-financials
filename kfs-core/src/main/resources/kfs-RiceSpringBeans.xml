@@ -32,11 +32,11 @@
     </bean>
 
     <bean id="ksbConfigurer" class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
-        <property name="registryDataSource" ref="riceDataSource"/><!-- only used when KSB running in LOCAL mode -->
-        <property name="bamDataSource" ref="riceDataSource"/>
-        <!-- These datasources correspond to the local message buffering done on each KSB client system -->
-        <property name="messageDataSource" ref="dataSource"/>
-        <property name="nonTransactionalMessageDataSource" ref="nonTransactionalDataSource"/>
+        <!--<property name="registryDataSource" ref="riceDataSource"/>&lt;!&ndash; only used when KSB running in LOCAL mode &ndash;&gt;-->
+        <!--<property name="bamDataSource" ref="riceDataSource"/>-->
+        <!--&lt;!&ndash; These datasources correspond to the local message buffering done on each KSB client system &ndash;&gt;-->
+        <!--<property name="messageDataSource" ref="dataSource"/>-->
+        <!--<property name="nonTransactionalMessageDataSource" ref="nonTransactionalDataSource"/>-->
     </bean>
 
 

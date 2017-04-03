@@ -150,32 +150,32 @@ public class UifViewBeanWrapper extends BeanWrapperImpl {
         return editor;
     }
 
-    @Override
-    public Class<?> getPropertyType(String propertyName) throws BeansException {
-        try {
-            PropertyDescriptor pd = getPropertyDescriptorInternal(propertyName);
-            if (pd != null) {
-                return pd.getPropertyType();
-            }
-
-            // Maybe an indexed/mapped property...
-            Object value = super.getPropertyValue(propertyName);
-            if (value != null) {
-                return value.getClass();
-            }
-
-            // Check to see if there is a custom editor,
-            // which might give an indication on the desired target type.
-            Class<?> editorType = guessPropertyTypeFromEditors(propertyName);
-            if (editorType != null) {
-                return editorType;
-            }
-        } catch (InvalidPropertyException ex) {
-            // Consider as not determinable.
-        }
-
-        return null;
-    }
+//    @Override
+//    public Class<?> getPropertyType(String propertyName) throws BeansException {
+//        try {
+//            PropertyDescriptor pd = getPropertyDescriptorInternal(propertyName);
+//            if (pd != null) {
+//                return pd.getPropertyType();
+//            }
+//
+//            // Maybe an indexed/mapped property...
+//            Object value = super.getPropertyValue(propertyName);
+//            if (value != null) {
+//                return value.getClass();
+//            }
+//
+//            // Check to see if there is a custom editor,
+//            // which might give an indication on the desired target type.
+//            Class<?> editorType = guessPropertyTypeFromEditors(propertyName);
+//            if (editorType != null) {
+//                return editorType;
+//            }
+//        } catch (InvalidPropertyException ex) {
+//            // Consider as not determinable.
+//        }
+//
+//        return null;
+//    }
 
     @Override
     public Object getPropertyValue(String propertyName) throws BeansException {

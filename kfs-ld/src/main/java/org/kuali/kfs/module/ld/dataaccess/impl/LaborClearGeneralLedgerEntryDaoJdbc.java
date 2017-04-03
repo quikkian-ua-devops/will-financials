@@ -29,7 +29,7 @@ public class LaborClearGeneralLedgerEntryDaoJdbc extends PlatformAwareDaoBaseJdb
      */
     public void deleteCopiedLaborGenerealLedgerEntries() {
         LOG.info("clearing labor general ledger entries");
-        getSimpleJdbcTemplate().update("delete from LD_LBR_GL_ENTRY_T");
+        getJdbcTemplate().update("delete from LD_LBR_GL_ENTRY_T");
     }
 
 }

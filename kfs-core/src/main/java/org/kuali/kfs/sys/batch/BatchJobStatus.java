@@ -56,15 +56,15 @@ public class BatchJobStatus extends TransientBusinessObjectBase {
     }
 
     public String getName() {
-        return jobDetail.getName();
+        return jobDetail.getKey().getName();
     }
 
     public String getGroup() {
-        return jobDetail.getGroup();
+        return jobDetail.getKey().getGroup();
     }
 
     public String getFullName() {
-        return jobDetail.getGroup() + "." + jobDetail.getName();
+        return jobDetail.getKey().getGroup() + "." + jobDetail.getKey().getName();
     }
 
     public String getNamespaceCode() {

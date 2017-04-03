@@ -33,6 +33,7 @@ import org.springframework.cache.CacheManager;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class PreferencesDaoJdbcTest {
     private static final String MENU_LINKS_KEY = "menu";
@@ -62,7 +63,22 @@ public class PreferencesDaoJdbcTest {
         public ValueWrapper get(Object key) { return () -> cacheMap.get(key); }
 
         @Override
+        public <T> T get(Object o, Class<T> aClass) {
+            return null;
+        }
+
+        @Override
+        public <T> T get(Object o, Callable<T> callable) {
+            return null;
+        }
+
+        @Override
         public void put(Object key, Object value) { cacheMap.put(key, value); }
+
+        @Override
+        public ValueWrapper putIfAbsent(Object o, Object o1) {
+            return null;
+        }
 
         @Override
         public void evict(Object key) { cacheMap.remove(key); }

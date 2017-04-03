@@ -19,10 +19,12 @@
 package org.kuali.kfs.sys.batch;
 
 import org.kuali.rice.core.api.datetime.DateTimeService;
-import org.quartz.CronTrigger;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.BeanNameAware;
+
+import static org.quartz.TriggerKey.triggerKey;
+
 
 public abstract class TriggerDescriptor implements BeanNameAware {
     private String name;
@@ -31,19 +33,15 @@ public abstract class TriggerDescriptor implements BeanNameAware {
     private DateTimeService dateTimeService;
     private boolean testMode = false;
 
-    protected abstract void completeTriggerDescription(Trigger trigger);
+    protected abstract Trigger completeTriggerDescription(TriggerBuilder triggerbuilder);
 
     public Trigger getTrigger() {
-        Trigger trigger = null;
-        if (getClass().equals(SimpleTriggerDescriptor.class)) {
-            trigger = new SimpleTrigger(name, group);
-        } else {
-            trigger = new CronTrigger(name, group);
-        }
-        trigger.setJobName(jobName);
-        trigger.setJobGroup(group);
-        trigger.setStartTime(dateTimeService.getCurrentDate());
-        completeTriggerDescription(trigger);
+        TriggerBuilder triggerBuilder = TriggerBuilder.newTrigger()
+                    .withIdentity(triggerKey(name, group))
+                    .startAt(dateTimeService.getCurrentDate())
+                    .forJob(jobName,group);
+
+        Trigger trigger = completeTriggerDescription(triggerBuilder);
         return trigger;
     }
 

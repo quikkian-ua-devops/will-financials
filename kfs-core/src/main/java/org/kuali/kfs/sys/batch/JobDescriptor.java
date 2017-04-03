@@ -21,7 +21,10 @@ package org.kuali.kfs.sys.batch;
 import org.kuali.kfs.kns.bo.Step;
 import org.kuali.kfs.sys.batch.service.SchedulerService;
 import org.quartz.JobDetail;
+import org.quartz.impl.JobDetailImpl;
 import org.springframework.beans.factory.BeanNameAware;
+import static org.quartz.JobBuilder.*;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +67,16 @@ public class JobDescriptor implements BeanNameAware {
      * @return the org.quartz.JobDetail corresponding to this instance
      */
     public JobDetail getJobDetail() {
-        return new JobDetail(name, group, Job.class, false, durable, false);
+       // return new JobDetail(name, group, Job.class, false, durable, false);
+        // kkronenb dragons
+        JobDetail detail = newJob().withIdentity(name, group)
+                                    .storeDurably(durable)
+                                    .requestRecovery(false)
+                                    .ofType(Job.class)
+                                    .build();
+
+        return detail;
+
     }
 
     /**

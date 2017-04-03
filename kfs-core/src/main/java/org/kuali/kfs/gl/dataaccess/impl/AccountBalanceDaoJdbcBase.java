@@ -53,7 +53,7 @@ public class AccountBalanceDaoJdbcBase extends PlatformAwareDaoBaseJdbc {
      * @param sessionId       the unique id of the web session of the inquiring user
      */
     protected void purgeCostShareEntries(String tableName, String sessionIdColumn, String sessionId) {
-        getSimpleJdbcTemplate().update("DELETE FROM " + tableName + " WHERE " + sessionIdColumn + " = ? " + " AND EXISTS (SELECT 1 FROM CA_A21_SUB_ACCT_T a " + " WHERE a.fin_coa_cd = " + tableName + ".fin_coa_cd AND a.account_nbr = " + tableName + ".account_nbr AND a.sub_acct_nbr = " + tableName + ".sub_acct_nbr AND a.sub_acct_typ_cd = 'CS')", sessionId);
+        getJdbcTemplate().update("DELETE FROM " + tableName + " WHERE " + sessionIdColumn + " = ? " + " AND EXISTS (SELECT 1 FROM CA_A21_SUB_ACCT_T a " + " WHERE a.fin_coa_cd = " + tableName + ".fin_coa_cd AND a.account_nbr = " + tableName + ".account_nbr AND a.sub_acct_nbr = " + tableName + ".sub_acct_nbr AND a.sub_acct_typ_cd = 'CS')", sessionId);
     }
 
     /**
@@ -63,7 +63,7 @@ public class AccountBalanceDaoJdbcBase extends PlatformAwareDaoBaseJdbc {
      * @return true if this inquiring user has temporary pending entries, false otherwise
      */
     protected boolean hasEntriesInPendingTable(String sessionId) {
-        return getSimpleJdbcTemplate().queryForInt("select count(*) as COUNT from GL_PENDING_ENTRY_MT WHERE sesid = ?", sessionId) != 0;
+        return getJdbcTemplate().queryForObject("select count(*) as COUNT from GL_PENDING_ENTRY_MT WHERE sesid = ?", Integer.class, sessionId) != 0;
     }
 
     /**
@@ -73,8 +73,8 @@ public class AccountBalanceDaoJdbcBase extends PlatformAwareDaoBaseJdbc {
      * @param sessionId            the unique web id of the inquiring user
      */
     protected void fixPendingEntryDisplay(Integer universityFiscalYear, String sessionId) {
-        getSimpleJdbcTemplate().update("update GL_PENDING_ENTRY_MT set univ_fiscal_yr = ? where SESID = ?", universityFiscalYear, sessionId);
-        getSimpleJdbcTemplate().update("update GL_PENDING_ENTRY_MT set SUB_ACCT_NBR = '-----' where (SUB_ACCT_NBR is null or SUB_ACCT_NBR = '     ')");
+        getJdbcTemplate().update("update GL_PENDING_ENTRY_MT set univ_fiscal_yr = ? where SESID = ?", universityFiscalYear, sessionId);
+        getJdbcTemplate().update("update GL_PENDING_ENTRY_MT set SUB_ACCT_NBR = '-----' where (SUB_ACCT_NBR is null or SUB_ACCT_NBR = '     ')");
     }
 
     /**
@@ -85,6 +85,6 @@ public class AccountBalanceDaoJdbcBase extends PlatformAwareDaoBaseJdbc {
      * @param sessionId       the unique value of the inquiry; basically, the unique web session id of the inquiring user
      */
     protected void clearTempTable(String tableName, String sessionIdColumn, String sessionId) {
-        getSimpleJdbcTemplate().update("DELETE from " + tableName + " WHERE " + sessionIdColumn + " = ?", sessionId);
+        getJdbcTemplate().update("DELETE from " + tableName + " WHERE " + sessionIdColumn + " = ?", sessionId);
     }
 }

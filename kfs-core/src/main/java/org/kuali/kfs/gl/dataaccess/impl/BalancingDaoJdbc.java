@@ -70,7 +70,7 @@ public class BalancingDaoJdbc extends PlatformAwareDaoBaseJdbc implements Balanc
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 
     /**
@@ -87,7 +87,7 @@ public class BalancingDaoJdbc extends PlatformAwareDaoBaseJdbc implements Balanc
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 
     /**
@@ -104,7 +104,7 @@ public class BalancingDaoJdbc extends PlatformAwareDaoBaseJdbc implements Balanc
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 
     /**
@@ -121,6 +121,6 @@ public class BalancingDaoJdbc extends PlatformAwareDaoBaseJdbc implements Balanc
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 }

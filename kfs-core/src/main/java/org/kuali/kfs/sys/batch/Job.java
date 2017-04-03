@@ -76,7 +76,7 @@ public class Job implements StatefulJob, InterruptableJob {
         workerThread = Thread.currentThread();
         if (isNotRunnable()) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Skipping job because doNotRun is true: " + jobExecutionContext.getJobDetail().getName());
+                LOG.info("Skipping job because doNotRun is true: " + jobExecutionContext.getJobDetail().getKey().getName());
             }
             return;
         }
@@ -117,7 +117,7 @@ public class Job implements StatefulJob, InterruptableJob {
                 }
                 step.setInterrupted(false);
                 try {
-                    if (!runStep(parameterService, jobExecutionContext.getJobDetail().getFullName(), currentStepNumber, step, jobRunDate)) {
+                    if (!runStep(parameterService, jobExecutionContext.getJobDetail().getKey().getName(), currentStepNumber, step, jobRunDate)) {
                         break;
                     }
                 } catch (InterruptedException ex) {
@@ -134,9 +134,9 @@ public class Job implements StatefulJob, InterruptableJob {
             }
         } catch (Exception e) {
             schedulerService.updateStatus(jobExecutionContext.getJobDetail(), SchedulerService.FAILED_JOB_STATUS_CODE);
-            throw new JobExecutionException("Caught exception in " + jobExecutionContext.getJobDetail().getName(), e, false);
+            throw new JobExecutionException("Caught exception in " + jobExecutionContext.getJobDetail().getKey().getName(), e, false);
         }
-        LOG.info("Finished executing job: " + jobExecutionContext.getJobDetail().getName());
+        LOG.info("Finished executing job: " + jobExecutionContext.getJobDetail().getKey().getName());
         schedulerService.updateStatus(jobExecutionContext.getJobDetail(), SchedulerService.SUCCEEDED_JOB_STATUS_CODE);
     }
 

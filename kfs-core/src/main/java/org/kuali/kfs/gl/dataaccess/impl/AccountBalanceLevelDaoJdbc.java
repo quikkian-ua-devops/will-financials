@@ -71,7 +71,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
             clearTempTable("FP_INTERIM2_LEVEL_MT", "SESID", sessionId);
 
             // Add in all the data we need
-            getSimpleJdbcTemplate().update("INSERT INTO FP_INTERIM1_LEVEL_MT (UNIV_FISCAL_YR, FIN_COA_CD, ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, FIN_SUB_OBJ_CD, " + " CURR_BDLN_BAL_AMT, " + "ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, TIMESTAMP, FIN_REPORT_SORT_CD, " + " FIN_OBJ_LEVEL_CD, SESID) " + " SELECT a.UNIV_FISCAL_YR, a.FIN_COA_CD, a.ACCOUNT_NBR, a.SUB_ACCT_NBR,a.FIN_OBJECT_CD, " + " a.FIN_SUB_OBJ_CD,a.CURR_BDLN_BAL_AMT, a.ACLN_ACTLS_BAL_AMT, a.ACLN_ENCUM_BAL_AMT, " + " a.TIMESTAMP, l.fin_report_sort_cd, l.fin_obj_level_cd, ? " + " FROM GL_ACCT_BALANCES_T a, CA_OBJECT_CODE_T o, CA_OBJ_LEVEL_T l " + " WHERE a.univ_fiscal_yr = ? AND a.fin_coa_cd = ? AND a.account_nbr = ?" + " AND a.univ_fiscal_yr = o.univ_fiscal_yr AND a.fin_coa_cd = o.fin_coa_cd " + " AND a.fin_object_cd = o.fin_object_cd AND o.fin_coa_cd = l.fin_coa_cd AND o.fin_obj_level_cd = l.fin_obj_level_cd" + " AND l.fin_cons_obj_cd = ? AND o.univ_fiscal_yr = ? AND o.fin_coa_cd = ? ", sessionId, universityFiscalYear,
+            getJdbcTemplate().update("INSERT INTO FP_INTERIM1_LEVEL_MT (UNIV_FISCAL_YR, FIN_COA_CD, ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, FIN_SUB_OBJ_CD, " + " CURR_BDLN_BAL_AMT, " + "ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, TIMESTAMP, FIN_REPORT_SORT_CD, " + " FIN_OBJ_LEVEL_CD, SESID) " + " SELECT a.UNIV_FISCAL_YR, a.FIN_COA_CD, a.ACCOUNT_NBR, a.SUB_ACCT_NBR,a.FIN_OBJECT_CD, " + " a.FIN_SUB_OBJ_CD,a.CURR_BDLN_BAL_AMT, a.ACLN_ACTLS_BAL_AMT, a.ACLN_ENCUM_BAL_AMT, " + " a.TIMESTAMP, l.fin_report_sort_cd, l.fin_obj_level_cd, ? " + " FROM GL_ACCT_BALANCES_T a, CA_OBJECT_CODE_T o, CA_OBJ_LEVEL_T l " + " WHERE a.univ_fiscal_yr = ? AND a.fin_coa_cd = ? AND a.account_nbr = ?" + " AND a.univ_fiscal_yr = o.univ_fiscal_yr AND a.fin_coa_cd = o.fin_coa_cd " + " AND a.fin_object_cd = o.fin_object_cd AND o.fin_coa_cd = l.fin_coa_cd AND o.fin_obj_level_cd = l.fin_obj_level_cd" + " AND l.fin_cons_obj_cd = ? AND o.univ_fiscal_yr = ? AND o.fin_coa_cd = ? ", sessionId, universityFiscalYear,
                 chartOfAccountsCode, accountNumber, financialConsolidationObjectCode, universityFiscalYear, chartOfAccountsCode);
 
             // Summarize pending entries into fp_interim1_level_mt if necessary
@@ -82,7 +82,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
             }
 
             // Add some reference data
-            getSimpleJdbcTemplate().update(
+            getJdbcTemplate().update(
                 "INSERT INTO FP_INTERIM2_LEVEL_MT (UNIV_FISCAL_YR, FIN_COA_CD, ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, FIN_SUB_OBJ_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, " + "ACLN_ENCUM_BAL_AMT, TIMESTAMP, SESID, FIN_REPORT_SORT_CD, FIN_OBJ_LEVEL_CD, ACCTG_CTGRY_CD ) " +
                     " SELECT a.UNIV_FISCAL_YR, a.FIN_COA_CD, a.ACCOUNT_NBR, a.SUB_ACCT_NBR,a.FIN_OBJECT_CD, a.FIN_SUB_OBJ_CD, a.CURR_BDLN_BAL_AMT, a.ACLN_ACTLS_BAL_AMT, " + "a.ACLN_ENCUM_BAL_AMT, a.TIMESTAMP, a.SESID, t.fin_report_sort_cd, l.fin_obj_level_cd, t.acctg_ctgry_cd" +
                     " FROM FP_INTERIM1_LEVEL_MT a, CA_OBJECT_CODE_T o, CA_OBJ_LEVEL_T l, CA_OBJ_TYPE_T t " +
@@ -104,13 +104,13 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
 
             // Summarize
             if (isConsolidated) {
-                getSimpleJdbcTemplate().update("INSERT INTO FP_BAL_BY_LEVEL_MT (SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, " + "TYP_FIN_REPORT_SORT_CD, SESID) SELECT '*ALL*', fin_obj_level_cd,fin_report_sort_cd, acctg_ctgry_cd, SUM(curr_bdln_bal_amt), " + "SUM(acln_actls_bal_amt), SUM(acln_encum_bal_amt),?, ?" + " FROM FP_INTERIM2_LEVEL_MT " + " WHERE SESID = ? " + " GROUP BY fin_report_sort_cd, fin_obj_level_cd, acctg_ctgry_cd", financialReportingSortCode, sessionId, sessionId);
+                getJdbcTemplate().update("INSERT INTO FP_BAL_BY_LEVEL_MT (SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, " + "TYP_FIN_REPORT_SORT_CD, SESID) SELECT '*ALL*', fin_obj_level_cd,fin_report_sort_cd, acctg_ctgry_cd, SUM(curr_bdln_bal_amt), " + "SUM(acln_actls_bal_amt), SUM(acln_encum_bal_amt),?, ?" + " FROM FP_INTERIM2_LEVEL_MT " + " WHERE SESID = ? " + " GROUP BY fin_report_sort_cd, fin_obj_level_cd, acctg_ctgry_cd", financialReportingSortCode, sessionId, sessionId);
             } else {
-                getSimpleJdbcTemplate().update("INSERT INTO FP_BAL_BY_LEVEL_MT (SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, " + "TYP_FIN_REPORT_SORT_CD, SESID) SELECT  sub_acct_nbr, fin_obj_level_cd, fin_report_sort_cd, acctg_ctgry_cd, SUM(curr_bdln_bal_amt), " + "SUM(acln_actls_bal_amt), SUM(acln_encum_bal_amt), ?, ? " + " FROM FP_INTERIM2_LEVEL_MT " + " WHERE SESID = ? " + " GROUP BY sub_acct_nbr, fin_report_sort_cd, fin_obj_level_cd, acctg_ctgry_cd", financialReportingSortCode, sessionId, sessionId);
+                getJdbcTemplate().update("INSERT INTO FP_BAL_BY_LEVEL_MT (SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, " + "TYP_FIN_REPORT_SORT_CD, SESID) SELECT  sub_acct_nbr, fin_obj_level_cd, fin_report_sort_cd, acctg_ctgry_cd, SUM(curr_bdln_bal_amt), " + "SUM(acln_actls_bal_amt), SUM(acln_encum_bal_amt), ?, ? " + " FROM FP_INTERIM2_LEVEL_MT " + " WHERE SESID = ? " + " GROUP BY sub_acct_nbr, fin_report_sort_cd, fin_obj_level_cd, acctg_ctgry_cd", financialReportingSortCode, sessionId, sessionId);
             }
 
             // Here's the data
-            data = getSimpleJdbcTemplate().queryForList("select SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, TYP_FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD " + "from FP_BAL_BY_LEVEL_MT where SESID = ? order by fin_report_sort_cd", sessionId);
+            data = getJdbcTemplate().queryForList("select SUB_ACCT_NBR, FIN_OBJ_LEVEL_CD, FIN_REPORT_SORT_CD, CURR_BDLN_BAL_AMT, ACLN_ACTLS_BAL_AMT, ACLN_ENCUM_BAL_AMT, TYP_FIN_REPORT_SORT_CD, ACCTG_CTGRY_CD " + "from FP_BAL_BY_LEVEL_MT where SESID = ? order by fin_report_sort_cd", sessionId);
         } finally {
             // Clean up everything
             clearTempTable("FP_BAL_BY_LEVEL_MT", "SESID", sessionId);
@@ -150,7 +150,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
 
                 Map<String, Object> balance = null;
                 try {
-                    balance = getSimpleJdbcTemplate().queryForMap(balanceStatementSql, sessionId, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE));
+                    balance = getJdbcTemplate().queryForMap(balanceStatementSql, sessionId, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE));
                 } catch (IncorrectResultSizeDataAccessException ex) {
                     if (ex.getActualSize() != 0) {
                         LOG.error("balance request sql returned more than one row, aborting", ex);
@@ -189,7 +189,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
                     }
 
                     // A balance exists, so we need to update it
-                    getSimpleJdbcTemplate().update(updateBalanceStatementSql, budget, actual, encumb, sessionId, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE));
+                    getJdbcTemplate().update(updateBalanceStatementSql, budget, actual, encumb, sessionId, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE));
                 } else {
                     insertCount++;
 
@@ -214,7 +214,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
                     }
 
                     // No balance exists, so we need to insert one
-                    getSimpleJdbcTemplate().update(insertBalanceStatementSql, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE), budget, actual, encumb, pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.REPORT_SORT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_LEVEL_CODE2), sessionId);
+                    getJdbcTemplate().update(insertBalanceStatementSql, pendingEntryRowSet.getInt(GeneralLedgerConstants.ColumnNames.UNIVERSITY_FISCAL_YEAR), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.CHART_OF_ACCOUNTS_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_ACCOUNT_NUMBER), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.SUB_OBJECT_CODE), budget, actual, encumb, pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.REPORT_SORT_CODE), pendingEntryRowSet.getString(GeneralLedgerConstants.ColumnNames.OBJECT_LEVEL_CODE2), sessionId);
                 }
             }
             LOG.info("summarizePendingEntriesByLevel() INSERTS: " + insertCount);
@@ -278,7 +278,7 @@ public class AccountBalanceLevelDaoJdbc extends AccountBalanceDaoJdbcBase implem
             selectSql = selectSql + "AND p.univ_fiscal_yr = ?";
             params.add(universityFiscalYear);
         }
-        getSimpleJdbcTemplate().update(insertSql + selectSql, params.toArray());
+        getJdbcTemplate().update(insertSql + selectSql, params.toArray());
 
         if (isCostShareExcluded) {
             purgeCostShareEntries("GL_PENDING_ENTRY_MT", "sesid", sessionId);

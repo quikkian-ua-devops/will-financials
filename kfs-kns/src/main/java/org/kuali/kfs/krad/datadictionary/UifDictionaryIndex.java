@@ -29,6 +29,7 @@ import org.kuali.kfs.krad.uif.util.ViewModelUtils;
 import org.kuali.kfs.krad.uif.view.View;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;

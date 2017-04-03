@@ -30,8 +30,10 @@ import org.kuali.kfs.sys.context.SpringContext;
 import org.kuali.kfs.sys.fixture.UserNameFixture;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -195,13 +197,17 @@ public class SchedulerServiceImplTest extends KualiTestBase {
     protected void scheduleJob(String groupName, String jobName, int startStep, int endStep, Date startTime, String requestorEmailAddress, Map<String, String> additionalJobData) {
         Scheduler scheduler = (Scheduler) SpringContext.getService("scheduler");
         try {
-            JobDetail jobDetail = scheduler.getJobDetail(jobName, groupName);
+            JobDetail jobDetail = scheduler.getJobDetail(new JobKey(jobName, groupName));
             if (jobDetail == null) {
                 fail("Unable to retrieve JobDetail object for " + groupName + " : " + jobName);
             }
-            if (jobDetail.getJobDataMap() == null) {
-                jobDetail.setJobDataMap(new JobDataMap());
-            }
+//            if (jobDetail.getJobDataMap() == null) {
+//                //kkronenb dragons
+//                JobBuilder builder = JobBuilder.newJob();
+//                builder.usingJobData(new JobDataMap());
+//                builder.withIdentity(jobName,groupName);
+//                jobDetail = builder.build();
+//            }
             jobDetail.getJobDataMap().put(SchedulerService.JOB_STATUS_PARAMETER, SchedulerService.SCHEDULED_JOB_STATUS_CODE);
             scheduler.addJob(jobDetail, true);
 
@@ -211,6 +217,8 @@ public class SchedulerServiceImplTest extends KualiTestBase {
             qTrigger.getJobDataMap().put(JobListener.REQUESTOR_EMAIL_ADDRESS_KEY, requestorEmailAddress);
             qTrigger.getJobDataMap().put(Job.JOB_RUN_START_STEP, String.valueOf(startStep));
             qTrigger.getJobDataMap().put(Job.JOB_RUN_END_STEP, String.valueOf(endStep));
+
+
             if (additionalJobData != null) {
                 qTrigger.getJobDataMap().putAll(additionalJobData);
             }

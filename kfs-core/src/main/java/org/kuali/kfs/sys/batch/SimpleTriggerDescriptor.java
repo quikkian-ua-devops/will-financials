@@ -21,6 +21,10 @@ package org.kuali.kfs.sys.batch;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+
 
 import java.util.Date;
 
@@ -39,31 +43,18 @@ public class SimpleTriggerDescriptor extends TriggerDescriptor {
         setDateTimeService(dateTimeService);
     }
 
-    /**
-     * @see org.kuali.kfs.sys.batch.TriggerDescriptor#completeTriggerDescription(org.quartz.Trigger)
-     */
-    protected void completeTriggerDescription(Trigger trigger) {
-        if (startTime == null) {
-            startTime = trigger.getStartTime();
-        }
+
+    protected Trigger completeTriggerDescription(TriggerBuilder triggerBuilder) {
+
         // prevent setting of the trigger information in test mode
         if (!isTestMode()) {
-            trigger.setStartTime(new Date(startTime.getTime() + startDelay));
-            ((SimpleTrigger) trigger).setRepeatCount(repeatCount);
+            triggerBuilder.startAt(new Date(startTime.getTime() + startDelay));
+            triggerBuilder.withSchedule(simpleSchedule().withRepeatCount(repeatCount));
         } else {
-            trigger.setStartTime(new Date(new Date().getTime() + 525600000L));
+            triggerBuilder.startAt(new Date(new Date().getTime() + 525600000L));
         }
+        return triggerBuilder.build();
     }
-
-    /**
-     * Sets the repeatCount attribute value.
-     *
-     * @param repeatCount The repeatCount to set.
-     */
-    public void setRepeatCount(int repeatCount) {
-        this.repeatCount = repeatCount;
-    }
-
     /**
      * Sets the startTime attribute value.
      *
@@ -80,5 +71,13 @@ public class SimpleTriggerDescriptor extends TriggerDescriptor {
      */
     public void setStartDelay(long startDelay) {
         this.startDelay = startDelay;
+    }
+
+    public int getRepeatCount() {
+        return repeatCount;
+    }
+
+    public void setRepeatCount(int repeatCount) {
+        this.repeatCount = repeatCount;
     }
 }

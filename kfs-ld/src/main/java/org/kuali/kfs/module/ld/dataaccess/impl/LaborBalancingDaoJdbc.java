@@ -52,7 +52,7 @@ public class LaborBalancingDaoJdbc extends BalancingDaoJdbc implements LedgerBal
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 
     /**
@@ -69,6 +69,6 @@ public class LaborBalancingDaoJdbc extends BalancingDaoJdbc implements LedgerBal
 
         LOG.debug(sql);
 
-        return getSimpleJdbcTemplate().update(sql);
+        return getJdbcTemplate().update(sql);
     }
 }

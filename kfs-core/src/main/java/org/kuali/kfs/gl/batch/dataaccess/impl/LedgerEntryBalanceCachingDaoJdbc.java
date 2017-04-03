@@ -47,7 +47,7 @@ public class LedgerEntryBalanceCachingDaoJdbc extends PlatformAwareDaoBaseJdbc i
         queryBuilder.append("eh.fin_balance_typ_cd = e.fin_balance_typ_cd and eh.univ_fiscal_prd_cd = e.univ_fiscal_prd_cd and eh.trn_debit_crdt_cd = e.trn_debit_crdt_cd ");
         queryBuilder.append("where e.univ_fiscal_yr >= " + fiscalYear + " and (eh.row_cnt <> e.entry_row_cnt or eh.trn_ldgr_entr_amt <> e.entry_amt or e.entry_row_cnt is null) ");
 
-        data = getSimpleJdbcTemplate().queryForList(queryBuilder.toString());
+        data = getJdbcTemplate().queryForList(queryBuilder.toString());
 
         return data;
 
@@ -70,7 +70,7 @@ public class LedgerEntryBalanceCachingDaoJdbc extends PlatformAwareDaoBaseJdbc i
         queryBuilder.append("bh.MO7_ACCT_LN_AMT <> e.MO7_ACCT_LN_AMT or bh.MO8_ACCT_LN_AMT <> e.MO8_ACCT_LN_AMT or bh.MO9_ACCT_LN_AMT <> e.MO9_ACCT_LN_AMT or bh.MO10_ACCT_LN_AMT <> e.MO10_ACCT_LN_AMT or bh.MO11_ACCT_LN_AMT <> e.MO11_ACCT_LN_AMT or bh.MO12_ACCT_LN_AMT <> e.MO12_ACCT_LN_AMT or  ");
         queryBuilder.append("bh.MO13_ACCT_LN_AMT <> e.MO13_ACCT_LN_AMT) ");
 
-        data = getSimpleJdbcTemplate().queryForList(queryBuilder.toString());
+        data = getJdbcTemplate().queryForList(queryBuilder.toString());
 
         return data;
 
@@ -89,7 +89,7 @@ public class LedgerEntryBalanceCachingDaoJdbc extends PlatformAwareDaoBaseJdbc i
         queryBuilder.append("where ab.UNIV_FISCAL_YR >= " + fiscalYear + " ");
         queryBuilder.append("and (abh.CURR_BDLN_BAL_AMT <> ab.CURR_BDLN_BAL_AMT or abh.ACLN_ACTLS_BAL_AMT <> ab.ACLN_ACTLS_BAL_AMT or abh.ACLN_ENCUM_BAL_AMT <> ab.ACLN_ENCUM_BAL_AMT) ");
 
-        data = getSimpleJdbcTemplate().queryForList(queryBuilder.toString());
+        data = getJdbcTemplate().queryForList(queryBuilder.toString());
 
         return data;
 
@@ -106,7 +106,7 @@ public class LedgerEntryBalanceCachingDaoJdbc extends PlatformAwareDaoBaseJdbc i
         queryBuilder.append("eh.UNIV_FISCAL_YR = e.UNIV_FISCAL_YR and eh.FIN_COA_CD = e.FIN_COA_CD and eh.ACCOUNT_NBR = e.ACCOUNT_NBR and eh.SUB_ACCT_NBR = e.SUB_ACCT_NBR and eh.FIN_OBJECT_CD = e.FIN_OBJECT_CD and eh.FIN_SUB_OBJ_CD = e.FIN_SUB_OBJ_CD and eh.FIN_BALANCE_TYP_CD = e.FIN_BALANCE_TYP_CD and eh.FDOC_TYP_CD = e.FDOC_TYP_CD and eh.FS_ORIGIN_CD = e.FS_ORIGIN_CD and eh.FDOC_NBR = e.FDOC_NBR ");
         queryBuilder.append("where e.UNIV_FISCAL_YR >= " + fiscalYear + " and (eh.ACLN_ENCUM_AMT <> e.ACLN_ENCUM_AMT or eh.ACLN_ENCUM_CLS_AMT <> e.ACLN_ENCUM_CLS_AMT) ");
 
-        data = getSimpleJdbcTemplate().queryForList(queryBuilder.toString());
+        data = getJdbcTemplate().queryForList(queryBuilder.toString());
 
         return data;
 

@@ -90,6 +90,9 @@
     <param name="datasource.pool.class" override="false">oracle.jdbc.xa.client.OracleXADataSource</param>
     <param name="datasource.pool.class.non.xa" override="false">bitronix.tm.resource.jdbc.lrc.LrcXADataSource</param>
 
+    <param name="datasource.url" override="false">${rice.datasource.url}</param>
+    <param name="datasource.username" override="false">${rice.datasource.username}</param>
+    <param name="datasource.password" override="false">${rice.datasource.password}</param>
 
     <!-- developer use only, if set to true, will serialize everything in memory on startup to quickly find objects that aren't serializable -->
     <!-- this parameter doesn't matter in a prod environment, as the serialization won't occur in prod environment -->
@@ -212,6 +215,9 @@
     <param name="attachment.dir.location" override="false">${java.io.tmpdir}/${environment}/attachments</param>
     <param name="data.xml.pollIntervalSecs" override="false">30</param>
     <param name="initialDelaySecs" override="false">10</param>
+
+    <param name="external.actn.list.notification.poll.interval.seconds" override="false">15</param>
+    <param name="external.actn.list.notification.initial.delay.seconds" override="false">30</param>
 
     <param name="rice.logging.configure" override="false">false</param>
 

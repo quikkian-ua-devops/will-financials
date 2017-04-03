@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
+import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
@@ -91,10 +92,10 @@ public abstract class KualiBeanDefinitionParserBase extends AbstractBeanDefiniti
         } else {
             builder = BeanDefinitionBuilder.childBeanDefinition(getBaseBeanTypeParent(element));
         }
-        builder.setSource(parserContext.extractSource(element));
+        builder.getRawBeanDefinition().setSource(parserContext.extractSource(element));
         if (parserContext.isNested()) {
             // Inner bean definition must receive same singleton status as containing bean.
-            builder.setSingleton(parserContext.getContainingBeanDefinition().isSingleton());
+            builder.setScope(parserContext.getContainingBeanDefinition().getScope());
         }
         if (parserContext.isDefaultLazyInit()) {
             // Default-lazy-init applies to custom bean definitions as well.

@@ -38,9 +38,9 @@ public class PriorYearOrganizationDaoJdbc extends PlatformAwareDaoBaseJdbc imple
 
         String priorYrOrgTableName = MetadataManager.getInstance().getGlobalRepository().getDescriptorFor(PriorYearOrganization.class).getFullTableName();
 
-        int count = getSimpleJdbcTemplate().queryForInt("SELECT COUNT(*) from " + priorYrOrgTableName);
+        int count = getJdbcTemplate().queryForObject("SELECT COUNT(*) from " + priorYrOrgTableName, Integer.class);
 
-        getSimpleJdbcTemplate().update("DELETE from " + priorYrOrgTableName);
+        getJdbcTemplate().update("DELETE from " + priorYrOrgTableName);
 
         return count;
     }
@@ -56,7 +56,7 @@ public class PriorYearOrganizationDaoJdbc extends PlatformAwareDaoBaseJdbc imple
         String priorYrOrgTableName = MetadataManager.getInstance().getGlobalRepository().getDescriptorFor(PriorYearOrganization.class).getFullTableName();
         String orgTableName = MetadataManager.getInstance().getGlobalRepository().getDescriptorFor(Organization.class).getFullTableName();
 
-        getSimpleJdbcTemplate().update("INSERT into " + priorYrOrgTableName + " (" +
+        getJdbcTemplate().update("INSERT into " + priorYrOrgTableName + " (" +
             "FIN_COA_CD,ORG_CD,OBJ_ID,VER_NBR,ORG_MGR_UNVL_ID,ORG_NM,RC_CD,ORG_PHYS_CMP_CD,ORG_TYP_CD,ORG_DFLT_ACCT_NBR,ORG_CITY_NM," +
             "ORG_STATE_CD,ORG_ZIP_CD,ORG_BEGIN_DT,ORG_END_DT,RPTS_TO_FIN_COA_CD,RPTS_TO_ORG_CD,ORG_ACTIVE_CD,ORG_IN_FP_CD," +
             "ORG_PLNT_ACCT_NBR,CMP_PLNT_ACCT_NBR,ORG_PLNT_COA_CD,CMP_PLNT_COA_CD,ORG_CNTRY_CD,ORG_LN1_ADDR,ORG_LN2_ADDR,LAST_UPDT_TS" +
@@ -66,6 +66,6 @@ public class PriorYearOrganizationDaoJdbc extends PlatformAwareDaoBaseJdbc imple
             "ORG_PLNT_ACCT_NBR,CMP_PLNT_ACCT_NBR,ORG_PLNT_COA_CD,CMP_PLNT_COA_CD,ORG_CNTRY_CD,ORG_LN1_ADDR,ORG_LN2_ADDR,LAST_UPDT_TS" +
             " from " + orgTableName);
 
-        return getSimpleJdbcTemplate().queryForInt("SELECT COUNT(*) from " + priorYrOrgTableName);
+        return getJdbcTemplate().queryForObject("SELECT COUNT(*) from " + priorYrOrgTableName, Integer.class);
     }
 }

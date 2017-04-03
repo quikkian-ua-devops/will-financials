@@ -63,7 +63,7 @@ public class JobListener implements org.quartz.JobListener {
     @Override
     public void jobToBeExecuted(JobExecutionContext jobExecutionContext) {
         if (jobExecutionContext.getJobInstance() instanceof Job) {
-            schedulerService.initializeJob(jobExecutionContext.getJobDetail().getName(), (Job) jobExecutionContext.getJobInstance());
+            schedulerService.initializeJob(jobExecutionContext.getJobDetail().getKey().getName(), (Job) jobExecutionContext.getJobInstance());
             initializeLogging(jobExecutionContext);
             // We only want to auto-cancel executions if they are part of a master scheduling job
             // Otherwise, this is a standalone job and should fire, regardless of prior status
@@ -87,13 +87,13 @@ public class JobListener implements org.quartz.JobListener {
     protected void initializeLogging(JobExecutionContext jobExecutionContext) {
         try {
             Calendar startTimeCalendar = dateTimeService.getCurrentCalendar();
-            StringBuilder nestedDiagnosticContext = new StringBuilder(StringUtils.substringAfter(BatchSpringContext.getJobDescriptor(jobExecutionContext.getJobDetail().getName()).getNamespaceCode(), "-").toLowerCase()).append(File.separator).append(jobExecutionContext.getJobDetail().getName()).append("-").append(dateTimeService.toDateTimeStringForFilename(dateTimeService.getCurrentDate()));
+            StringBuilder nestedDiagnosticContext = new StringBuilder(StringUtils.substringAfter(BatchSpringContext.getJobDescriptor(jobExecutionContext.getJobDetail().getKey().getName()).getNamespaceCode(), "-").toLowerCase()).append(File.separator).append(jobExecutionContext.getJobDetail().getKey().getName()).append("-").append(dateTimeService.toDateTimeStringForFilename(dateTimeService.getCurrentDate()));
             ((Job) jobExecutionContext.getJobInstance()).setNdcAppender(new FileAppender(Logger.getRootLogger().getAppender("StdOut").getLayout(), getLogFileName(nestedDiagnosticContext.toString())));
             ((Job) jobExecutionContext.getJobInstance()).getNdcAppender().addFilter(new NDCFilter(nestedDiagnosticContext.toString()));
             Logger.getRootLogger().addAppender(((Job) jobExecutionContext.getJobInstance()).getNdcAppender());
             NDC.push(nestedDiagnosticContext.toString());
         } catch (IOException e) {
-            LOG.warn("Could not initialize special custom logging for job: " + jobExecutionContext.getJobDetail().getName(), e);
+            LOG.warn("Could not initialize special custom logging for job: " + jobExecutionContext.getJobDetail().getKey().getName(), e);
         }
     }
 
@@ -109,7 +109,7 @@ public class JobListener implements org.quartz.JobListener {
 
     protected void notify(JobExecutionContext jobExecutionContext, String jobStatus) {
         try {
-            StringBuilder mailMessageSubject = new StringBuilder(jobExecutionContext.getJobDetail().getGroup()).append(": ").append(jobExecutionContext.getJobDetail().getName());
+            StringBuilder mailMessageSubject = new StringBuilder(jobExecutionContext.getJobDetail().getKey().getGroup()).append(": ").append(jobExecutionContext.getJobDetail().getKey().getName());
             BodyMailMessage mailMessage = new BodyMailMessage();
             mailMessage.setFromAddress(emailService.getDefaultFromAddress());
             if (jobExecutionContext.getMergedJobDataMap().containsKey(REQUESTOR_EMAIL_ADDRESS_KEY) && !StringUtils.isBlank(jobExecutionContext.getMergedJobDataMap().getString(REQUESTOR_EMAIL_ADDRESS_KEY))) {
@@ -126,7 +126,7 @@ public class JobListener implements org.quartz.JobListener {
                 emailService.sendMessage(mailMessage,false);
             }
         } catch (Exception iae) {
-            LOG.error("Caught exception while trying to send job completion notification e-mail for " + jobExecutionContext.getJobDetail().getName(), iae);
+            LOG.error("Caught exception while trying to send job completion notification e-mail for " + jobExecutionContext.getJobDetail().getKey().getName(), iae);
         }
     }
 

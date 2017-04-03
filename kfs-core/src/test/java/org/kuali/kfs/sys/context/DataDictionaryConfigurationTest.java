@@ -27,7 +27,6 @@ import org.kuali.kfs.kns.datadictionary.LookupDefinition;
 import org.kuali.kfs.kns.datadictionary.MaintainableSectionDefinition;
 import org.kuali.kfs.krad.datadictionary.AttributeDefinition;
 import org.kuali.kfs.krad.datadictionary.DataDictionary;
-import org.kuali.kfs.krad.datadictionary.DefaultListableBeanFactory;
 import org.kuali.kfs.krad.datadictionary.DocumentEntry;
 import org.kuali.kfs.krad.service.DataDictionaryService;
 import org.kuali.kfs.sys.ConfigureContext;
@@ -35,6 +34,8 @@ import org.kuali.kfs.sys.document.datadictionary.FinancialSystemMaintenanceDocum
 import org.kuali.rice.core.api.mo.common.active.MutableInactivatable;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;

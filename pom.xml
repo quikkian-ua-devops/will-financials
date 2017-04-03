@@ -104,124 +104,124 @@
         </rice.web.excludes>
 
         <!-- dependency versions -->
-        <oracle.jdbc.version>10.2.0.3.0</oracle.jdbc.version>
-        <oracle.jdbc.artifactId>ojdbc14</oracle.jdbc.artifactId>
-        <mysql.jdbc.version>5.1.39</mysql.jdbc.version>
-        <mysql.jdbc.artifactId>mysql-connector-java</mysql.jdbc.artifactId>
+
+        <java.version>1.8</java.version>
+        <maven.compiler.version>3.3</maven.compiler.version>
+        <project.java.version>1.8</project.java.version>
 
         <antlr.version>2.7.7</antlr.version>
         <aopalliance.version>1.0</aopalliance.version>
-        <asm.version>5.1</asm.version>
-        <bcprov.version>1.55</bcprov.version>
-        <cas-client-core.version>3.2.1</cas-client-core.version>
-        <cglib.version>3.2.1</cglib.version>
         <aspectj.version>1.8.1</aspectj.version>
+        <asm.version>5.2</asm.version>
+        <barcode4j.version>2.1</barcode4j.version>
+        <bcprov.version>1.56</bcprov.version>
         <bitronix.version>2.1.4</bitronix.version>
+        <cas-client-core.version>3.2.1</cas-client-core.version>
+        <cglib.version>3.2.5</cglib.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <commons-codec.version>1.9</commons-codec.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <commons-cli.version>1.0</commons-cli.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
+        <commons-digester.version>2.0</commons-digester.version>
         <commons-fileupload.version>1.3.2</commons-fileupload.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.5</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <commons.net.ftp.version>2.0</commons.net.ftp.version>
         <commons-pool.version>1.6</commons-pool.version>
-        <commons-validator.version>1.4.0</commons-validator.version>
-        <cxf.version>2.7.18</cxf.version>
-        <jaxb.version>2.2.6</jaxb.version>
-        <cxf-java2ws-plugin.jaxb-impl.version>2.1.13</cxf-java2ws-plugin.jaxb-impl.version>
+        <commons-validator.version>1.6</commons-validator.version>
+        <commons-transaction.version>1.2</commons-transaction.version>
+        <core-filter.version>1.3</core-filter.version>
+        <cxf.version>3.1.10</cxf.version>
         <db-ojb.version>1.0.4-patch9</db-ojb.version>
         <displaytag.version>1.2</displaytag.version>
         <dom4j.version>1.6.1</dom4j.version>
         <dwr.version>3.0.RC2</dwr.version>
-        <ehcache.version>2.6.9</ehcache.version>
+        <ehcache.version>2.10.3</ehcache.version>
         <esapi.version>2.1.0.1</esapi.version>
         <filemonitor.version>1.0-kuali</filemonitor.version>
         <groovy.version>2.4.7</groovy.version>
-        <guava.version>17.0</guava.version>
+        <guava.version>21.0</guava.version>
         <hibernate.version>3.6.9.Final</hibernate.version>
-        <kuali-mvn.version>1.0.2</kuali-mvn.version>
-        <mail.version>1.5.6</mail.version>
-        <jackson.jaxrs.provider.version>2.5.3</jackson.jaxrs.provider.version>
-        <java.version>1.8</java.version>
+        <httpclient.version>4.5.3</httpclient.version>
+        <itext.version>1.4.8</itext.version>
+        <jackson.version>2.8.7</jackson.version>
+        <jasperreports.version>2.0.4</jasperreports.version>
+        <javamelody.core.version>1.62.0</javamelody.core.version>
+        <javax.resource.connector.api.version>1.5</javax.resource.connector.api.version>
         <javassist.version>3.18.2-GA</javassist.version>
         <javax.inject.version>1</javax.inject.version>
+        <jaxb.version>2.2.11</jaxb.version>
         <jaxen.version>1.1.6</jaxen.version>
         <jdom.version>1.1.3</jdom.version>
-        <joda-time.version>2.4</joda-time.version>
+        <jersey.version>1.18.1</jersey.version>
+        <joda-time.version>2.9.7</joda-time.version>
         <joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
-        <jotm.version>2.1.10</jotm.version>
-        <jsp-api.version>2.1</jsp-api.version>
+        <jotm.version>2.1.10-kuali-1</jotm.version>
+        <jrobin.version>1.5.9</jrobin.version>
+        <jsonpath.version>2.2.0</jsonpath.version>
+        <jsoup.version>1.10.2</jsoup.version>
+        <jsp-api.version>2.2</jsp-api.version>
         <jsr311-api.version>1.1.1</jsr311-api.version>
         <jstl.version>1.2</jstl.version>
-
+        <jstl-api.version>1.2</jstl-api.version>
         <jta.version>1.1</jta.version>
-        <junit.version>4.11</junit.version>
+        <liquibase.version>3.4.1</liquibase.version>
         <log4j.version>1.2.17</log4j.version>
-        <mockito.version>1.9.5</mockito.version>
-        <easymock.version>3.4</easymock.version>
-        <powermock.version>1.6.5</powermock.version>
+        <mail.version>1.5.6</mail.version>
+        <ojb.version>1.0.4-patch9</ojb.version>
+        <opencsv.version>2.3</opencsv.version>
+        <p6spy.version>1.3-patched</p6spy.version>
         <persistence.version>2.1.0</persistence.version>
-
-        <quartz.version>1.8.6</quartz.version>
-        <rice.version>2.5.19</rice.version>
-        <selenium-java.version>2.41.0</selenium-java.version>
-        <xalan.version>2.7.2</xalan.version>
+        <quartz.version>2.2.3</quartz.version>
+        <selenium-java.version>2.53.1</selenium-java.version>
         <serializer.version>2.7.2</serializer.version>
         <servlet-api.version>3.0.1</servlet-api.version>
-        <slf4j.version>1.7.7</slf4j.version>
-        <soa.model.core.version>1.2.2</soa.model.core.version>
-        <httpclient.version>4.5.2</httpclient.version>
+        <slf4j.version>1.7.24</slf4j.version>
+        <soa.model.core.version>1.5.4</soa.model.core.version>
         <spring-modules-ojb.version>0.8a</spring-modules-ojb.version>
-        <spring.version>3.2.12.RELEASE</spring.version>
-        <spring.security.version>3.2.4.RELEASE</spring.security.version>
+        <spring.version>4.3.7.RELEASE</spring.version>
+        <spring.security.version>4.2.2.RELEASE</spring.security.version>
         <struts.version>1.3.11-kuali-1</struts.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
         <tiles.version>2.2.2</tiles.version>
-        <wss4j.version>1.6.18</wss4j.version>
+        <velocity.version>1.5</velocity.version>
+        <velocity-tools.version>2.0</velocity-tools.version>
+        <wss4j.version>2.1.8</wss4j.version>
+        <xalan.version>2.7.2</xalan.version>
+        <xapool.version>1.5.0-patch6</xapool.version>
+        <xercesImpl.version>2.11.0</xercesImpl.version>
+        <xml-apis.version>1.4.01</xml-apis.version>
+        <xmlunit.version>2.3.0</xmlunit.version>
+        <xstream.version>1.4.9</xstream.version>
 
-        <barcode4j.version>2.1</barcode4j.version>
-        <core-filter.version>1.3</core-filter.version>
-        <commons-cli.version>1.0</commons-cli.version>
-        <commons-digester.version>2.0</commons-digester.version>
-        <commons.net.ftp.version>2.0</commons.net.ftp.version>
-        <commons-transaction.version>1.2</commons-transaction.version>
-        <itext.version>1.4.8</itext.version>
-        <jasperreports.version>2.0.4</jasperreports.version>
-        <java.version>1.8</java.version>
-        <javamelody.core.version>1.62.0</javamelody.core.version>
-        <javax.resource.connector.api.version>1.5</javax.resource.connector.api.version>
-        <jersey.version>1.18.1</jersey.version>
-        <jrobin.version>1.5.9</jrobin.version>
-        <jsonpath.version>2.2.0</jsonpath.version>
-        <jstl-api.version>1.2</jstl-api.version>
-        <jsoup.version>1.10.2</jsoup.version>
-        <jta.version>1.1</jta.version>
+        <!-- test libs -->
+        <easymock.version>3.4</easymock.version>
+        <junit.version>4.12</junit.version>
+        <mockito.version>1.10.19</mockito.version>
+        <powermock.version>1.6.6</powermock.version>
+
         <kfs.help.version>current-SNAPSHOT</kfs.help.version>
-        <maven.compiler.version>3.3</maven.compiler.version>
+        <rice.version>2.6.0-1705.0002-SNAPSHOT</rice.version>
+
+        <oracle.jdbc.version>10.2.0.3.0</oracle.jdbc.version>
+        <oracle.jdbc.artifactId>ojdbc14</oracle.jdbc.artifactId>
+        <mysql.jdbc.version>5.1.39</mysql.jdbc.version>
+
+        <mysql.jdbc.artifactId>mysql-connector-java</mysql.jdbc.artifactId>
         <mysql.groupId>mysql</mysql.groupId>
         <mysql.artifactId>mysql-connector-java</mysql.artifactId>
-        <mysql.version>5.1.25</mysql.version>
-        <liquibase.version>3.4.1</liquibase.version>
-        <ojb.version>1.0.4-patch9</ojb.version>
-        <opencsv.version>2.3</opencsv.version>
+        <mysql.version>5.1.41</mysql.version>
+
         <oracle.groupId>com.oracle</oracle.groupId>
         <oracle.artifactId>ojdbc6</oracle.artifactId>
         <oracle.version>11.2.0.3</oracle.version>
-        <p6spy.version>1.3-patched</p6spy.version>
-        <velocity.version>1.5</velocity.version>
-        <velocity-tools.version>2.0</velocity-tools.version>
-        <wstx-asl.version>3.2.9</wstx-asl.version>
-        <xapool.version>1.5.0-patch4</xapool.version>
-        <xercesImpl.version>2.9.1</xercesImpl.version>
-        <xmlunit.version>1.3</xmlunit.version>
-        <xstream.version>1.4.9</xstream.version>
 
         <db.groupId>${mysql.groupId}</db.groupId>
         <db.artifactId>${mysql.artifactId}</db.artifactId>
         <db.version>${mysql.version}</db.version>
 
-        <project.java.version>1.7</project.java.version>
 
 
         <!-- plugin versions -->
@@ -528,6 +528,16 @@
             <artifactId>jstl-impl</artifactId>
             <version>${jstl.version}</version>
             <!-- should be provided scope on newer containers like tomcat 7 -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jsp-api</artifactId>
+                    <groupId>javax.servlet.jsp</groupId>
+                </exclusion>
+            </exclusions>
             <scope>compile</scope>
         </dependency>
 
@@ -538,11 +548,11 @@
         </dependency>
 
         <!-- explicitly including jaxen to change version number from what maven would have resolved it to -->
-        <dependency>
-            <groupId>jaxen</groupId>
-            <artifactId>jaxen</artifactId>
-            <version>${jaxen.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>jaxen</groupId>-->
+            <!--<artifactId>jaxen</artifactId>-->
+            <!--<version>${jaxen.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>joda-time</groupId>
@@ -565,7 +575,7 @@
 
         <dependency>
             <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
+            <artifactId>ehcache</artifactId>
             <version>${ehcache.version}</version>
             <!-- consider making this optional so it's not always shipped with rice -->
             <scope>runtime</scope>
@@ -579,22 +589,6 @@
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-api</artifactId>
-            <version>${cxf.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.geronimo.specs</groupId>
-                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
             <version>${cxf.version}</version>
             <exclusions>
@@ -602,31 +596,36 @@
                     <groupId>org.apache.geronimo.specs</groupId>
                     <artifactId>geronimo-javamail_1.4_spec</artifactId>
                 </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-core</artifactId>
+            <version>${cxf.version}</version>
+            <exclusions>
                 <exclusion>
                     <groupId>asm</groupId>
                     <artifactId>asm</artifactId>
                 </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-core</artifactId>
-            <version>${cxf.version}</version>
-            <exclusions>
                 <exclusion>
                     <groupId>org.apache.geronimo.specs</groupId>
                     <artifactId>geronimo-javamail_1.4_spec</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.sum.xml.bind</groupId>
+                    <artifactId>jaxb-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sum.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-databinding-aegis</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-databinding-jaxb</artifactId>
@@ -641,15 +640,21 @@
                     <groupId>com.sun.xml.bind</groupId>
                     <artifactId>jaxb-xjc</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-bindings-soap</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -659,25 +664,23 @@
                     <groupId>org.apache.geronimo.specs</groupId>
                     <artifactId>geronimo-javamail_1.4_spec</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-simple</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-ws-security</artifactId>
@@ -693,6 +696,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.cxf</groupId>-->
+            <!--<artifactId>cxf-rt-transports-http-jetty</artifactId>-->
+            <!--<version>${cxf.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -746,85 +754,85 @@
             <version>${struts.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-core</artifactId>
-            <version>${tiles.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-core</artifactId>-->
+            <!--<version>${tiles.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-beanutils</groupId>-->
+                    <!--<artifactId>commons-beanutils</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-api</artifactId>
-            <version>${tiles.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-api</artifactId>-->
+            <!--<version>${tiles.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-beanutils</groupId>-->
+                    <!--<artifactId>commons-beanutils</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-servlet</artifactId>
-            <version>${tiles.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-servlet</artifactId>-->
+            <!--<version>${tiles.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-beanutils</groupId>-->
+                    <!--<artifactId>commons-beanutils</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-jsp</artifactId>
-            <version>${tiles.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-jsp</artifactId>-->
+            <!--<version>${tiles.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-beanutils</groupId>-->
+                    <!--<artifactId>commons-beanutils</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-template</artifactId>
-            <version>${tiles.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-template</artifactId>-->
+            <!--<version>${tiles.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-beanutils</groupId>-->
+                    <!--<artifactId>commons-beanutils</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -868,18 +876,18 @@
             <version>${persistence.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jasig.cas.client</groupId>
-            <artifactId>cas-client-core</artifactId>
-            <version>${cas-client-core.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
-            <scope>runtime</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jasig.cas.client</groupId>-->
+            <!--<artifactId>cas-client-core</artifactId>-->
+            <!--<version>${cas-client-core.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>commons-logging</artifactId>-->
+                    <!--<groupId>commons-logging</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.javassist</groupId>
@@ -893,10 +901,17 @@
             <version>${jdom.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.kuali.common</groupId>-->
+            <!--<artifactId>kuali-mvn</artifactId>-->
+            <!--<version>${kuali-mvn.version}</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.kuali.common</groupId>
-            <artifactId>kuali-mvn</artifactId>
-            <version>${kuali-mvn.version}</version>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>2.5.1</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -923,18 +938,18 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium</groupId>-->
+            <!--<artifactId>selenium-java</artifactId>-->
+            <!--<version>${selenium-java.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-logging</groupId>-->
+                    <!--<artifactId>commons-logging</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -1070,7 +1085,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.ow2.jotm</groupId>
+            <groupId>org.kuali.jotm</groupId>
             <artifactId>jotm-core</artifactId>
             <version>${jotm.version}</version>
             <exclusions>
@@ -1085,6 +1100,10 @@
                 <exclusion>
                     <groupId>org.ow2.spec.ee</groupId>
                     <artifactId>ow2-jta-1.1-spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -1129,8 +1148,15 @@
         </dependency>
 
         <dependency>
-            <groupId>xmlunit</groupId>
-            <artifactId>xmlunit</artifactId>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>${xmlunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-legacy</artifactId>
             <version>${xmlunit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1537,6 +1563,10 @@
                     <groupId>commons-beanutils</groupId>
                     <artifactId>commons-beanutils</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-tiles</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -1544,16 +1574,7 @@
             <artifactId>core-filter</artifactId>
             <version>${core-filter.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
@@ -1593,6 +1614,13 @@
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
             <version>${easymock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>3.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1685,12 +1713,7 @@
             <version>${log4j.version}</version>
             <scope>${log4j.scope}</scope>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.woodstox</groupId>
-            <artifactId>wstx-asl</artifactId>
-            <version>${wstx-asl.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+
         <dependency>
             <groupId>xapool</groupId>
             <artifactId>xapool</artifactId>
@@ -1703,6 +1726,17 @@
             <version>${jaxb.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxb.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>${xml-apis.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -1711,19 +1745,34 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.ws.security</groupId>
-            <artifactId>wss4j</artifactId>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-bindings</artifactId>
             <version>${wss4j.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bouncycastle</groupId>
-                    <artifactId>bcprov-jdk14</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-policy</artifactId>
+            <version>${wss4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-ws-security-common</artifactId>
+            <version>${wss4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-ws-security-stax</artifactId>
+            <version>${wss4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-ws-security-policy-stax</artifactId>
+            <version>${wss4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wss4j</groupId>
+            <artifactId>wss4j-ws-security-dom</artifactId>
+            <version>${wss4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.kuali.db.ojb</groupId>
@@ -1768,9 +1817,25 @@
             <version>${jersey.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>${jackson.jaxrs.provider.version}</version>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

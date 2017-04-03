@@ -264,6 +264,16 @@ public class PaymentRequestDocumentRuleTest extends PurapRuleTestBase {
             }
 
             @Override
+            public Set<String> getSimpleNodeNames() {
+                return null;
+            }
+
+            @Override
+            public Set<String> getCurrentSimpleNodeNames() {
+                return null;
+            }
+
+            @Override
             public void recall(String arg0, boolean arg1) {
                 // TODO Auto-generated method stub
 
@@ -366,6 +376,16 @@ public class PaymentRequestDocumentRuleTest extends PurapRuleTestBase {
             @Override
             public boolean isRecalled() {
                 return false;
+            }
+
+            @Override
+            public Set<String> getSimpleNodeNames() {
+                return null;
+            }
+
+            @Override
+            public Set<String> getCurrentSimpleNodeNames() {
+                return null;
             }
 
             @Override

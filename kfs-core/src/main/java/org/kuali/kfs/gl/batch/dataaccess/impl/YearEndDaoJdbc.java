@@ -121,7 +121,7 @@ public class YearEndDaoJdbc extends PlatformAwareDaoBaseJdbc implements YearEndD
         Set<Map<String, String>> missingPriorYears = new TreeSet<Map<String, String>>(priorYearAccountPrimaryKeyComparator);
         for (Object priorYearKeyAsObject : priorYearKeys) {
             Map<String, String> priorYearKey = (Map<String, String>) priorYearKeyAsObject;
-            int count = getJdbcTemplate().queryForInt("select count(*) from CA_PRIOR_YR_ACCT_T where fin_coa_cd = ? and account_nbr = ?", new Object[]{priorYearKey.get("chartOfAccountsCode"), priorYearKey.get("accountNumber")});
+            int count = getJdbcTemplate().queryForObject("select count(*) from CA_PRIOR_YR_ACCT_T where fin_coa_cd = ? and account_nbr = ?", new Object[]{priorYearKey.get("chartOfAccountsCode"), priorYearKey.get("accountNumber")}, Integer.class);
             if (count == 0) {
                 missingPriorYears.add(priorYearKey);
             }
@@ -171,7 +171,7 @@ public class YearEndDaoJdbc extends PlatformAwareDaoBaseJdbc implements YearEndD
         Set<Map<String, String>> missingSubFundGroups = new TreeSet<Map<String, String>>(subFundGroupPrimaryKeyComparator);
         for (Object subFundGroupKeyAsObject : subFundGroupKeys) {
             Map<String, String> subFundGroupKey = (Map<String, String>) subFundGroupKeyAsObject;
-            int count = getJdbcTemplate().queryForInt("select count(*) from CA_SUB_FUND_GRP_T where sub_fund_grp_cd = ?", new Object[]{subFundGroupKey.get("subFundGroupCode")});
+            int count = getJdbcTemplate().queryForObject("select count(*) from CA_SUB_FUND_GRP_T where sub_fund_grp_cd = ?", new Object[]{subFundGroupKey.get("subFundGroupCode")}, Integer.class);
             if (count == 0) {
                 missingSubFundGroups.add(subFundGroupKey);
             }

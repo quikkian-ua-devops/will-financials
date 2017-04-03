@@ -1053,5 +1053,14 @@ public abstract class MockWorkflowDocument implements WorkflowDocument {
         return false;
     }
 
+    @Override
+    public Set<String> getCurrentSimpleNodeNames() {
+        return null;
+    }
+
+    @Override
+    public Set<String> getSimpleNodeNames() {
+        return null;
+    }
 }
 

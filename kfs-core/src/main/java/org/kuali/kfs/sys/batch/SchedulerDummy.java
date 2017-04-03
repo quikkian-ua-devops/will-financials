@@ -22,6 +22,6 @@ import org.quartz.impl.StdScheduler;
 
 public class SchedulerDummy extends StdScheduler {
     public SchedulerDummy() {
-        super(null, null);
+        super(null);
     }
 }

@@ -73,7 +73,7 @@ public class SchedulerFactoryBean extends org.springframework.scheduling.quartz.
     @Override
     protected Scheduler createScheduler(SchedulerFactory schedulerFactory, String schedulerName) throws SchedulerException {
         Scheduler scheduler = super.createScheduler(schedulerFactory, schedulerName);
-        scheduler.addJobListener(new MessageServiceExecutorJobListener());
+        scheduler.getListenerManager().addJobListener(new MessageServiceExecutorJobListener());
         return scheduler;
     }
 

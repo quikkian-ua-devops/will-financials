@@ -46,7 +46,7 @@ public class LaborLedgerEntryBalanceCachingDaoJdbc extends LedgerEntryBalanceCac
         queryBuilder.append("bh.MO7_ACCT_LN_AMT <> e.MO7_ACCT_LN_AMT or bh.MO8_ACCT_LN_AMT <> e.MO8_ACCT_LN_AMT or bh.MO9_ACCT_LN_AMT <> e.MO9_ACCT_LN_AMT or bh.MO10_ACCT_LN_AMT <> e.MO10_ACCT_LN_AMT or bh.MO11_ACCT_LN_AMT <> e.MO11_ACCT_LN_AMT or bh.MO12_ACCT_LN_AMT <> e.MO12_ACCT_LN_AMT or  ");
         queryBuilder.append("bh.MO13_ACCT_LN_AMT <> e.MO13_ACCT_LN_AMT) ");
 
-        data = getSimpleJdbcTemplate().queryForList(queryBuilder.toString());
+        data = getJdbcTemplate().queryForList(queryBuilder.toString());
 
         return data;
 

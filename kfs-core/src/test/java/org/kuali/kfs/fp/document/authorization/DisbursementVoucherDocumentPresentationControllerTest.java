@@ -822,8 +822,18 @@ public class DisbursementVoucherDocumentPresentationControllerTest {
         }
 
         @Override
+        public Set<String> getSimpleNodeNames() {
+            return null;
+        }
+
+        @Override
         public Set<String> getCurrentNodeNames() {
             // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Set<String> getCurrentSimpleNodeNames() {
             return null;
         }
 
@@ -863,5 +873,7 @@ public class DisbursementVoucherDocumentPresentationControllerTest {
             // TODO Auto-generated method stub
 
         }
+
+
     }
 }

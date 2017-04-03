@@ -17,4 +17,174 @@
    - You should have received a copy of the GNU Affero General Public License
    - along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd" logicalFilePath="org/kuali/kfs/core/db/phase5/post-rel-2017-04-27.xml"/>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+                   logicalFilePath="org/kuali/kfs/core/db/phase5/post-rel-2017-04-27.xml" >
+
+    <changeSet id="FINI-3567" author="KFS701" context="bootstrap,demo,unit">
+        <dropColumn tableName="krsb_qrtz_job_details" columnName="is_volatile"/>
+        <dropColumn tableName="krsb_qrtz_triggers" columnName="is_volatile"/>
+        <dropColumn tableName="krsb_qrtz_fired_triggers" columnName="is_volatile"/>
+        <addColumn tableName="krsb_qrtz_job_details">
+            <column name="is_nonconcurrent" type="bool"/>
+            <column name="is_update_data" type="bool"/>
+        </addColumn>
+        <update tableName="krsb_qrtz_job_details">
+            <column name="is_nonconcurrent" valueComputed="is_stateful"/>
+            <column name="is_update_data" valueComputed="is_stateful"/>
+        </update>
+        <dropColumn tableName="krsb_qrtz_job_details" columnName="is_stateful"/>
+        <addColumn tableName="krsb_qrtz_fired_triggers">
+            <column name="is_nonconcurrent" type="bool"/>
+            <column name="is_update_data" type="bool"/>
+        </addColumn>
+        <update tableName="krsb_qrtz_fired_triggers">
+            <column name="is_nonconcurrent" valueComputed="is_stateful"/>
+            <column name="is_update_data" valueComputed="is_stateful"/>
+        </update>
+        <dropColumn tableName="krsb_qrtz_fired_triggers" columnName="is_stateful"/>
+
+        <addColumn tableName="krsb_qrtz_blob_triggers">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_calendars">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_cron_triggers">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_fired_triggers">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_fired_triggers">
+            <column name="sched_time" type="bigint(13)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_job_details">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_locks">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_paused_trigger_grps">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_scheduler_state">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_simple_triggers">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="krsb_qrtz_triggers">
+            <column name="sched_name" type="varchar(120)" defaultValue="KrTestScheduler">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <dropForeignKeyConstraint baseTableName="krsb_qrtz_blob_triggers" constraintName="KRSB_QRTZ_BLOB_TRIGGERS_TR1"/>
+        <dropForeignKeyConstraint baseTableName="krsb_qrtz_simple_triggers" constraintName="KRSB_QRTZ_SIMPLE_TRIGGERS_TR1"/>
+        <dropForeignKeyConstraint baseTableName="krsb_qrtz_cron_triggers" constraintName="KRSB_QRTZ_CRON_TRIGGERS_TR1"/>
+        <dropForeignKeyConstraint baseTableName="krsb_qrtz_job_listeners" constraintName="KRSB_QUARTZ_JOB_LISTENERS_TR1"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_job_details" constraintName="PRIMARY"/>
+        <addPrimaryKey tableName="krsb_qrtz_job_details" columnNames="job_name, job_group, sched_name"/>
+
+        <addForeignKeyConstraint baseTableName="krsb_qrtz_job_listeners" baseColumnNames="job_name, job_group" constraintName="KRSB_QUARTZ_JOB_LISTENERS_TR1"
+                                 referencedTableName="krsb_qrtz_job_details" referencedColumnNames="job_name, job_group"/>
+
+        <dropForeignKeyConstraint baseTableName="krsb_qrtz_trigger_listeners" constraintName="KRSB_QRTZ_TRIGGER_LISTENE_TR1"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_triggers"/>
+        <addPrimaryKey tableName="krsb_qrtz_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
+
+        <addForeignKeyConstraint baseTableName="krsb_qrtz_trigger_listeners" baseColumnNames="TRIGGER_NAME, TRIGGER_GROUP" constraintName="KRSB_QRTZ_TRIGGER_LISTENE_TR1"
+                                 referencedTableName="krsb_qrtz_triggers"
+                                 referencedColumnNames="TRIGGER_NAME, TRIGGER_GROUP"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_blob_triggers"/>
+        <addPrimaryKey tableName="krsb_qrtz_blob_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
+
+        <addForeignKeyConstraint baseTableName="KRSB_QRTZ_BLOB_TRIGGERS" baseColumnNames="trigger_name, trigger_group, sched_name"
+                                 constraintName="KRSB_QRTZ_BLOB_TRIGGERS_TR1"
+                                 referencedTableName="KRSB_QRTZ_TRIGGERS"
+                                 referencedColumnNames="trigger_name, trigger_group, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_cron_triggers"/>
+        <addPrimaryKey tableName="krsb_qrtz_cron_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
+
+        <addForeignKeyConstraint baseTableName="krsb_qrtz_cron_triggers" baseColumnNames="trigger_name, trigger_group, sched_name"
+                                 constraintName="KRSB_QRTZ_CRON_TRIGGERS_TR1"
+                                 referencedTableName="KRSB_QRTZ_TRIGGERS"
+                                 referencedColumnNames="trigger_name, trigger_group, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_simple_triggers"/>
+        <addPrimaryKey tableName="krsb_qrtz_simple_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
+
+        <addForeignKeyConstraint baseTableName="krsb_qrtz_simple_triggers" baseColumnNames="trigger_name, trigger_group, sched_name"
+                                 constraintName="KRSB_QRTZ_SIMPLE_TRIGGERS_TR1"
+                                 referencedTableName="KRSB_QRTZ_TRIGGERS"
+                                 referencedColumnNames="trigger_name, trigger_group, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_fired_triggers"/>
+        <addPrimaryKey tableName="krsb_qrtz_fired_triggers" columnNames="entry_id, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_calendars"/>
+        <addPrimaryKey tableName="krsb_qrtz_calendars" columnNames="calendar_name, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_locks"/>
+        <addPrimaryKey tableName="krsb_qrtz_locks" columnNames="lock_name, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_paused_trigger_grps"/>
+        <addPrimaryKey tableName="krsb_qrtz_paused_trigger_grps" columnNames="trigger_group, sched_name"/>
+
+        <dropPrimaryKey tableName="krsb_qrtz_scheduler_state"/>
+        <addPrimaryKey tableName="krsb_qrtz_scheduler_state" columnNames="instance_name, sched_name"/>
+
+        <createTable tableName="krsb_qrtz_simprop_triggers">
+            <column name="SCHED_NAME" type="VARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRIGGER_NAME" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STR_PROP_1" type="VARCHAR(512)"/>
+            <column name="STR_PROP_2" type="VARCHAR(512)"/>
+            <column name="STR_PROP_3" type="VARCHAR(512)"/>
+            <column name="INT_PROP_1" type="NUMBER"/>
+            <column name="INT_PROP_2" type="NUMBER"/>
+            <column name="LONG_PROP_1" type="NUMBER"/>
+            <column name="LONG_PROP_2" type="NUMBER"/>
+            <column name="DEC_PROP_1" type="NUMERIC(13,4)"/>
+            <column name="DEC_PROP_2" type="NUMERIC(13,4)"/>
+            <column name="BOOL_PROP_1" type="BOOL"/>
+            <column name="BOOL_PROP_2" type="BOOL"/>
+        </createTable>
+        <addPrimaryKey tableName="krsb_qrtz_simprop_triggers" columnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP"/>
+        <addForeignKeyConstraint baseTableName="krsb_qrtz_simprop_triggers" baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" constraintName="KRSB_QRTZ_SIMPROP_TRIGGERS_TR1"
+                                 referencedTableName="krsb_QRTZ_TRIGGERS" referencedColumnNames="TRIGGER_NAME,TRIGGER_GROUP,SCHED_NAME"/>
+    </changeSet>
+
+</databaseChangeLog>
