@@ -215,7 +215,7 @@ public abstract class LedgerBalanceForExpenseTransferLookupableHelperServiceImpl
         col.setComparator(CellComparatorHelper.getAppropriateComparatorForPropertyClass(propClass));
         col.setValueComparator(CellComparatorHelper.getAppropriateValueComparatorForPropertyClass(propClass));
 
-        propValue = super.maskValueIfNecessary(element.getClass(), col.getPropertyName(), propValue, businessObjectRestrictions);
+        propValue = super.maskValueIfNecessary(element, col.getPropertyName(), propValue, businessObjectRestrictions);
         col.setPropertyValue(propValue);
 
 
