@@ -24,6 +24,8 @@ import org.kuali.kfs.sys.database.LiquibaseTestBase;
 import java.util.List;
 
 public class LdLiquibaseModifySqlTest extends LiquibaseTestBase {
+    public static final String PACKAGE_PHASE5 = "org/kuali/kfs/module/ld/db/phase5/";
+
     @Test
     public void testForDateColumn() throws Exception {
         testForDateColumn("/org/kuali/kfs/module/ld/db/phase1/kfs-ld_createTable.xml");
@@ -36,7 +38,7 @@ public class LdLiquibaseModifySqlTest extends LiquibaseTestBase {
 
     @Test
     public void testPhase5_modifySql() throws Exception {
-        List<String> phase5Files = findLiquibaseFiles("org/kuali/kfs/module/ld/db/phase5/");
+        List<String> phase5Files = findLiquibaseFiles(PACKAGE_PHASE5);
         for (String fileName : phase5Files) {
             System.out.println(fileName);
             testForMissingModifySql("/" + fileName);
@@ -45,10 +47,26 @@ public class LdLiquibaseModifySqlTest extends LiquibaseTestBase {
 
     @Test
     public void testPhase5_dateColumn() throws Exception {
-        List<String> phase5Files = findLiquibaseFiles("org/kuali/kfs/module/ld/db/phase5/");
+        List<String> phase5Files = findLiquibaseFiles(PACKAGE_PHASE5);
         for (String fileName : phase5Files) {
             System.out.println(fileName);
             testForDateColumn("/" + fileName);
+        }
+    }
+
+    @Test
+    public void testPhase5_filename() throws Exception {
+        for (String fileName : findLiquibaseFiles(PACKAGE_PHASE5)) {
+            System.out.println(fileName);
+            testPhase5FileName("/" + fileName);
+        }
+    }
+
+    @Test
+    public void testPhase5_logicalFilePath() throws Exception {
+        for (String fileName : findLiquibaseFiles(PACKAGE_PHASE5)) {
+            System.out.println(fileName);
+            testLogicalFilePath("/" + fileName);
         }
     }
 }
