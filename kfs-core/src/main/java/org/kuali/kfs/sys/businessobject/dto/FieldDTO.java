@@ -18,6 +18,7 @@
  */
 package org.kuali.kfs.sys.businessobject.dto;
 
+
 public class FieldDTO {
 
     private String code;
@@ -27,6 +28,7 @@ public class FieldDTO {
     private boolean required;
     private String fieldType;
     private boolean cascadeSource;
+    private CascadeParentDTO cascadeParentDTO;
 
     public String getCode() {
         return code;
@@ -82,6 +84,14 @@ public class FieldDTO {
 
     public void setCascadeSource(boolean cascadeSource) {
         this.cascadeSource = cascadeSource;
+    }
+
+    public CascadeParentDTO getCascadeParentDTO() {
+        return cascadeParentDTO;
+    }
+
+    public void setCascadeParentDTO(CascadeParentDTO cascadeParentDTO) {
+        this.cascadeParentDTO = cascadeParentDTO;
     }
 
     @Override
