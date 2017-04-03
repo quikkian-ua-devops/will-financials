@@ -20,6 +20,7 @@ package org.kuali.kfs.sys.database;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.kuali.kfs.sys.datatools.liquirelational.LiquiRelational;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,9 +36,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class LiquibaseTestBase {
+    public static final String ATTR_LOGICAL_FILE_PATH = "logicalFilePath";
+    public static final int LEGACY_YEAR_CUTOFF = 2017;
+    public static final int LEGACY_MONTH_CUTOFF = 3;
+
     protected void testForMissingModifySql(String filename) throws IOException, SAXException, ParserConfigurationException {
         Element rootElement = parseFile(filename);
         List<Node> children = getChildNodes(rootElement);
@@ -93,6 +99,75 @@ public class LiquibaseTestBase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * For non-legacy liquirelational files, this enforces the logicalFilePath attribute's existence on the
+     * databaseChangelog and absence on changeSets
+     *
+     * @param fullyQualifiedName the fully qualified filename of the liquirelational file
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    protected void testLogicalFilePath(String fullyQualifiedName) throws IOException, SAXException, ParserConfigurationException {
+        String filename = fullyQualifiedName.substring(fullyQualifiedName.lastIndexOf('/') + 1);
+        if (!isLegacyLiquirelational(filename)) {
+            Element rootElement = parseFile(fullyQualifiedName);
+
+            if (!nodeHasAttribute(rootElement, ATTR_LOGICAL_FILE_PATH)) {
+                throw new RuntimeException(String.format("%s attribute must be set on databaseChangeLog", ATTR_LOGICAL_FILE_PATH));
+            }
+
+            getChildNodes(rootElement).forEach(changeSet -> {
+                if (nodeHasAttribute(changeSet, ATTR_LOGICAL_FILE_PATH)) {
+                    throw new RuntimeException(String.format("%s attribute must not be set on changeSet", ATTR_LOGICAL_FILE_PATH));
+                }
+            });
+
+            if (!isValidLogicalFilePath(rootElement.getAttribute(ATTR_LOGICAL_FILE_PATH), fullyQualifiedName)) {
+                throw new RuntimeException(String.format("Invalid %s attribute", ATTR_LOGICAL_FILE_PATH));
+            }
+        }
+    }
+
+    /**
+     * Enforces naming conventions. As of March 2017, the YYYY-MM.xml is now the legacy naming format.
+     * New changesets should be added to a next-release.xml file in the appropriate package. These
+     * will be moved to a release liquirelational file named YYYY-MM-DD.xml based on the build's release version.
+     *
+     * @param fullyQualifiedName The fully qualified filename of the liquirelational file
+     */
+    protected void testPhase5FileName(String fullyQualifiedName) {
+        String filename = fullyQualifiedName.substring(fullyQualifiedName.lastIndexOf('/') + 1);
+        if (isLegacyLiquirelational(filename)) {
+            int year = Integer.parseInt(filename.substring(0,4));
+            int month = Integer.parseInt(filename.substring(5,7));
+            if (year > LEGACY_YEAR_CUTOFF || (year == LEGACY_YEAR_CUTOFF && month > LEGACY_MONTH_CUTOFF)) {
+                throw new RuntimeException(String.format("Legacy liquirelational filename YYYY-MM.xml not supported after %d-%02d",
+                                                         LEGACY_YEAR_CUTOFF, LEGACY_MONTH_CUTOFF));
+            }
+        } else if (!( LiquiRelational.liquirelationalPatternNextRelease.matcher(filename).matches() ||
+                      LiquiRelational.liquirelationalPatternRelease.matcher(filename).matches())) {
+            throw new RuntimeException("Liquirelational filename must be either YYYY-MM-DD.xml or next-release.xml");
+        }
+    }
+
+    protected boolean isValidLogicalFilePath(String logicalFilePath, String fullyQualifiedName) {
+        String packageName = fullyQualifiedName.substring(1, fullyQualifiedName.lastIndexOf('/'));
+        if (!logicalFilePath.startsWith(packageName)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean isLegacyLiquirelational(String filename) {
+        return LiquiRelational.liquirelationalPatternLegacy.matcher(filename).matches();
+    }
+
+    protected boolean nodeHasAttribute(Node node, String attribute) {
+        return ((Element)node).hasAttribute(attribute);
     }
 
     protected boolean changeContainsColumns(Node changeSet) {
