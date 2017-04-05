@@ -48,9 +48,11 @@ public abstract class LoginFilterBase implements Filter {
     private static final String MDC_USER = "user";
     protected ParameterService parameterService;
     protected CfAuthenticationService cfAuthenticationService;
+    private FilterConfig filterConfig;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        this.filterConfig = filterConfig;
     }
 
     @Override
@@ -105,7 +107,9 @@ public abstract class LoginFilterBase implements Filter {
         String kualiSessionId = this.getKualiSessionId(request.getCookies());
         if (kualiSessionId == null) {
             kualiSessionId = UUID.randomUUID().toString();
-            response.addCookie(new Cookie(KRADConstants.KUALI_SESSION_ID, kualiSessionId));
+            Cookie cookie = new Cookie(KRADConstants.KUALI_SESSION_ID, kualiSessionId);
+            cookie.setPath(filterConfig.getServletContext().getContextPath());
+            response.addCookie(cookie);
         }
         KRADUtils.getUserSessionFromRequest(request).setKualiSessionId(kualiSessionId);
     }
