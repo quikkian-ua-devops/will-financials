@@ -30,7 +30,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.kuali.kfs.sys.datatools.util.PropertyLoadingFactoryBean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
@@ -44,11 +43,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 public class LiquiRelational {
     private static final Logger LOG = Logger.getLogger(LiquiRelational.class);
+
+    public static final Pattern liquirelationalPatternLegacy = Pattern.compile("\\d\\d\\d\\d-\\d\\d.xml");
+    public static final Pattern liquirelationalPatternRelease = Pattern.compile("\\d\\d\\d\\d-\\d\\d-\\d\\d.xml");
+    public static final Pattern liquirelationalPatternNextRelease = Pattern.compile("next-release.xml");
 
     protected static final String UPDATE_DATABASE_FULL_REBUILD = "updateDatabaseFullRebuild";
     protected static final String UPDATE_DATABASE_MANUAL_START = "updateDatabaseManualStart";
@@ -56,6 +61,8 @@ public class LiquiRelational {
     protected static final String UPDATE_DATABASE_CONTEXT = "updateDatabaseContext";
     protected static final String UPDATE_DATABASE_PACKAGES = "updateDatabasePackages";
     protected static final String UPDATE_DATABASE_PACKAGES_RICE = "updateDatabasePackagesRice";
+
+    protected static final LiquiRelationalFileComparator liquiRelationalFileComparator = new LiquiRelationalFileComparator();
 
     private ClassPathXmlApplicationContext applicationContext;
     protected Properties properties = null;
@@ -245,7 +252,7 @@ public class LiquiRelational {
                     for (int i = 0; i < resources.length; i++) {
                         tempFilenames.add(pkg + "/db/phase" + phase + "/" + resources[i].getFilename());
                     }
-                    Collections.sort(tempFilenames);
+                    Collections.sort(tempFilenames, liquiRelationalFileComparator);
                     phaseFilenames.addAll(tempFilenames);
                 } catch (FileNotFoundException e) {
                     LOG.warn("Failed to find files for " + sourceName);
@@ -284,6 +291,46 @@ public class LiquiRelational {
             } else {
                 return null;
             }
+        }
+    }
+
+    public static class LiquiRelationalFileComparator implements Comparator<String> {
+        @Override
+        public int compare(String qualifiedFilename1, String qualifiedFilename2) {
+            String filename1 = qualifiedFilename1.substring(qualifiedFilename1.lastIndexOf('/') +1);
+            String filename2 = qualifiedFilename2.substring(qualifiedFilename2.lastIndexOf('/') +1);
+
+            boolean isLegacy1 = liquirelationalPatternLegacy.matcher(filename1).matches();
+            boolean isLegacy2 = liquirelationalPatternLegacy.matcher(filename2).matches();
+            boolean isRelease1 = liquirelationalPatternRelease.matcher(filename1).matches();
+            boolean isRelease2 = liquirelationalPatternRelease.matcher(filename2).matches();
+            boolean isNextRelease1 = liquirelationalPatternNextRelease.matcher(filename1).matches();
+            boolean isNextRelease2 = liquirelationalPatternNextRelease.matcher(filename2).matches();
+
+            int result = filename1.compareTo(filename2);
+            if (isLegacy1 && isRelease2) {
+                String yearMonth1 = filename1.substring(0, 7);
+                String yearMonth2 = filename2.substring(0, 7);
+                if (yearMonth1.equals(yearMonth2)) { //same month so nextRelease always after
+                    result = -1;
+                } else {
+                    result = yearMonth1.compareTo(yearMonth2);
+                }
+            } else if (isRelease1 && isLegacy2) {
+                String yearMonth1 = filename1.substring(0, 7);
+                String yearMonth2 = filename2.substring(0, 7);
+                if (yearMonth1.equals(yearMonth2)) { //same month so nextRelease always before
+                    result = 1;
+                } else {
+                    result = yearMonth1.compareTo(yearMonth2);
+                }
+            } else if (isNextRelease1 && (isLegacy2 || isRelease2)) {
+                result = 1;
+            } else if ((isLegacy1 || isRelease1) && isNextRelease2) {
+                result = -1;
+            }
+
+            return result;
         }
     }
 }

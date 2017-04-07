@@ -1,3 +1,221 @@
+************************* 2017-04-06 *************************
+commit 5a8d9838600b22cb594ba400804467588b867603
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 13:43:31 -0600
+
+    FINP-1475 remove references to unused beans
+
+:100644 100644 688cdae... ce7e1ce... M	kfs-core/src/test/config/kfs-core.properties
+
+commit e50f18db05b3b8adc3d3d5f1ff1a7d8a8d3daa18
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 13:21:26 -0600
+
+    FINP-1475 remove references to unused beans
+
+:100644 100644 2e42cd2... 688cdae... M	kfs-core/src/test/config/kfs-core.properties
+:100644 100644 30f0c36... 88e070c... M	kfs-core/src/test/resources/test-configuration.properties
+
+commit a4b0f2fd88a3f5cdcc3126c0c2da858041375a1c
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 13:04:48 -0600
+
+    FINP-1475 Remove unused beans
+
+:100644 100644 e4e61b2... f4fa0cc... M	kfs-core/src/main/resources/kfs-default-config.properties
+:100644 000000 ad560ee... 0000000... D	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-dev-env-beans.xml
+:100644 000000 ad560ee... 0000000... D	kfs-core/src/main/resources/spring-dev-rice-krad-overrides.xml
+
+commit 73a03c94190e6eb6f0cf239bfa7f2729e977147d
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 12:20:51 -0600
+
+    FINP-1318 set cookie path on cf.kualiSessionId
+
+:100644 100644 a1695a1... 7f6c06d... M	kfs-kns/src/main/java/org/kuali/kfs/krad/web/filter/LoginFilterBase.java
+
+commit 59ce159a37dfcad8c332ebe51e5acb0137229cbe
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 10:13:19 -0600
+
+    FINP-1467 restablish institution.spring.source.files configuration hook
+
+:100644 100644 10f89ac... e4e61b2... M	kfs-core/src/main/resources/kfs-default-config.properties
+
+commit f1a3023e826dfd7227f1be2c4b68c5e3abc025fd
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-05 10:06:08 -0600
+
+    FINP-1316 stop serving js build files
+
+:100644 100644 675a4d7... 9b273e3... M	kfs-web/src/main/webapp/WEB-INF/web.xml
+
+commit f91f4af3ba26a98bbaa032af818149ed242843b2
+Author: Kelly Davis <kldavis4@users.noreply.github.com>
+Date:   2017-04-03 15:01:48 -0400
+
+    FINI-3515 Update liquirelational sorting and unit tests (#1111)
+    
+    * FINI-3515 Implement custom sort for new liquirelational process
+    
+    * FINI-3515 Modify liquirelational tests to validate according to new process
+
+:100644 100644 bc2dc6f... 4a3afcd... M	kfs-ar/src/test/java/org/kuali/kfs/module/ar/database/ArLiquibaseModifySqlTest.java
+:100644 100644 0f0996d... 97ec263... M	kfs-cam/src/test/java/org/kuali/kfs/module/cam/database/CamLiquibaseModifySqlTest.java
+:100644 100644 1a29e97... d7269a4... M	kfs-cg/src/test/java/org/kuali/kfs/module/cg/database/CgLiquibaseModifySqlTest.java
+:100644 100644 834f09f... ad876ec... M	kfs-core/src/test/java/org/kuali/kfs/sys/database/CoreLiquibaseModifySqlTest.java
+:100644 100644 c0ed6d6... 84a07f2... M	kfs-core/src/test/java/org/kuali/kfs/sys/database/LiquibaseTestBase.java
+:100644 100644 a26e33f... 4d033a5... M	kfs-datatools/src/main/java/org/kuali/kfs/sys/datatools/liquirelational/LiquiRelational.java
+:000000 100644 0000000... fe5b969... A	kfs-datatools/src/test/java/org/kuali/kfs/sys/datatools/liquirelational/LiquiRelationalTest.java
+:100644 100644 0ad6102... fbbb789... M	kfs-ec/src/test/java/org/kuali/kfs/module/ec/database/EcLiquibaseModifySqlTest.java
+:100644 100644 d2a02c7... 23608e4... M	kfs-kc/src/test/java/org/kuali/kfs/module/kc/database/KcLiquibaseModifySqlTest.java
+:100644 100644 eb33347... 0ddfda0... M	kfs-ld/src/test/java/org/kuali/kfs/module/ld/database/LdLiquibaseModifySqlTest.java
+:100644 100644 194ae4d... 21082bb... M	kfs-purap/src/test/java/org/kuali/kfs/module/purap/database/PurapLiquibaseModifySqlTest.java
+
+commit 30ecf31c4304edc527c485a2499c69a50e3f7053
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-03 09:27:10 -0600
+
+    FINP-1459 maintain hierarchy of fields
+
+:000000 100644 0000000... 710bdf8... A	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/CascadeParentDTO.java
+:100644 100644 62aa9e0... 8f088d9... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/FieldDTO.java
+
+commit 33a319bc9945ea3108f39252f77dd7e9ed86942d
+Author: lmarkes <lmarkes@users.noreply.github.com>
+Date:   2017-03-31 10:00:33 -0500
+
+    FINP-1313: fix description tool tip for GEC & PCDO (#1109)
+
+:100644 100644 271e60e... 57d2ae1... M	kfs-core/src/main/resources/org/kuali/kfs/fp/businessobject/datadictionary/GECSourceAccountingLine.xml
+:100644 100644 8bb89bd... a223e17... M	kfs-core/src/main/resources/org/kuali/kfs/fp/businessobject/datadictionary/GECTargetAccountingLine.xml
+:100644 100644 e9a8d15... cd303fc... M	kfs-core/src/main/resources/org/kuali/kfs/fp/businessobject/datadictionary/ProcurementCardSourceAccountingLine.xml
+:100644 100644 615343d... 790d866... M	kfs-core/src/main/resources/org/kuali/kfs/fp/businessobject/datadictionary/ProcurementCardTargetAccountingLine.xml
+
+commit ea33a28960c7c3619ab0460a53f5dfda734d08fc
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-03-30 14:26:14 -0400
+
+    FINP-1311 No sidebar loading icon when the sidebar is hidden (#1108)
+
+:100644 100644 2ba7d40... 2ee0351... M	kfs-web/src/main/webapp/scripts/components/general/sidebar.jsx
+
+commit bc760804a90210ab1a677596b8bd012117d5b709
+Author: Kelly Davis <kldavis4@users.noreply.github.com>
+Date:   2017-03-30 12:07:13 -0400
+
+    FINP-1310 Update object code inactivation error message (#1107)
+
+:100644 100644 90855ef... e337bb3... M	kfs-core/src/main/resources/org/kuali/kfs/sys/sys-resources.properties
+
+commit 548074e07ae700cd142ab8e62e0cce8c97a7feea
+Author: smith750 <jksmith@kuali.co>
+Date:   2017-03-29 11:09:27 -0600
+
+    FINP-1254
+
+:000000 100644 0000000... 345642b... A	kfs-core/src/main/java/org/kuali/kfs/sys/batch/DataDictionaryFilter.java
+:100644 100644 b5a4429... f151ca5... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/DataDictionaryFilteredEntity.java
+:100644 100644 e2e4d93... ab5dc56... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/DataDictionaryFilteredField.java
+:100644 100644 364f144... ab45118... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/DataDictionaryFilteredTable.java
+:100644 100644 163823f... b29d92c... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImpl.java
+
+commit 584f8207b3997182eeed7ac602665560062cc59a
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-03-29 12:39:40 -0400
+
+    FINP-1285 Add waiting icon on initial load (#1104)
+    
+    * FINP-1285 Refactor to one component per file
+    
+    * FINP-1285 Add waiting icon on initial load
+
+:100644 100644 ad736c1... 4784586... M	kfs-web/src/main/webapp/css/newPortal.css
+:000000 100644 0000000... ef7b808... A	kfs-web/src/main/webapp/scripts/components/general/LinkFilter.jsx
+:000000 100644 0000000... a23a8cb... A	kfs-web/src/main/webapp/scripts/components/general/LinkGroup.jsx
+:000000 100644 0000000... b4d6833... A	kfs-web/src/main/webapp/scripts/components/general/LinkGroupSublinks.jsx
+:000000 100644 0000000... f26af55... A	kfs-web/src/main/webapp/scripts/components/general/SidebarError.jsx
+:000000 100644 0000000... 49ecc43... A	kfs-web/src/main/webapp/scripts/components/general/SidebarWaiting.jsx
+:100644 100644 e6bba50... 8198393... M	kfs-web/src/main/webapp/scripts/components/general/link.jsx
+:100644 100644 91fe59c... 2ba7d40... M	kfs-web/src/main/webapp/scripts/components/general/sidebar.jsx
+:000000 100644 0000000... e5d2fd8... A	kfs-web/src/main/webapp/scripts/sys/sidebar_utils.js
+
+commit 3bb1b486809684c560dcdda1d320634ca1527f43
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-03-29 10:32:46 -0500
+
+    FINP-1287: add refs to DataDictionaryQualifierResolver to cf upgrade script
+
+:100644 100644 7d04cae... d6e4c42... M	kfs-core/src/main/config/upgrades/6.0_6.0.1/cf-upgrade-patterns.xml
+
+commit f7254d05afd30175983e5c96a47885640f3594a8
+Author: smith750 <jksmith@kuali.co>
+Date:   2017-03-28 15:03:44 -0600
+
+    FINP-1252
+
+:100644 100644 8991f9d... e78d9b0... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+
+commit 6e4015f1c4300ee1784a52f3c9addf50a0d9a439
+Author: James Smith <jksmith@kuali.co>
+Date:   2017-03-28 14:27:11 -0600
+
+    FINP-1251 (#1101)
+
+:100644 100644 637007e... 8991f9d... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+
+commit 8aa0dbb6a122401cb7ce5dc2ffce636b31e1c301
+Author: Kelly Davis <kldavis4@gmail.com>
+Date:   2017-03-28 14:36:41 -0400
+
+    FINP-1219 Modify sanitizer to use generic html parser
+     - fixes sorting issues and is flexibly handles different inputs
+
+:100644 100644 defbf9c... 08a241e... M	kfs-kns/pom.xml
+:100644 100644 cfad050... f276074... M	kfs-kns/src/main/java/org/kuali/kfs/kns/web/comparator/CellComparatorHelper.java
+:100644 100644 41f9574... 9325c12... M	kfs-kns/src/test/java/org/kuali/kfs/kns/web/comparator/CellComparatorHelperTest.java
+:100644 100644 6fe3f80... 7bab15b... M	kfs-web/src/main/webapp/kr/WEB-INF/jsp/KualiLookup.jsp
+:100644 100644 4f724f8... a02b276... M	pom.xml
+
+commit 4fdfcb2562f7e7d5759fe921551109f18d82774a
+Author: James Smith <jksmith@kuali.co>
+Date:   2017-03-28 11:05:02 -0600
+
+    FINP-1250 (#1097)
+
+:100644 100644 586e1aa... 637007e... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+
+commit adb7b2b75f045c48c7e51313de0690e80da6f9a8
+Author: Kelly Davis <kldavis4@users.noreply.github.com>
+Date:   2017-03-28 12:46:26 -0400
+
+    FINP-1283 Rename jwt.signing.key so it is masked in config viewer (#1100)
+
+:100644 100644 fb6b6d8... fa98b47... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/JwtServiceImpl.java
+:100644 100644 9d4914b... 76deda8... M	kfs-core/src/main/resources/kfs-security-default-config.properties
+:100644 100644 f9348be... 31c52a1... M	kfs-core/src/test/java/org/kuali/kfs/sys/service/impl/JwtServiceImplTest.java
+
+commit 0ffe45843eb48654a0a9641ea1f60db1ec027e4d
+Author: Kelly Davis <kldavis4@users.noreply.github.com>
+Date:   2017-03-28 12:46:11 -0400
+
+    FINP-1264 Add Object Code Inactivation blocking rules for GL entries (#1099)
+    
+    * FINP-1264 Implement rule that checks for base budgets and prevents inactivation
+     - Note: Unit tests are currently failing in this revision
+    
+    * FINP-1264 Add prepare annotation to each test
+    
+    * FINP-1264 Refactor to use report queries
+
+:100644 100644 5f0e72d... 3a5eaf5... M	kfs-core/src/main/java/org/kuali/kfs/coa/document/validation/impl/ObjectCodeRule.java
+:100644 100644 04758ed... 4434d03... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/BalanceDao.java
+:100644 100644 719aed3... ce54ba8... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/BalanceDaoOjb.java
+:100644 100644 6cfd7cd... 4d522ba... M	kfs-core/src/main/java/org/kuali/kfs/sys/KFSKeyConstants.java
+:100644 100644 0bad6f0... 73f44fd... M	kfs-core/src/main/java/org/kuali/kfs/sys/dataaccess/GeneralLedgerPendingEntryDao.java
+:100644 100644 008ef47... 5789e8e... M	kfs-core/src/main/java/org/kuali/kfs/sys/dataaccess/impl/GeneralLedgerPendingEntryDaoOjb.java
+:100644 100644 320211f... 90855ef... M	kfs-core/src/main/resources/org/kuali/kfs/sys/sys-resources.properties
+:000000 100644 0000000... 0c54793... A	kfs-core/src/test/java/org/kuali/kfs/coa/document/validation/impl/ObjectCodeRuleTest.java
 ************************* 2017-03-28 *************************
 commit 6b4b70efea183649f5428e7b15ae444ce87a53cc
 Author: Kelly Davis <kldavis4@gmail.com>
