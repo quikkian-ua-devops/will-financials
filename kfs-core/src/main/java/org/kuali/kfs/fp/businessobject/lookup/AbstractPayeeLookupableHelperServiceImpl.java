@@ -193,7 +193,7 @@ public class AbstractPayeeLookupableHelperServiceImpl extends KualiLookupableHel
      * @see org.kuali.rice.kns.lookup.AbstractLookupableHelperServiceImpl#maskValueIfNecessary(java.lang.Class, java.lang.String, java.lang.String, org.kuali.rice.kns.document.authorization.BusinessObjectRestrictions)
      */
     @Override
-    protected String maskValueIfNecessary(Class businessObjectClass, String propertyName, String propertyValue, BusinessObjectRestrictions businessObjectRestrictions) {
+    protected String maskValueIfNecessary(BusinessObject businessObject, String propertyName, String propertyValue, BusinessObjectRestrictions businessObjectRestrictions) {
         String maskedPropertyValue = propertyValue;
         if (businessObjectRestrictions != null) {
             FieldRestriction fieldRestriction = businessObjectRestrictions.getFieldRestriction(propertyName);

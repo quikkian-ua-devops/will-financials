@@ -76,7 +76,7 @@ public abstract class ContractsGrantsReportLookupableHelperServiceImplBase exten
                 col.setValueComparator(CellComparatorHelper.getAppropriateValueComparatorForPropertyClass(propClass));
 
                 String propValueBeforePotientalMasking = propValue;
-                propValue = maskValueIfNecessary(element.getClass(), col.getPropertyName(), propValue, businessObjectRestrictions);
+                propValue = maskValueIfNecessary(element, col.getPropertyName(), propValue, businessObjectRestrictions);
                 col.setPropertyValue(propValue);
 
                 // Add url when property is documentNumber and paymentNumber (paymentNumber is a document number.)

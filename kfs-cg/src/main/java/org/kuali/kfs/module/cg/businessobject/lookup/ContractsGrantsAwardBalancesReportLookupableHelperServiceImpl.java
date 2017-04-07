@@ -193,7 +193,7 @@ public class ContractsGrantsAwardBalancesReportLookupableHelperServiceImpl exten
                 col.setValueComparator(CellComparatorHelper.getAppropriateValueComparatorForPropertyClass(propClass));
 
                 String propValueBeforePotientalMasking = propValue;
-                propValue = maskValueIfNecessary(element.getClass(), col.getPropertyName(), propValue, businessObjectRestrictions);
+                propValue = maskValueIfNecessary(element, col.getPropertyName(), propValue, businessObjectRestrictions);
                 col.setPropertyValue(propValue);
             }
 

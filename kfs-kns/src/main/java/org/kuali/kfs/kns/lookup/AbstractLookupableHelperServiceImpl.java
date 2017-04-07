@@ -1174,7 +1174,7 @@ public abstract class AbstractLookupableHelperServiceImpl implements LookupableH
                 col.setValueComparator(CellComparatorHelper.getAppropriateValueComparatorForPropertyClass(propClass));
 
                 String propValueBeforePotientalMasking = propValue;
-                propValue = maskValueIfNecessary(element.getClass(), col.getPropertyName(), propValue,
+                propValue = maskValueIfNecessary(element, col.getPropertyName(), propValue,
                     businessObjectRestrictions);
                 col.setPropertyValue(propValue);
 
@@ -1257,7 +1257,7 @@ public abstract class AbstractLookupableHelperServiceImpl implements LookupableH
     }
 
 
-    protected String maskValueIfNecessary(Class businessObjectClass, String propertyName, String propertyValue, BusinessObjectRestrictions businessObjectRestrictions) {
+    protected String maskValueIfNecessary(BusinessObject businessObject, String propertyName, String propertyValue, BusinessObjectRestrictions businessObjectRestrictions) {
         String maskedPropertyValue = propertyValue;
         if (businessObjectRestrictions != null) {
             FieldRestriction fieldRestriction = businessObjectRestrictions.getFieldRestriction(propertyName);
