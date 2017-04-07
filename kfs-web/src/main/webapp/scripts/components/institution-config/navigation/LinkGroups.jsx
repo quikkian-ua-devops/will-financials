@@ -36,6 +36,7 @@ export default class LinkGroups extends Component {
         this.state = {'deleting': null};
 
         this.stateOpenDeleteGroup = this.stateOpenDeleteGroup.bind(this);
+        this.groupLabelAlreadyExists = this.groupLabelAlreadyExists.bind(this);
     }
 
     componentDidMount() {
@@ -45,6 +46,16 @@ export default class LinkGroups extends Component {
 
     stateOpenDeleteGroup(label) {
         this.setState({'deleting': label});
+    }
+
+    groupLabelAlreadyExists(label) {
+        let exists = false
+        this.props.linkGroups.forEach(function(linkGroup) {
+            if (linkGroup.get('label').toLowerCase() === label.toLowerCase())  {
+                exists = true;
+            }
+        });
+        return exists;
     }
 
     render() {
@@ -60,7 +71,9 @@ export default class LinkGroups extends Component {
                            deleting={this.state.deleting}
                            expandedLinkGroup={this.props.expandedLinkGroup}
                            linkGroupIndex={idx}
-                           stateMaintenance={stateMaintenance}/>
+                           stateMaintenance={stateMaintenance}
+                           groupLabelAlreadyExists={this.groupLabelAlreadyExists}
+                />
             );
         }
         return (
@@ -91,7 +104,7 @@ class LinkGroup extends Component {
 
     editLabel(event) {
         event.stopPropagation();
-        this.setState({linkGroupEditing: true});
+        this.setState({linkGroupEditing: true, error: null});
     }
 
     cancelEditLabel(event) {
@@ -121,9 +134,13 @@ class LinkGroup extends Component {
     saveLinkGroupName(event) {
         event.stopPropagation();
         let newLabel = $('#groupLabelInput').val();
-        let index = $(event.target).closest('li').index();
-        this.setState({linkGroupName: newLabel, linkGroupEditing: false});
-        this.props.stateMaintenance.stateUpdateLinkGroupName(index, newLabel);
+        if (this.props.groupLabelAlreadyExists(newLabel)) {
+            this.setState({error: "Group name must be unique"});
+        } else {
+            let index = $(event.target).closest('li').index();
+            this.setState({linkGroupName: newLabel, linkGroupEditing: false});
+            this.props.stateMaintenance.stateUpdateLinkGroupName(index, newLabel);
+         }
     }
 
     stateUpdateLinkGroupLabel(event) {
@@ -143,12 +160,15 @@ class LinkGroup extends Component {
         let panelClassName = determinePanelClassName(this.props.expandedLinkGroup, label);
 
         let buttons;
+        let dialog;
         if (this.state.linkGroupEditing) {
             buttons =
                 <div className="actions">
                     <button id="cancelGroupLabelButton" alt="Cancel" onClick={this.cancelEditLabel}><span className="cancel">Cancel</span></button>
                     <button id="saveGroupLabelButton" alt="Save Link Group Name" onClick={this.saveLinkGroupName}><span className="save">Save</span></button>
                 </div>;
+
+
         } else {
             buttons =
                 <div className="actions">
@@ -157,7 +177,6 @@ class LinkGroup extends Component {
                 </div>;
         }
 
-        let dialog;
         if (this.props.deleting === label) {
         	let canDelete = true;
         	let linksToCheck = this.props.linkGroup.get('links');
@@ -188,6 +207,16 @@ class LinkGroup extends Component {
                     </div>
                 );
             }
+        } else if (this.state.error) {
+
+            dialog = (
+                <div className="dialog form delete-form">
+                    <div><label>{this.state.error}</label></div>
+                    <div>
+                        <button className="btn btn-default" onClick={this.editLabel}>OK</button>
+                    </div>
+                </div>
+            );
         }
 
         return (
