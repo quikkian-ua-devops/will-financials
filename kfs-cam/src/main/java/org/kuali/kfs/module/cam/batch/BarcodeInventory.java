@@ -21,9 +21,6 @@ package org.kuali.kfs.module.cam.batch;
 import java.io.Serializable;
 import java.sql.Date;
 
-/**
- * Object representation of collector xml input.
- */
 public class BarcodeInventory implements Serializable {
     private String campusTagNumber;
     private String inventoryScannedCode;
@@ -35,10 +32,6 @@ public class BarcodeInventory implements Serializable {
     private String conditionCode;
     private String inventoryStatusCode;
 
-
-    /**
-     * Constructs a CollectorBatch
-     */
     public BarcodeInventory() {
     }
 
@@ -105,7 +98,6 @@ public class BarcodeInventory implements Serializable {
     public void setConditionCode(String conditionCode) {
         this.conditionCode = conditionCode;
     }
-
 
     public String getInventoryStatusCode() {
         return inventoryStatusCode;

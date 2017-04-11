@@ -349,23 +349,13 @@
     <!-- Asset Bar Code inventory-->
     <bean id="assetBarcodeInventoryLoadService" parent="assetBarcodeInventoryLoadService-parentBean"/>
     <bean id="assetBarcodeInventoryLoadService-parentBean" class="org.kuali.kfs.module.cam.batch.service.impl.AssetBarcodeInventoryLoadServiceImpl" abstract="true">
-        <property name="businessObjectService">
-            <ref bean="businessObjectService"/>
-        </property>
-        <property name="dataDictionaryService">
-            <ref bean="dataDictionaryService"/>
-        </property>
-        <property name="kualiRuleService">
-            <ref bean="kualiRuleService"/>
-        </property>
-        <property name="documentService">
-            <ref bean="documentService"/>
-        </property>
-        <property name="workflowDocumentService">
-            <ref bean="rice.kew.workflowDocumentService"/>
-        </property>
+        <property name="businessObjectService" ref ="businessObjectService"/>
+        <property name="dataDictionaryService" ref="dataDictionaryService"/>
+        <property name="kualiRuleService" ref="kualiRuleService"/>
+        <property name="documentService" ref="documentService"/>
         <property name="parameterService" ref="parameterService"/>
         <property name="dateTimeService" ref="dateTimeService"/>
+        <property name="assetService" ref="assetService"/>
     </bean>
 
     <bean id="assetBarcodeInventoryInputFileType" parent="assetBarcodeInventoryInputFileType-parentBean"/>
