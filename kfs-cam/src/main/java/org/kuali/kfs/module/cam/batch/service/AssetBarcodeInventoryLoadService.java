@@ -32,10 +32,10 @@ public interface AssetBarcodeInventoryLoadService {
     /**
      * Validates and parses the file identified by the given files name. If successful, parsed entries are stored.
      *
-     * @param fileName Name of file to be uploaded and processed.
+     * @param file file to be uploaded and processed.
      * @return True if the file load and store was successful, false otherwise.
      */
-    public boolean isFileFormatValid(File file);
+    boolean isFileFormatValid(File file);
 
     /**
      * This method creates the barcode inventory error document, validates each record, and invokes the method that actually stores
@@ -44,7 +44,7 @@ public interface AssetBarcodeInventoryLoadService {
      * @param file
      * @return
      */
-    public boolean processFile(File file, AssetBarCodeInventoryInputFileForm form);
+    boolean processFile(File file, AssetBarCodeInventoryInputFileForm form);
 
 
     /**
@@ -52,7 +52,7 @@ public interface AssetBarcodeInventoryLoadService {
      *
      * @param barcodeInventoryErrorDetail
      */
-    public void updateAssetInformation(BarcodeInventoryErrorDetail barcodeInventoryErrorDetail, boolean updateWithDateAssetWasScanned);
+    void updateAssetInformation(BarcodeInventoryErrorDetail barcodeInventoryErrorDetail, boolean updateWithDateAssetWasScanned);
 
     /**
      * Determines whether or not the BCIE document has all its records corrected or deleted
