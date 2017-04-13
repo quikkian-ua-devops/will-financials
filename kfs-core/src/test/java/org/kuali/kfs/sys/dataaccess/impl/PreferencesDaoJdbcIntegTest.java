@@ -168,15 +168,15 @@ public class PreferencesDaoJdbcIntegTest {
         //Add the new link group in middle of list
         linkGroups.add((int) Math.floor(linkGroups.size() / 2), linkGroup);
 
-
-        String expected = mapper.writeValueAsString(preferences);
+        Map<String,Object> oldPrefs = preferences;
+        //String expected = mapper.writeValueAsString(preferences);
 
         preferencesDao.saveInstitutionPreferences(null, preferences);
         preferences = preferencesDao.findInstitutionPreferences();
 
-        String actual = mapper.writeValueAsString(preferences);
+        //String actual = mapper.writeValueAsString(preferences);
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(oldPrefs, preferences);
     }
 
     @Test
