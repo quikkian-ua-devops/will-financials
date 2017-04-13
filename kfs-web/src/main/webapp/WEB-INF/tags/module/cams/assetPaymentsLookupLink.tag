@@ -19,27 +19,15 @@
 <%@ include file="/jsp/sys/kfsTldHeader.jsp" %>
 
 <%@ attribute name="capitalAssetNumber" type="java.lang.Long" required="true" description="Capital Asset Number" %>
-<%@ attribute name="isTransactionalDocument" required="false" %>
-
-<c:if test="${empty isTransactionalDocument}">
-    <c:set var="isTransactionalDocument" value="true"/>
-</c:if>
 
 <kul:tab tabTitle="Payments Lookup" defaultOpen="false" useCurrentTabIndexAsKey="true">
     <div class="tab-container">
         <table class="standard side-margins">
             <tr>
                 <td>
-                    <c:choose>
-                        <c:when test="${isTransactionalDocument}">
-                            <html:link target="_blank" styleClass="portal_link" title="Payment Information"
+
+                    <html:link target="_blank" styleClass="portal_link" title="Payment Information"
                                        href="kr/lookup.do?methodToCall=search&businessObjectClassName=org.kuali.kfs.module.cam.businessobject.AssetPayment&docFormKey=88888888&returnLocation=portal.do&hideReturnLink=true&capitalAssetNumber=${capitalAssetNumber}">Click here</html:link>
-                        </c:when>
-                        <c:otherwise>
-                            <html:link target="_blank" styleClass="portal_link" title="Payment Information"
-                                       href="lookup.do?methodToCall=search&businessObjectClassName=org.kuali.kfs.module.cam.businessobject.AssetPayment&docFormKey=88888888&returnLocation=portal.do&hideReturnLink=true&capitalAssetNumber=${capitalAssetNumber}">Click here</html:link>
-                        </c:otherwise>
-                    </c:choose>
                     to view the payment lookup for this asset.
                 </td>
             </tr>
