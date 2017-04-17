@@ -35,6 +35,7 @@ import org.kuali.kfs.krad.util.UrlFactory;
 import org.kuali.kfs.module.cam.CamsConstants;
 import org.kuali.kfs.module.cam.CamsPropertyConstants;
 import org.kuali.kfs.module.cam.document.service.PaymentSummaryService;
+import org.kuali.kfs.sys.KFSConstants;
 import org.kuali.kfs.sys.KFSPropertyConstants;
 import org.kuali.kfs.sys.businessobject.Building;
 import org.kuali.kfs.sys.businessobject.Room;
@@ -2048,7 +2049,7 @@ public class AssetBase extends PersistableBusinessObjectBase {
         params.put(KRADConstants.RETURN_LOCATION_PARAMETER, "portal.do");
         params.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, AssetPayment.class.getName());
 
-        return UrlFactory.parameterizeUrl(KRADConstants.LOOKUP_ACTION, params);
+        return UrlFactory.parameterizeUrl(KFSConstants.LOOKUP_ACTION, params);
     }
 
     protected String getUrlForAssetDocumentLookup(String documentTypeName) {
