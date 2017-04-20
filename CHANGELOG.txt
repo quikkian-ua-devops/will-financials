@@ -1,3 +1,28 @@
+************************* 2017-04-20 *************************
+commit bf6fdaa4bcfd94bcf0a4dc42f90ef34063085cbe
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-17 14:39:58 -0600
+
+    FINP-1511 fix Asset Payment Lookup URL
+
+:100644 100644 ed99b08... b1def5a... M	kfs-cam/src/main/java/org/kuali/kfs/module/cam/businessobject/AssetBase.java
+
+commit b3da2aa823885a75d39bf8e61d5b22b1f2b8c610
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-13 13:38:48 -0600
+
+    FINP-1508 compare the maps rather than string representations
+
+:100644 100644 c35f6b8... f16a1f9... M	kfs-core/src/test/java/org/kuali/kfs/sys/dataaccess/impl/PreferencesDaoJdbcIntegTest.java
+
+commit 622faf11db7a1668d0be9f688d8f709550559fbe
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-13 09:45:30 -0600
+
+    FINP-1498 fix the link for Asset Payments
+
+:100644 100644 9489941... 3564333... M	kfs-web/src/main/webapp/WEB-INF/tags/module/cams/assetPaymentsLookupLink.tag
+:100644 100644 ce78bd0... 4a3ef69... M	kfs-web/src/main/webapp/jsp/module/cams/AssetPaymentsLookupLink.jsp
 ************************* 2017-04-13 *************************
 commit 58bcd6f1ca4494efad3ac48ae94d8ec517946eb7
 Author: jsissom <jsissom@kuali.co>
