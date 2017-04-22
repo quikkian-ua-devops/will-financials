@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.kfs.kns.question.ConfirmationQuestion;
+import org.kuali.kfs.kns.service.KNSServiceLocator;
 import org.kuali.kfs.kns.web.struts.action.KualiAction;
 import org.kuali.kfs.krad.exception.AuthorizationException;
 import org.kuali.kfs.krad.util.GlobalVariables;
@@ -64,6 +65,7 @@ public class KualiBatchFileAdminAction extends KualiAction {
         BatchFile batchFile = new BatchFile();
         batchFile.setFile(file);
         if (!SpringContext.getBean(BatchFileAdminAuthorizationService.class).canDownload(batchFile, GlobalVariables.getUserSession().getPerson())) {
+            logFileAction(filePath, "DOWNLOAD", false);
             throw new RuntimeException("Error: not authorized to download file");
         }
 
@@ -74,6 +76,7 @@ public class KualiBatchFileAdminAction extends KualiAction {
         response.setHeader("Pragma", "public");
         response.setContentLength((int) fileStorageService.getFileLength(filePath));
 
+        logFileAction(filePath, "DOWNLOAD", true);
         InputStream fis = fileStorageService.getFileStream(filePath);
         IOUtils.copy(fis, response.getOutputStream());
         response.getOutputStream().flush();
@@ -100,6 +103,7 @@ public class KualiBatchFileAdminAction extends KualiAction {
         BatchFile batchFile = new BatchFile();
         batchFile.setFile(file);
         if (!SpringContext.getBean(BatchFileAdminAuthorizationService.class).canDelete(batchFile, GlobalVariables.getUserSession().getPerson())) {
+            logFileAction(filePath, "DELETE", false);
             throw new RuntimeException("Error: not authorized to delete file");
         }
 
@@ -117,6 +121,7 @@ public class KualiBatchFileAdminAction extends KualiAction {
                 String status = null;
                 if (ConfirmationQuestion.YES.equals(buttonClicked)) {
                     try {
+                        logFileAction(filePath, "DELETE", true);
                         fileStorageService.delete(filePath);
                         status = kualiConfigurationService.getPropertyValueAsString(KFSKeyConstants.MESSAGE_BATCH_FILE_ADMIN_DELETE_SUCCESSFUL);
                         status = MessageFormat.format(status, displayFileName);
@@ -143,5 +148,11 @@ public class KualiBatchFileAdminAction extends KualiAction {
     @Override
     protected void checkAuthorization(ActionForm form, String methodToCall) throws AuthorizationException {
         // do nothing... authorization is integrated into action handler
+    }
+
+    protected void logFileAction(String filePath, String action, boolean granted) {
+        StringBuilder buf = new StringBuilder(300);
+        buf.append(action).append(",").append(granted ? "SUCCESS" : "DENY").append(",").append(filePath);
+        KNSServiceLocator.getSecurityLoggingService().logCustomString(buf.toString());
     }
 }

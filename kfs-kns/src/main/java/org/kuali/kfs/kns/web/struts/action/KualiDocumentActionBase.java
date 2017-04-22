@@ -1254,6 +1254,7 @@ public class KualiDocumentActionBase extends KualiAction {
             // since we're downloading a file, all of the editable properties from the previous request will continue to be editable.
             documentForm.copyPopulateEditablePropertiesToActionEditableProperties();
 
+            logAttachmentDownload(documentForm, request, note, attachment);
             WebUtils.saveMimeInputStreamAsFile(response, attachment.getAttachmentMimeTypeCode(), attachment.getAttachmentContents(), attachment.getAttachmentFileName(), attachment.getAttachmentFileSize().intValue());
             return null;
         }
@@ -1261,6 +1262,13 @@ public class KualiDocumentActionBase extends KualiAction {
         return mapping.findForward(RiceConstants.MAPPING_BASIC);
     }
 
+    protected void logAttachmentDownload(KualiDocumentFormBase form, HttpServletRequest request, Note note, Attachment attachment) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("DownloadAttachment,docNum=").append(form.getDocument().getDocumentNumber())
+                .append(",noteId=").append(attachment.getNoteIdentifier())
+                .append(",attId=").append(attachment.getAttachmentIdentifier());
+        KNSServiceLocator.getSecurityLoggingService().logCustomString(buf.toString());
+    }
 
     /**
      * @param request
