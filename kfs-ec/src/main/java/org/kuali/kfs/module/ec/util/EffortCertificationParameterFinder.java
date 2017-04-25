@@ -51,7 +51,7 @@ public class EffortCertificationParameterFinder {
      * @return the federal agency type codes setup in system parameters
      */
     public static Collection<String> getFederalAgencyTypeCodes() {
-        return parameterService.getParameterValuesAsString(EffortCertificationExtractStep.class, KfsParameterConstants.FEDERAL_AGENCY_TYPE_CODE);
+        return parameterService.getParameterValuesAsString(EffortCertificationExtractStep.class, KfsParameterConstants.FEDERAL_AGENCY_TYPE);
     }
 
     /**

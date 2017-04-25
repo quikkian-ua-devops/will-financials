@@ -338,5 +338,5 @@ public class KfsParameterConstants {
 
     public static final String INSTITUTION_NAME = "INSTITUTION_NAME";
 
-    public static final String FEDERAL_AGENCY_TYPE_CODE = "FEDERAL_AGENCY_TYPE";
+    public static final String FEDERAL_AGENCY_TYPE = "FEDERAL_AGENCY_TYPE";
 }
