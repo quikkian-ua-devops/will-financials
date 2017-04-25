@@ -42,6 +42,7 @@ public class KNSServiceLocator {
     public static final String MAINTENANCE_DOCUMENT_DICTIONARY_SERVICE = "cf.maintenanceDocumentDictionaryService";
     public static final String SESSION_DOCUMENT_SERVICE = "cf.knsSessionDocumentService";
     public static final String TRANSACTIONAL_DOCUMENT_DICTIONARY_SERVICE = "cf.transactionalDocumentDictionaryService";
+    public static final String SECURITY_LOGGING_SERVICE = "cf.securityLoggingService";
 
     public static <T extends Object> T getService(String serviceName) {
         return GlobalResourceLoader.<T>getService(serviceName);
@@ -107,5 +108,7 @@ public class KNSServiceLocator {
         return (Question) getService(questionName);
     }
 
-
+    public static SecurityLoggingService getSecurityLoggingService() {
+        return getService(SECURITY_LOGGING_SERVICE);
+    }
 }

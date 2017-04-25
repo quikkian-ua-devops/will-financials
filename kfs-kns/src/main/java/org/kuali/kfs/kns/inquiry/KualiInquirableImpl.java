@@ -22,6 +22,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.commons.lang.StringUtils;
+import org.kuali.kfs.kns.datadictionary.FieldDefinition;
+import org.kuali.kfs.kns.datadictionary.InquiryCollectionDefinition;
 import org.kuali.kfs.kns.datadictionary.InquirySectionDefinition;
 import org.kuali.kfs.kns.lookup.HtmlData;
 import org.kuali.kfs.kns.lookup.HtmlData.AnchorHtmlData;
@@ -174,9 +176,33 @@ public class KualiInquirableImpl extends InquirableImpl implements Inquirable {
                 Section section = SectionBridge.toSection(this, inquirySection, bo, inquiryRestrictions);
                 sections.add(section);
             }
+
+            // log access to sensitive fields
+            for (FieldDefinition fieldDefinition : inquirySection.getInquiryFields()) {
+                if (fieldDefinition instanceof InquiryCollectionDefinition) {
+                    logCollectionAccess((InquiryCollectionDefinition) fieldDefinition, inquiryRestrictions, bo);
+                }
+                else {
+                    String propertyName = fieldDefinition.getName();
+                    KNSServiceLocator.getSecurityLoggingService().logFieldAccess(bo, propertyName, null, inquiryRestrictions, true, null);
+                }
+            }
         }
 
         return sections;
+    }
+
+    protected void logCollectionAccess(InquiryCollectionDefinition collectionDefinition, InquiryRestrictions inquiryRestrictions, BusinessObject bo) {
+        if (collectionDefinition.getInquiryFields() != null) {
+            for (FieldDefinition fieldDefinition : collectionDefinition.getInquiryFields()) {
+                KNSServiceLocator.getSecurityLoggingService().logFieldAccess(bo, fieldDefinition.getName(), null, inquiryRestrictions, true, null);
+            }
+        }
+        if (collectionDefinition.getInquiryCollections() != null) {
+            for (InquiryCollectionDefinition subCollectionDefinition : collectionDefinition.getInquiryCollections()) {
+                logCollectionAccess(subCollectionDefinition, inquiryRestrictions, bo);
+            }
+        }
     }
 
     /**
