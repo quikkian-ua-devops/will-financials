@@ -46,6 +46,7 @@ import org.kuali.kfs.sys.Message;
 import org.kuali.kfs.sys.MessageBuilder;
 import org.kuali.kfs.sys.service.OptionsService;
 import org.kuali.kfs.sys.service.UniversityDateService;
+import org.kuali.kfs.sys.service.impl.KfsParameterConstants;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.springframework.transaction.annotation.Transactional;
@@ -344,7 +345,7 @@ public class EffortCertificationExtractServiceImpl implements EffortCertificatio
         // employee with pay by federal grant
         boolean isFederalFundsOnly = Boolean.parseBoolean(parameters.get(SystemParameters.FEDERAL_ONLY_BALANCE_IND).iterator().next());
         if (isFederalFundsOnly) {
-            Collection<String> federalAgencyTypeCodes = parameters.get(SystemParameters.FEDERAL_AGENCY_TYPE_CODE);
+            Collection<String> federalAgencyTypeCodes = parameters.get(KfsParameterConstants.FEDERAL_AGENCY_TYPE);
 
             Message federalFundsNotFoundError = LedgerBalanceFieldValidator.hasFederalFunds(ledgerBalances, federalAgencyTypeCodes);
             if (federalFundsNotFoundError != null) {
@@ -439,7 +440,7 @@ public class EffortCertificationExtractServiceImpl implements EffortCertificatio
 
         parameters.put(SystemParameters.ACCOUNT_TYPE_CODE_BALANCE_SELECT, EffortCertificationParameterFinder.getAccountTypeCodes());
         parameters.put(SystemParameters.FEDERAL_ONLY_BALANCE_IND, EffortCertificationParameterFinder.getFederalOnlyBalanceIndicatorAsString());
-        parameters.put(SystemParameters.FEDERAL_AGENCY_TYPE_CODE, EffortCertificationParameterFinder.getFederalAgencyTypeCodes());
+        parameters.put(KfsParameterConstants.FEDERAL_AGENCY_TYPE, EffortCertificationParameterFinder.getFederalAgencyTypeCodes());
 
         return parameters;
     }

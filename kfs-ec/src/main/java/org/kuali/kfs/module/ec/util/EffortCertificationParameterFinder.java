@@ -24,6 +24,7 @@ import org.kuali.kfs.module.ec.batch.EffortCertificationCreateStep;
 import org.kuali.kfs.module.ec.batch.EffortCertificationExtractStep;
 import org.kuali.kfs.module.ec.document.EffortCertificationDocument;
 import org.kuali.kfs.sys.context.SpringContext;
+import org.kuali.kfs.sys.service.impl.KfsParameterConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,7 +51,7 @@ public class EffortCertificationParameterFinder {
      * @return the federal agency type codes setup in system parameters
      */
     public static Collection<String> getFederalAgencyTypeCodes() {
-        return parameterService.getParameterValuesAsString(EffortCertificationExtractStep.class, SystemParameters.FEDERAL_AGENCY_TYPE_CODE);
+        return parameterService.getParameterValuesAsString(EffortCertificationExtractStep.class, KfsParameterConstants.FEDERAL_AGENCY_TYPE);
     }
 
     /**
