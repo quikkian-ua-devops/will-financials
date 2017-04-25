@@ -205,4 +205,9 @@ public class ACHPayeeLookupableHelperServiceImpl extends AbstractPayeeLookupable
     protected void filterReturnUrl(List<ResultRow> resultRowList, List<DisbursementPayee> payeeList, String paymentReasonCode) {
     }
 
+    @Override
+    protected String generateBusinessObjectIdentifierForSecurityLogging(BusinessObject businessObject) {
+        DisbursementPayee disbursementPayee = (DisbursementPayee) businessObject;
+        return disbursementPayee.getPayeeTypeCode() + "-" + disbursementPayee.getPayeeIdNumber();
+    }
 }

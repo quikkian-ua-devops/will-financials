@@ -287,9 +287,34 @@ public class KualiMaintainableImpl extends MaintainableImpl implements Maintaina
             throw new RuntimeException("Unable to create instance of object class" + e.getMessage());
         }
 
+        if (oldMaintainable != null) {
+            Class businessObjectClass = getBoClass();
+            for (MaintainableSectionDefinition sectionDefinition : sectionDefinitions) {
+                for (MaintainableItemDefinition itemDefinition : sectionDefinition.getMaintainableItems()) {
+                    if (itemDefinition instanceof MaintainableFieldDefinition) {
+                        MaintainableFieldDefinition fieldDefinition = (MaintainableFieldDefinition) itemDefinition;
+                        KNSServiceLocator.getSecurityLoggingService().logFieldAccess(getBusinessObject(), fieldDefinition.getName(), document, maintenanceRestrictions, true, null);
+                    } else if (itemDefinition instanceof MaintainableCollectionDefinition) {
+                        logCollectionAccess((MaintainableCollectionDefinition) itemDefinition, maintenanceRestrictions, getBusinessObject(), document);
+                    }
+                }
+            }
+        }
         return sections;
     }
 
+    protected void logCollectionAccess(MaintainableCollectionDefinition collectionDefinition, MaintenanceDocumentRestrictions maintenanceRestrictions, BusinessObject bo, MaintenanceDocument document) {
+        if (collectionDefinition.getMaintainableFields() != null) {
+            for (MaintainableFieldDefinition fieldDefinition : collectionDefinition.getMaintainableFields()) {
+                KNSServiceLocator.getSecurityLoggingService().logFieldAccess(bo, fieldDefinition.getName(), document, maintenanceRestrictions, true, null);
+            }
+        }
+        if (collectionDefinition.getMaintainableCollections() != null) {
+            for (MaintainableCollectionDefinition subCollectionDefinition : collectionDefinition.getMaintainableCollections()) {
+                logCollectionAccess(subCollectionDefinition, maintenanceRestrictions, bo, document);
+            }
+        }
+    }
 
     /**
      * @see Maintainable#saveBusinessObject()

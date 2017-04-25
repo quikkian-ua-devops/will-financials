@@ -163,6 +163,7 @@ public class KualiRequestProcessor extends RequestProcessor {
         }
         GlobalVariables.setUserSession(session);
         KNSGlobalVariables.clear();
+        KNSGlobalVariables.setRemoteIpAddress(request.getRemoteAddr());
         return true;
     }
 

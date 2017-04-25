@@ -26,6 +26,7 @@ import org.kuali.kfs.kns.document.authorization.BusinessObjectRestrictions;
 import org.kuali.kfs.kns.document.authorization.FieldRestriction;
 import org.kuali.kfs.kns.lookup.KualiLookupableHelperServiceImpl;
 import org.kuali.kfs.kns.lookup.Lookupable;
+import org.kuali.kfs.kns.service.KNSServiceLocator;
 import org.kuali.kfs.kns.web.ui.ResultRow;
 import org.kuali.kfs.sys.KFSConstants;
 import org.kuali.kfs.sys.KFSPropertyConstants;
@@ -44,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AbstractPayeeLookupableHelperServiceImpl extends KualiLookupableHelperServiceImpl {
+public abstract class AbstractPayeeLookupableHelperServiceImpl extends KualiLookupableHelperServiceImpl {
 
     protected Lookupable vendorLookupable;
     protected DisbursementVoucherPayeeService disbursementVoucherPayeeService;
@@ -203,6 +204,9 @@ public class AbstractPayeeLookupableHelperServiceImpl extends KualiLookupableHel
                 maskedPropertyValue = fieldRestriction.getMaskFormatter().maskValue(propertyValue);
             }
         }
+        if (StringUtils.isNotBlank(propertyValue)) {
+            KNSServiceLocator.getSecurityLoggingService().logFieldAccess(businessObject, propertyName, null, businessObjectRestrictions, false, generateBusinessObjectIdentifierForSecurityLogging(businessObject));
+        }
         return maskedPropertyValue;
     }
 
@@ -233,4 +237,5 @@ public class AbstractPayeeLookupableHelperServiceImpl extends KualiLookupableHel
         this.disbursementVoucherPaymentReasonService = disbursementVoucherPaymentReasonService;
     }
 
+    protected abstract String generateBusinessObjectIdentifierForSecurityLogging(BusinessObject businessObject);
 }

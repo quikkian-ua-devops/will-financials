@@ -22,10 +22,12 @@ import org.apache.commons.lang.StringUtils;
 import org.kuali.kfs.fp.businessobject.DisbursementPayee;
 import org.kuali.kfs.integration.ar.AccountsReceivableCustomer;
 import org.kuali.kfs.integration.ar.AccountsReceivableModuleService;
+import org.kuali.kfs.kns.document.authorization.BusinessObjectRestrictions;
 import org.kuali.kfs.kns.util.KNSGlobalVariables;
 import org.kuali.kfs.kns.util.MessageList;
 import org.kuali.kfs.kns.web.struts.form.LookupForm;
 import org.kuali.kfs.kns.web.ui.ResultRow;
+import org.kuali.kfs.krad.datadictionary.AttributeSecurity;
 import org.kuali.kfs.krad.exception.ValidationException;
 import org.kuali.kfs.krad.lookup.CollectionIncomplete;
 import org.kuali.kfs.krad.util.BeanPropertyComparator;
@@ -368,4 +370,9 @@ public class DisbursementPayeeLookupableHelperServiceImpl extends AbstractPayeeL
         this.accountsReceivableModuleService = accountsReceivableModuleService;
     }
 
+    @Override
+    protected String generateBusinessObjectIdentifierForSecurityLogging(BusinessObject businessObject) {
+        DisbursementPayee disbursementPayee = (DisbursementPayee) businessObject;
+        return disbursementPayee.getPayeeTypeCode() + "-" + disbursementPayee.getPayeeIdNumber();
+    }
 }

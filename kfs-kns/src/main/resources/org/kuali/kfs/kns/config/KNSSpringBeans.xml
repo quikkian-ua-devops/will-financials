@@ -347,6 +347,6 @@
 
     <bean id="cf.documentHelperService" class="org.kuali.kfs.kns.service.impl.DocumentHelperServiceImpl"/>
 
-
+    <bean id="cf.securityLoggingService" class="org.kuali.kfs.kns.service.impl.SecurityLoggingServiceImpl"/>
 
 </beans>
