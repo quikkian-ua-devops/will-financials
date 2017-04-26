@@ -23,13 +23,13 @@ import org.kuali.kfs.fp.businessobject.lookup.AbstractPayeeLookupableHelperServi
 import org.kuali.kfs.kns.lookup.HtmlData;
 import org.kuali.kfs.krad.util.KRADConstants;
 import org.kuali.kfs.pdp.PdpPropertyConstants;
-import org.kuali.kfs.pdp.businessobject.PayeeACHAccount;
 import org.kuali.rice.krad.bo.BusinessObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PayeeACHAccountLookupableHelperServiceImpl extends AbstractPayeeLookupableHelperServiceImpl {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PayeeACHAccountLookupableHelperServiceImpl.class);
 
     /**
      * @see AbstractPayeeLookupableHelperServiceImpl#allowsMaintenanceNewOrCopyAction
@@ -37,7 +37,9 @@ public class PayeeACHAccountLookupableHelperServiceImpl extends AbstractPayeeLoo
      */
     @Override
     public List<HtmlData> getCustomActionUrls(BusinessObject businessObject, List pkNames) {
-        List<HtmlData> htmlDataList = new ArrayList<HtmlData>();
+        LOG.debug("getCustomActionUrls() started");
+
+        List<HtmlData> htmlDataList = new ArrayList<>();
         if (allowsMaintenanceEditAction(businessObject)) {
             htmlDataList.add(getUrlData(businessObject, KRADConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
         }
@@ -56,10 +58,13 @@ public class PayeeACHAccountLookupableHelperServiceImpl extends AbstractPayeeLoo
      */
     @Override
     public HtmlData getInquiryUrl(BusinessObject bo, String propertyName) {
+        LOG.debug("getInquiryUrl() started");
+
         // for properties other than payeeName, or if the user is allowed to inquire the record, return inquiry link as done in super
         // NOTE: Since we don't have separate permission for inquiring PayeeACHAccount, we regard the permission for inquiry as equivalent to the permission for edit.
-        if (!StringUtils.equals(PdpPropertyConstants.PAYEE_NAME, propertyName) || allowsMaintenanceEditAction(bo))
+        if (!isInquiryRestricted(bo, propertyName)) {
             return super.getInquiryUrl(bo, propertyName);
+        }
 
         // otherwise return empty inquiry link
         return new HtmlData.AnchorHtmlData();
@@ -68,5 +73,9 @@ public class PayeeACHAccountLookupableHelperServiceImpl extends AbstractPayeeLoo
     @Override
     protected String generateBusinessObjectIdentifierForSecurityLogging(BusinessObject businessObject) {
         return null;
+    }
+
+    protected boolean isInquiryRestricted(BusinessObject bo, String propertyName) {
+        return (StringUtils.equals(PdpPropertyConstants.PAYEE_NAME, propertyName) && !allowsMaintenanceEditAction(bo));
     }
 }
