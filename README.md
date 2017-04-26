@@ -1,2 +1,1 @@
-# Main Documentation Home
-[https://kualico.atlassian.net/wiki/display/FINDOC/Kuali+Financials+Documentation](https://kualico.atlassian.net/wiki/display/FINDOC/Kuali+Financials+Documentation)
+[Product Documentation](https://kualico.atlassian.net/wiki/display/FINDOC/Kuali+Financials+Documentation) | [Release Notes](https://drive.google.com/drive/folders/0B5IDPi_9SmL1eHhERGplbUk1c00) | [Changelog](https://github.com/KualiCo/financials/blob/master/CHANGELOG.txt?raw=true)
