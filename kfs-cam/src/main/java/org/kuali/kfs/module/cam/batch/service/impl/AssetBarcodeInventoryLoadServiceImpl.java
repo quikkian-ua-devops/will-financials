@@ -479,6 +479,7 @@ public class AssetBarcodeInventoryLoadServiceImpl implements AssetBarcodeInvento
             asset.setBuildingCode(null);
             asset.setBuilding(null);
         }
+
         if (StringUtils.isEmpty(asset.getBuildingRoomNumber())) {
             asset.setBuildingRoomNumber(null);
             asset.setBuildingRoom(null);
@@ -499,8 +500,15 @@ public class AssetBarcodeInventoryLoadServiceImpl implements AssetBarcodeInvento
             }
         }
 
-        // Updating asset information
+        updateAssetPreSave(barcodeInventoryErrorDetail, asset);
         businessObjectService.save(asset);
+    }
+
+    @Override
+    public void updateAssetPreSave(BarcodeInventoryErrorDetail barcodeInventoryErrorDetail, Asset asset) {
+        LOG.debug("updateAssetPreSave() started");
+
+        // Not implemented by default.  This method can be overridden by implementing institutions
     }
 
     /**
