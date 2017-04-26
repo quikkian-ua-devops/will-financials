@@ -50,6 +50,7 @@ import java.util.Map;
 @Transactional
 public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractLookupableHelperServiceImpl {
     private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ElectronicPaymentClaimLookupableHelperServiceImpl.class);
+
     private LookupDao lookupDao;
 
     /**
@@ -57,6 +58,8 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
      */
     @Override
     public List<PersistableBusinessObject> getSearchResults(Map<String, String> fieldValues) {
+        LOG.debug("getSearchResults() started");
+
         String claimingStatus = fieldValues.remove(KFSPropertyConstants.PAYMENT_CLAIM_STATUS_CODE);
         if (claimingStatus != null) {
             if (StringUtils.equals(claimingStatus, ElectronicPaymentClaim.ClaimStatusCodes.CLAIMED)) {
@@ -71,13 +74,66 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
         if (advanceDepositFieldValues.size() > 0) {
             epcList = pruneResults(epcList, advanceDepositFieldValues);
         }
-        List<PersistableBusinessObject> resultsList = new ArrayList<PersistableBusinessObject>(epcList);
+        List<PersistableBusinessObject> resultsList = new ArrayList<>(epcList);
         return resultsList;
     }
 
-    private List<ElectronicPaymentClaim> pruneResults(List<ElectronicPaymentClaim> epcList, Map<String, String> fieldValues) {
+    /**
+     * @see org.kuali.rice.kns.lookup.AbstractLookupableHelperServiceImpl#validateSearchParameters(java.util.Map)
+     */
+    @Override
+    public void validateSearchParameters(Map fieldValues) {
+        LOG.debug("validateSearchParameters() started");
+
+        this.setDocFormKey((String) fieldValues.get(KFSConstants.DOC_FORM_KEY));
+        this.setBackLocation((String) fieldValues.get(KFSConstants.BACK_LOCATION));
+        super.validateSearchParameters(fieldValues);
+    }
+
+    /**
+     * @see org.kuali.rice.kns.lookup.AbstractLookupableHelperServiceImpl#isResultReturnable(org.kuali.rice.krad.bo.BusinessObject)
+     */
+    @Override
+    public boolean isResultReturnable(BusinessObject claimAsBO) {
+        LOG.debug("isResultReturnable() started");
+
+        boolean result = super.isResultReturnable(claimAsBO);
+        ElectronicPaymentClaim claim = (ElectronicPaymentClaim) claimAsBO;
+        if (result && ((claim.getPaymentClaimStatusCode() != null && claim.getPaymentClaimStatusCode().equals(ElectronicPaymentClaim.ClaimStatusCodes.CLAIMED)) || (!StringUtils.isBlank(claim.getReferenceFinancialDocumentNumber())))) {
+            result = false;
+        }
+        return result;
+    }
+
+    /**
+     * Using default results, add columnAnchor link for reference financial document number to open document
+     *
+     * @param lookupForm
+     * @param resultTable
+     * @param bounded
+     * @return KRAD Conversion: Lookupable performing customization of columns of the display list.
+     */
+    @Override
+    public Collection performLookup(LookupForm lookupForm, Collection resultTable, boolean bounded) {
+        LOG.debug("performLookup() started");
+
+        Collection displayList = super.performLookup(lookupForm, resultTable, bounded);
+        for (ResultRow row : (Collection<ResultRow>) resultTable) {
+            for (Column col : row.getColumns()) {
+                if (StringUtils.equals(KFSPropertyConstants.REFERENCE_FINANCIAL_DOCUMENT_NUMBER, col.getPropertyName()) && StringUtils.isNotBlank(col.getPropertyValue())) {
+                    String propertyURL = SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(KFSConstants.WORKFLOW_URL_KEY) + KRADConstants.DOCHANDLER_DO_URL + col.getPropertyValue() + KRADConstants.DOCHANDLER_URL_CHUNK;
+                    AnchorHtmlData htmlData = new AnchorHtmlData(propertyURL, "", col.getPropertyValue());
+                    htmlData.setTitle(col.getPropertyValue());
+                    col.setColumnAnchor(htmlData);
+                }
+            }
+        }
+        return displayList;
+    }
+
+    protected List<ElectronicPaymentClaim> pruneResults(List<ElectronicPaymentClaim> epcList, Map<String, String> fieldValues) {
         List<AdvanceDepositDocument> addList = getAdvanceDepositsWithMatchingFields(fieldValues);
-        ArrayList<ElectronicPaymentClaim> prunedResults = new ArrayList<ElectronicPaymentClaim>();
+        ArrayList<ElectronicPaymentClaim> prunedResults = new ArrayList<>();
         for (ElectronicPaymentClaim epc : epcList) {
             for (AdvanceDepositDocument add : addList) {
                 boolean isElectronicPaymentClaimMatchAdvanceDepositDocument = isElectronicPaymentClaimMatchAdvanceDepositDocument(epc, add);
@@ -89,13 +145,13 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
         return prunedResults;
     }
 
-    private List<AdvanceDepositDocument> getAdvanceDepositsWithMatchingFields(Map<String, String> advanceDepositFieldValues) {
+    protected List<AdvanceDepositDocument> getAdvanceDepositsWithMatchingFields(Map<String, String> advanceDepositFieldValues) {
         List<AdvanceDepositDocument> advanceDepositList = (List<AdvanceDepositDocument>) getLookupService().findCollectionBySearch(AdvanceDepositDocument.class, advanceDepositFieldValues);
         return advanceDepositList;
     }
 
-    private Map<String, String> getAdvanceDepositFieldValues(Map<String, String> fieldValues) {
-        Map<String, String> returnMap = new HashMap<String, String>();
+    protected Map<String, String> getAdvanceDepositFieldValues(Map<String, String> fieldValues) {
+        Map<String, String> returnMap = new HashMap<>();
 
         String orgRefId = fieldValues.remove(KFSPropertyConstants.GENERATING_ACCOUNTING_LINE + KFSConstants.DELIMITER + KFSPropertyConstants.ORGANIZATION_REFERENCE_ID);
         String dateFrom = fieldValues.remove(KFSPropertyConstants.RANGE_LOWER_BOUND_KEY_PREFIX + KFSPropertyConstants.GENERATING_ADVANCE_DEPOSIT_DETAIL + KFSConstants.DELIMITER + KFSPropertyConstants.FINANCIAL_DOCUMENT_ADVANCE_DEPOSIT_DATE);
@@ -130,7 +186,7 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
      * @param toAmount   the upper bound amount
      * @return a lookupable criteria
      */
-    private String getAmountCriteria(String fromAmount, String toAmount) {
+    protected String getAmountCriteria(String fromAmount, String toAmount) {
         if (StringUtils.isNotBlank(fromAmount) && StringUtils.isNotBlank(toAmount)) {
             return fromAmount + SearchOperator.BETWEEN.op() + toAmount;
         }
@@ -143,7 +199,7 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
         return null;
     }
 
-    private boolean isElectronicPaymentClaimMatchAdvanceDepositDocument(ElectronicPaymentClaim epc, AdvanceDepositDocument add) {
+    protected boolean isElectronicPaymentClaimMatchAdvanceDepositDocument(ElectronicPaymentClaim epc, AdvanceDepositDocument add) {
         for (AdvanceDepositDetail detail : add.getAdvanceDeposits()) {
             if (detail.getDocumentNumber().equals(epc.getDocumentNumber())) {
                 return true;
@@ -152,62 +208,7 @@ public class ElectronicPaymentClaimLookupableHelperServiceImpl extends AbstractL
         return false;
     }
 
-    /**
-     * @see org.kuali.rice.kns.lookup.AbstractLookupableHelperServiceImpl#validateSearchParameters(java.util.Map)
-     */
-    @Override
-    public void validateSearchParameters(Map fieldValues) {
-        // grab the backLocation and the docFormKey
-        this.setDocFormKey((String) fieldValues.get(KFSConstants.DOC_FORM_KEY));
-        this.setBackLocation((String) fieldValues.get(KFSConstants.BACK_LOCATION));
-        super.validateSearchParameters(fieldValues);
-    }
-
-    /**
-     * @see org.kuali.rice.kns.lookup.AbstractLookupableHelperServiceImpl#isResultReturnable(org.kuali.rice.krad.bo.BusinessObject)
-     */
-    @Override
-    public boolean isResultReturnable(BusinessObject claimAsBO) {
-        boolean result = super.isResultReturnable(claimAsBO);
-        ElectronicPaymentClaim claim = (ElectronicPaymentClaim) claimAsBO;
-        if (result && ((claim.getPaymentClaimStatusCode() != null && claim.getPaymentClaimStatusCode().equals(ElectronicPaymentClaim.ClaimStatusCodes.CLAIMED)) || (!StringUtils.isBlank(claim.getReferenceFinancialDocumentNumber())))) {
-            result = false;
-        }
-        return result;
-    }
-
-    /**
-     * Using default results, add columnAnchor link for reference financial document number to open document
-     *
-     * @param lookupForm
-     * @param kualiLookupable
-     * @param resultTable
-     * @param bounded
-     * @return KRAD Conversion: Lookupable performing customization of columns of the display list.
-     */
-    @Override
-    public Collection performLookup(LookupForm lookupForm, Collection resultTable, boolean bounded) {
-        Collection displayList = super.performLookup(lookupForm, resultTable, bounded);
-        for (ResultRow row : (Collection<ResultRow>) resultTable) {
-            for (Column col : row.getColumns()) {
-                if (StringUtils.equals(KFSPropertyConstants.REFERENCE_FINANCIAL_DOCUMENT_NUMBER, col.getPropertyName()) && StringUtils.isNotBlank(col.getPropertyValue())) {
-                    String propertyURL = SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(KFSConstants.WORKFLOW_URL_KEY) + KRADConstants.DOCHANDLER_DO_URL + col.getPropertyValue() + KRADConstants.DOCHANDLER_URL_CHUNK;
-                    AnchorHtmlData htmlData = new AnchorHtmlData(propertyURL, "", col.getPropertyValue());
-                    htmlData.setTitle(col.getPropertyValue());
-                    col.setColumnAnchor(htmlData);
-                }
-            }
-        }
-        return displayList;
-    }
-
-    /**
-     * Sets the lookupDao attribute value.
-     *
-     * @param lookupDao The lookupDao to set.
-     */
     public void setLookupDao(LookupDao lookupDao) {
         this.lookupDao = lookupDao;
     }
-
 }
