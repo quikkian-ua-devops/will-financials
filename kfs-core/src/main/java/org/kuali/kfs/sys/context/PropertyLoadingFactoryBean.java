@@ -65,7 +65,6 @@ public class PropertyLoadingFactoryBean implements FactoryBean<Properties> {
             loadPropertyList(props, PROPERTY_TEST_FILE_NAMES_KEY);
         }
         props.putAll(System.getenv());
-        LOG.info(System.getenv());
         if (StringUtils.isBlank(System.getProperty(HTTP_URL_PROPERTY_NAME))) {
             props.put(KSB_REMOTING_URL_PROPERTY_NAME, props.getProperty(KFSConstants.APPLICATION_URL_KEY) + REMOTING_URL_SUFFIX);
         } else {
@@ -74,7 +73,7 @@ public class PropertyLoadingFactoryBean implements FactoryBean<Properties> {
         if (LOG.isDebugEnabled()) {
             for (Object key : props.keySet()) {
                 String value = (String) props.get(key);
-                LOG.info(key + ": " + value);
+                LOG.debug(key + ": " + value);
             }
         }
         return props;
