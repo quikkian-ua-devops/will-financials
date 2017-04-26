@@ -19,6 +19,7 @@
 package org.kuali.kfs.module.cam.batch.service;
 
 import org.kuali.kfs.krad.document.Document;
+import org.kuali.kfs.module.cam.businessobject.Asset;
 import org.kuali.kfs.module.cam.businessobject.BarcodeInventoryErrorDetail;
 import org.kuali.kfs.module.cam.document.web.struts.AssetBarCodeInventoryInputFileForm;
 
@@ -46,13 +47,20 @@ public interface AssetBarcodeInventoryLoadService {
      */
     boolean processFile(File file, AssetBarCodeInventoryInputFileForm form);
 
-
     /**
      * This method updates the asset table
      *
      * @param barcodeInventoryErrorDetail
      */
     void updateAssetInformation(BarcodeInventoryErrorDetail barcodeInventoryErrorDetail, boolean updateWithDateAssetWasScanned);
+
+    /**
+     * This method is called before each asset is saved during the Barcode inventory load process
+     *
+     * @param barcodeInventoryErrorDetail error detail for asset
+     * @param asset asset to be saved
+     */
+    void updateAssetPreSave(BarcodeInventoryErrorDetail barcodeInventoryErrorDetail, Asset asset);
 
     /**
      * Determines whether or not the BCIE document has all its records corrected or deleted
