@@ -23,6 +23,7 @@ import org.kuali.kfs.fp.businessobject.lookup.AbstractPayeeLookupableHelperServi
 import org.kuali.kfs.kns.lookup.HtmlData;
 import org.kuali.kfs.krad.util.KRADConstants;
 import org.kuali.kfs.pdp.PdpPropertyConstants;
+import org.kuali.kfs.pdp.businessobject.PayeeACHAccount;
 import org.kuali.rice.krad.bo.BusinessObject;
 
 import java.util.ArrayList;
@@ -62,5 +63,10 @@ public class PayeeACHAccountLookupableHelperServiceImpl extends AbstractPayeeLoo
 
         // otherwise return empty inquiry link
         return new HtmlData.AnchorHtmlData();
+    }
+
+    @Override
+    protected String generateBusinessObjectIdentifierForSecurityLogging(BusinessObject businessObject) {
+        return null;
     }
 }

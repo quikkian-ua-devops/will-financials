@@ -1265,6 +1265,7 @@ public abstract class AbstractLookupableHelperServiceImpl implements LookupableH
                 maskedPropertyValue = fieldRestriction.getMaskFormatter().maskValue(propertyValue);
             }
         }
+        KNSServiceLocator.getSecurityLoggingService().logFieldAccess(businessObject, propertyName, null, businessObjectRestrictions, false, null);
         return maskedPropertyValue;
     }
 

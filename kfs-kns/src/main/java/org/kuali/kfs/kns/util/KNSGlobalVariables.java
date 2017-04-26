@@ -42,6 +42,8 @@ public final class KNSGlobalVariables {
         }
     };
 
+    private static ThreadLocal<String> remoteIpAddresses = new ApplicationThreadLocal<>();
+
     private static ThreadLocal<HashMap<String, AuditCluster>> auditErrorMaps = new ApplicationThreadLocal<HashMap<String, AuditCluster>>() {
         @Override
         protected HashMap<String, AuditCluster> initialValue() {
@@ -104,10 +106,21 @@ public final class KNSGlobalVariables {
     }
 
     @Deprecated
+    public static String getRemoteIpAddress() {
+        return remoteIpAddresses.get();
+    }
+
+    @Deprecated
+    public static void setRemoteIpAddress(String remoteIpAddress) {
+        remoteIpAddresses.set(remoteIpAddress);
+    }
+
+    @Deprecated
     public static void clear() {
         GlobalVariables.clear();
         messageLists.set(new MessageList());
         auditErrorMaps.set(new HashMap<String, AuditCluster>());
         kualiForms.set(null);
+        remoteIpAddresses.set(null);
     }
 }

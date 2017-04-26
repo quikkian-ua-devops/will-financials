@@ -34,7 +34,9 @@ import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kim.api.KimConstants.PermissionTemplateNames;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is used to define global constants.
@@ -1490,6 +1492,19 @@ public class KFSConstants {
     }
 
     public static final int MAX_NOTE_LINE_SIZE = 90;
+
+    public static final String ACTIVE_EMPLOYEE_STATUS_CODE = "A";
+    public static final String ON_LEAVE_EMPLOYEE_STATUS_CODE = "L";
+    public static final String PENDING_EMPLOYEE_STATUS_CODE = "P";
+    public static final Set<String> ACTIVE_EMPLOYEE_STATUSES = new HashSet<String>();
+
+    static {
+        ACTIVE_EMPLOYEE_STATUSES.add(ACTIVE_EMPLOYEE_STATUS_CODE);
+        ACTIVE_EMPLOYEE_STATUSES.add(ON_LEAVE_EMPLOYEE_STATUS_CODE);
+        ACTIVE_EMPLOYEE_STATUSES.add(PENDING_EMPLOYEE_STATUS_CODE);
+    }
+
+    public static final String PROFESSIONAL_EMPLOYEE_TYPE_CODE = "P";
 
     public static class PaymentPayeeTypes {
         public static final String EMPLOYEE = "E";

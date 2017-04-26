@@ -41,19 +41,6 @@ public class EmployeeDerivedRoleTypeServiceImpl extends DerivedRoleTypeServiceBa
     protected IdentityService identityService;
     protected RoleService roleService;
 
-    protected static final String ACTIVE_EMPLOYEE_STATUS_CODE = "A";
-    protected static final String ON_LEAVE_EMPLOYEE_STATUS_CODE = "L";
-    protected static final String PENDING_EMPLOYEE_STATUS_CODE = "P";
-    protected static final Set<String> ACTIVE_EMPLOYEE_STATUSES = new HashSet<String>();
-
-    static {
-        ACTIVE_EMPLOYEE_STATUSES.add(ACTIVE_EMPLOYEE_STATUS_CODE);
-        ACTIVE_EMPLOYEE_STATUSES.add(ON_LEAVE_EMPLOYEE_STATUS_CODE);
-        ACTIVE_EMPLOYEE_STATUSES.add(PENDING_EMPLOYEE_STATUS_CODE);
-    }
-
-    protected static final String PROFESSIONAL_EMPLOYEE_TYPE_CODE = "P";
-
     @Override
     public List<RoleMembership> getRoleMembersFromDerivedRole(String namespaceCode, String roleName, Map<String, String> qualification) {
         List<RoleMembership> members = new ArrayList<RoleMembership>();
@@ -73,10 +60,10 @@ public class EmployeeDerivedRoleTypeServiceImpl extends DerivedRoleTypeServiceBa
         if ((entity == null) || (entity.getEmployment() == null)) {
             return false;
         }
-        if (!entity.isActive() || !entity.getEmployment().isActive() || !ACTIVE_EMPLOYEE_STATUSES.contains(entity.getEmployment().getEmployeeStatus().getCode())) {
+        if (!entity.isActive() || !entity.getEmployment().isActive() || !KFSConstants.ACTIVE_EMPLOYEE_STATUSES.contains(entity.getEmployment().getEmployeeStatus().getCode())) {
             return false;
         }
-        if ((KFSConstants.SysKimApiConstants.ACTIVE_PROFESSIONAL_EMPLOYEE_KIM_ROLE_NAME.equals(roleName) || KFSConstants.SysKimApiConstants.ACTIVE_PROFESSIONAL_EMPLOYEE_AND_KFS_USER_KIM_ROLE_NAME.equals(roleName)) && !PROFESSIONAL_EMPLOYEE_TYPE_CODE.equals(entity.getEmployment().getEmployeeType().getCode())) {
+        if ((KFSConstants.SysKimApiConstants.ACTIVE_PROFESSIONAL_EMPLOYEE_KIM_ROLE_NAME.equals(roleName) || KFSConstants.SysKimApiConstants.ACTIVE_PROFESSIONAL_EMPLOYEE_AND_KFS_USER_KIM_ROLE_NAME.equals(roleName)) && !KFSConstants.PROFESSIONAL_EMPLOYEE_TYPE_CODE.equals(entity.getEmployment().getEmployeeType().getCode())) {
             return false;
         }
         if ((KFSConstants.SysKimApiConstants.ACTIVE_PROFESSIONAL_EMPLOYEE_AND_KFS_USER_KIM_ROLE_NAME.equals(roleName) || KFSConstants.SysKimApiConstants.ACTIVE_EMPLOYEE_AND_KFS_USER_KIM_ROLE_NAME.equals(roleName))) {

@@ -31,13 +31,16 @@ import java.util.Set;
 /**
  * Base class for all TransactionalDocumentAuthorizers.
  */
-public class TransactionalDocumentAuthorizerBase extends DocumentAuthorizerBase
-    implements TransactionalDocumentAuthorizer {
-    public final Set<String> getEditModes(Document document, Person user,
-                                          Set<String> editModes) {
-        Set<String> unauthorizedEditModes = new HashSet<String>();
+public class TransactionalDocumentAuthorizerBase extends DocumentAuthorizerBase implements TransactionalDocumentAuthorizer {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TransactionalDocumentAuthorizerBase.class);
+
+    @Override
+    public Set<String> getEditModes(Document document, Person user, Set<String> editModes) {
+        LOG.debug("getEditModes() started");
+
+        Set<String> unauthorizedEditModes = new HashSet<>();
         for (String editMode : editModes) {
-            Map<String, String> additionalPermissionDetails = new HashMap<String, String>();
+            Map<String, String> additionalPermissionDetails = new HashMap<>();
             additionalPermissionDetails.put(KimConstants.AttributeConstants.EDIT_MODE, editMode);
             if (permissionExistsByTemplate(
                 document,
