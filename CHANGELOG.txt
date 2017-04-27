@@ -1,3 +1,163 @@
+************************* 2017-04-27 *************************
+commit b19b24e56040f854f8c44de8cc854587aab5e42a
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-04-26 15:57:21 -0400
+
+    FINP-1531 make private methods protected to allow them to be overridden (#1139)
+
+:100644 100644 5b52972... 3344ee6... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/lookup/ElectronicPaymentClaimLookupableHelperServiceImpl.java
+
+commit 960fd1150acba6348d4580cea6684211a1126fd4
+Author: ailishbyrne <byrne.ailish@gmail.com>
+Date:   2017-04-26 15:01:04 -0400
+
+    Update README.md
+
+:100644 100644 e52a9dc... b1f0907... M	README.md
+
+commit 32e962d2508a56ccd4486f411bc06e2cd208b92a
+Author: Philip Berg <pcberg@iu.edu>
+Date:   2017-04-26 13:19:03 -0400
+
+    FINP-1533: Original PR on story caused bug, fixing
+    
+    Since we moved the parameter to SYS and componnent=all, I also need to
+    update the retrieval
+
+:100644 100644 83a0729... 14e25b2... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/util/EffortCertificationParameterFinder.java
+
+commit 8a1cedb6e73d2d450a39253f9b49d02873af372e
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-04-26 13:09:57 -0400
+
+    FINP-1529 Allow inquiry URL restriction to be overridden (#1136)
+
+:100644 100644 363e3c0... aa1da28... M	kfs-core/src/main/java/org/kuali/kfs/pdp/businessobject/lookup/PayeeACHAccountLookupableHelperServiceImpl.java
+
+commit 39d313b2d3ca9419122b91e982b4183c5dd182e8
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-04-26 11:23:28 -0400
+
+    FINP-1524 Add pre-save hook for assets in CAMS Barcode inventory load (#1134)
+
+:100644 100644 219dc93... f7341bb... M	kfs-cam/src/main/java/org/kuali/kfs/module/cam/batch/service/AssetBarcodeInventoryLoadService.java
+:100644 100644 01780e0... cc1532a... M	kfs-cam/src/main/java/org/kuali/kfs/module/cam/batch/service/impl/AssetBarcodeInventoryLoadServiceImpl.java
+
+commit 2dd42e41b86e4b38b5d0b64bf396fa8015469b6e
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-26 09:12:46 -0600
+
+    cleanup
+
+:100644 100644 0a756d8... f4e18d5... M	kfs-core/src/main/java/org/kuali/kfs/sys/context/PropertyLoadingFactoryBean.java
+
+commit edb39bc2cb75bf21a855d8985e3b2166ef589831
+Author: Kevin Kronenbitter <kevin@kuali.co>
+Date:   2017-04-26 08:22:33 -0600
+
+    Update README.md
+
+:100644 100644 1ee3b8e... e52a9dc... M	README.md
+
+commit 2a2a3c22a8fecee90e15e0309b24dd02466a1729
+Author: Philip Berg <pcberg@iu.edu>
+Date:   2017-04-25 14:44:19 -0400
+
+    FINP-1526: Corrected liquibase notation
+
+:100644 000000 7f5e0fd... 0000000... D	kfs-ec/src/main/resources/org/kuali/kfs/module/ec/db/phase5/2017-04.xml
+:100644 100644 c2fa01f... c0eac79... M	kfs-ec/src/main/resources/org/kuali/kfs/module/ec/db/phase5/next-release.xml
+
+commit db549bf4043c1c6a56a24d0a8bc55a9a7797536c
+Author: Philip Berg <pcberg@iu.edu>
+Date:   2017-04-25 13:22:26 -0400
+
+    FINP-1526: Renamed parameter for clarity
+
+:100644 100644 6acf146... 0d2c7e4... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/KfsParameterConstants.java
+:100644 100644 b6d4f37... 21f60f0... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/batch/service/impl/EffortCertificationExtractServiceImpl.java
+:100644 100644 e16281b... 83a0729... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/util/EffortCertificationParameterFinder.java
+
+commit 8021b2d8316daac61f00b16da093198dc3471717
+Author: Philip Berg <pcberg@iu.edu>
+Date:   2017-04-25 12:59:54 -0400
+
+    FINP-1526: Moved EC parameter to SYS
+
+:100644 100644 9b706e9... 6acf146... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/KfsParameterConstants.java
+:100644 100644 271ea3a... aaca782... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/EffortConstants.java
+:100644 100644 4e2106c... b6d4f37... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/batch/service/impl/EffortCertificationExtractServiceImpl.java
+:100644 100644 91741ef... e16281b... M	kfs-ec/src/main/java/org/kuali/kfs/module/ec/util/EffortCertificationParameterFinder.java
+:000000 100644 0000000... 7f5e0fd... A	kfs-ec/src/main/resources/org/kuali/kfs/module/ec/db/phase5/2017-04.xml
+
+commit 7e3e0bb0779c5ce4279c255f883cfbe4dd61c597
+Author: Kevin Kronenbitter <kevin@kuali.co>
+Date:   2017-04-24 16:08:47 -0600
+
+    update license header
+
+:100644 100644 b34316a... 434661a... M	kfs-kns/src/main/java/org/kuali/kfs/kns/service/impl/SecurityLoggingServiceImpl.java
+
+commit d0ebe5b8c624925c1f3ce63feafabff79bad300b
+Author: Kevin Kronenbitter <kevin@kuali.co>
+Date:   2017-04-24 16:08:17 -0600
+
+    update license header
+
+:100644 100644 06b3d89... 7d4f087... M	kfs-kns/src/main/java/org/kuali/kfs/kns/service/SecurityLoggingService.java
+
+commit 6d4599d481b84557b6b8c222ba19aab9ab4d10de
+Author: Philip Berg <pcberg@iu.edu>
+Date:   2017-04-24 17:34:36 -0400
+
+    FINP-1518: Moved *EMPLOYEE_STATUS_CODE constants
+
+:100644 100644 eda2fe7... c192e2f... M	kfs-core/src/main/java/org/kuali/kfs/sys/KFSConstants.java
+:100644 100644 67166c5... 778d225... M	kfs-core/src/main/java/org/kuali/kfs/sys/identity/EmployeeDerivedRoleTypeServiceImpl.java
+
+commit f3c97d99670bfc298ef3f407a9272be552ff584e
+Author: wliang <wliang@uci.edu>
+Date:   2017-04-21 18:05:04 -0700
+
+    security logging for lookups, maintenance, inquiries, document attachment download, and batch file download/delete
+
+:100644 100644 745c6cb... 572cfd7... M	kfs-core/src/main/java/org/kuali/kfs/fp/businessobject/lookup/AbstractPayeeLookupableHelperServiceImpl.java
+:100644 100644 7221e04... 3cca893... M	kfs-core/src/main/java/org/kuali/kfs/fp/businessobject/lookup/DisbursementPayeeLookupableHelperServiceImpl.java
+:100644 100644 10b69b8... 076b474... M	kfs-core/src/main/java/org/kuali/kfs/pdp/businessobject/lookup/ACHPayeeLookupableHelperServiceImpl.java
+:100644 100644 4359e4e... 363e3c0... M	kfs-core/src/main/java/org/kuali/kfs/pdp/businessobject/lookup/PayeeACHAccountLookupableHelperServiceImpl.java
+:100644 100644 410c973... bad058b... M	kfs-core/src/main/java/org/kuali/kfs/sys/web/struts/KualiBatchFileAdminAction.java
+:100644 100644 378ae67... 1ccccfb... M	kfs-core/src/main/resources/log4j.properties
+:100644 100644 da085f9... d986a56... M	kfs-kns/src/main/java/org/kuali/kfs/kns/inquiry/KualiInquirableImpl.java
+:100644 100644 55c4bf0... 85dc3ff... M	kfs-kns/src/main/java/org/kuali/kfs/kns/lookup/AbstractLookupableHelperServiceImpl.java
+:100644 100644 ce40e5f... bbdbd1a... M	kfs-kns/src/main/java/org/kuali/kfs/kns/maintenance/KualiMaintainableImpl.java
+:100644 100644 eeb9f25... e59fa0d... M	kfs-kns/src/main/java/org/kuali/kfs/kns/service/KNSServiceLocator.java
+:000000 100644 0000000... 06b3d89... A	kfs-kns/src/main/java/org/kuali/kfs/kns/service/SecurityLoggingService.java
+:000000 100644 0000000... b34316a... A	kfs-kns/src/main/java/org/kuali/kfs/kns/service/impl/SecurityLoggingServiceImpl.java
+:100644 100644 08fc3b8... d682200... M	kfs-kns/src/main/java/org/kuali/kfs/kns/util/KNSGlobalVariables.java
+:100644 100644 54fd9a8... 0a909a7... M	kfs-kns/src/main/java/org/kuali/kfs/kns/web/struts/action/KualiDocumentActionBase.java
+:100644 100644 5c82312... 369cc88... M	kfs-kns/src/main/java/org/kuali/kfs/kns/web/struts/action/KualiRequestProcessor.java
+:100644 100644 f7a0f6e... c7a4f7d... M	kfs-kns/src/main/resources/org/kuali/kfs/kns/config/KNSSpringBeans.xml
+
+commit fbdd267b229072b44f3b3f5dcb2c8df6a7e56318
+Author: jsissom <jsissom@kuali.co>
+Date:   2017-04-20 17:13:06 -0400
+
+    FINP-1517 Allow override of getEditModes (#1128)
+    
+    * FINP-1517 Cleanup code
+    
+    * FINP-1517 Allow override of getEditModes
+
+:100644 100644 69d84ac... 15715f7... M	kfs-kns/src/main/java/org/kuali/kfs/kns/document/authorization/TransactionalDocumentAuthorizerBase.java
+
+commit b7663a96d8e49cac1386416916831541aa311784
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-19 14:29:30 -0600
+
+    FINI-3563 first whack at Dockerfile
+
+:000000 100644 0000000... f5d8dd9... A	Dockerfile
+:100644 100644 1b7d17d... 0a756d8... M	kfs-core/src/main/java/org/kuali/kfs/sys/context/PropertyLoadingFactoryBean.java
 ************************* 2017-04-20 *************************
 commit bf6fdaa4bcfd94bcf0a4dc42f90ef34063085cbe
 Author: kkronenb <kevin@kuali.co>
