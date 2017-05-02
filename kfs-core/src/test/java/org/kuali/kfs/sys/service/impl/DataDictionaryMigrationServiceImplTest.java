@@ -57,10 +57,13 @@ import org.kuali.kfs.sys.businessobject.Bank;
 import org.kuali.kfs.sys.businessobject.FinancialSystemDocumentHeader;
 import org.kuali.kfs.sys.businessobject.GeneralLedgerPendingEntry;
 import org.kuali.kfs.sys.businessobject.TargetAccountingLine;
+import org.kuali.kfs.sys.businessobject.datadictionary.FinancialSystemBusinessObjectEntry;
+import org.kuali.kfs.sys.businessobject.dto.CascadeParentDTO;
 import org.kuali.kfs.sys.businessobject.dto.ConcernDTO;
 import org.kuali.kfs.sys.businessobject.dto.EntityDTO;
 import org.kuali.kfs.sys.businessobject.dto.FieldDTO;
 import org.kuali.kfs.sys.businessobject.dto.TableDTO;
+import org.kuali.kfs.sys.document.FinancialSystemMaintenanceDocument;
 import org.kuali.kfs.vnd.businessobject.AddressType;
 import org.kuali.kfs.vnd.businessobject.VendorAddress;
 import org.kuali.kfs.vnd.businessobject.VendorContact;
@@ -257,6 +260,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("chartOfAccountsCode")).andReturn(chartOfAccountsAttributeDefinition);
         EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(Chart.class, "chartOfAccountsCode")).andReturn("FIN_COA_CD");
         EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
+        EasyMock.expect(dataDictionary.findParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(null).anyTimes();
 
         EasyMock.replay(dataDictionaryService, dataDictionary, businessObjectEntry, persistenceStructureService);
 
@@ -820,6 +824,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(Account.class, "accountNumber")).andReturn("ACCOUNT_NBR");
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("goodToBeOnTheRoadBackHome")).andReturn(null);
         EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
+        EasyMock.expect(dataDictionary.findParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(null).anyTimes();
 
         EasyMock.replay(dataDictionaryService, dataDictionary, businessObjectEntry, persistenceStructureService);
 
@@ -831,6 +836,172 @@ public class DataDictionaryMigrationServiceImplTest {
         Assert.assertNull(concernDTO.getDescription());
         Assert.assertNotNull(concernDTO.getTable());
         assertAgainstAccountTableDTO(concernDTO.getTable());
+    }
+
+    @Test
+    public void testFindParent() {
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn("VendorPhoneNumber-vendorPhoneNumber-parentField").anyTimes();
+        EasyMock.replay(dataDictionaryService, dataDictionary);
+
+        String parent = dataDictionaryMigrationService.findParent(VendorPhoneNumber.class, "vendorPhoneNumber");
+
+        EasyMock.verify(dataDictionaryService, dataDictionary);
+        Assert.assertEquals("VendorPhoneNumber-vendorPhoneNumber", parent);
+    }
+
+    @Test
+    public void testFindParent_BeanException() {
+        Map<String, String> beanExceptions = dataDictionaryMigrationService.getBeanNameReverseExceptions();
+        beanExceptions.put("VendorPhoneNumber-vendorPhoneNumber", "VendorPhoneNumber-vendorPhoneNumberException");
+        dataDictionaryMigrationService.setBeanNameExceptions(beanExceptions);
+
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", beanExceptions))
+            .andReturn("VendorPhoneNumber-vendorPhoneNumber-parentField").anyTimes();
+        EasyMock.replay(dataDictionaryService, dataDictionary);
+
+        String parent = dataDictionaryMigrationService.findParent(VendorPhoneNumber.class, "vendorPhoneNumber");
+
+        EasyMock.verify(dataDictionaryService, dataDictionary);
+        Assert.assertEquals("VendorPhoneNumber-vendorPhoneNumberException", parent);
+    }
+
+    @Test
+    public void testFindParent_NoParentFound() {
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn(null).anyTimes();
+        EasyMock.replay(dataDictionaryService, dataDictionary);
+
+        String parent = dataDictionaryMigrationService.findParent(VendorPhoneNumber.class, "vendorPhoneNumber");
+
+        EasyMock.verify(dataDictionaryService, dataDictionary);
+        Assert.assertNull(parent);
+    }
+
+    @Test
+    public void testFindParentTableClass_Null() {
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("Blah")).andReturn(null);
+        EasyMock.replay(dataDictionaryService);
+
+        Class<? extends BusinessObject> parentTableClass = dataDictionaryMigrationService.findParentTableClass("Blah");
+
+        EasyMock.verify(dataDictionaryService);
+        Assert.assertNull(parentTableClass);
+    }
+
+    @Test
+    public void testFindParentTableClass_NotAssignable() {
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("Blah")).andReturn(String.class);
+        EasyMock.replay(dataDictionaryService);
+
+        Class<? extends BusinessObject> parentTableClass = dataDictionaryMigrationService.findParentTableClass("Blah");
+
+        EasyMock.verify(dataDictionaryService);
+        Assert.assertNull(parentTableClass);
+    }
+
+    @Test
+    public void testFindParentTableClass_BusinessObjectEntry() {
+        Object fsbo = new FinancialSystemBusinessObjectEntry();
+        BusinessObjectEntry bo = (BusinessObjectEntry) fsbo;
+        bo.setBusinessObjectClass(Chart.class);
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("Blah")).andReturn(bo);
+        EasyMock.replay(dataDictionaryService);
+
+        Class<? extends BusinessObject> parentTableClass = dataDictionaryMigrationService.findParentTableClass("Blah");
+
+        EasyMock.verify(dataDictionaryService);
+        Assert.assertEquals(Chart.class, parentTableClass);
+    }
+
+    @Test
+    public void testFindParentTableClass_DocumentEntry() {
+        Object transDoc = new TransactionalDocumentEntry();
+        DocumentEntry doc = (DocumentEntry) transDoc;
+        doc.setDocumentClass(FinancialSystemMaintenanceDocument.class);
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("Blah")).andReturn(doc);
+        EasyMock.replay(dataDictionaryService);
+
+        Class<? extends BusinessObject> parentTableClass = dataDictionaryMigrationService.findParentTableClass("Blah");
+
+        EasyMock.verify(dataDictionaryService);
+        Assert.assertEquals(FinancialSystemMaintenanceDocument.class, parentTableClass);
+    }
+
+    @Test
+    public void testAddCascadeParentDTO() {
+        FieldDTO fieldDTO = new FieldDTO();
+        Object fsbo = new FinancialSystemBusinessObjectEntry();
+        BusinessObjectEntry bo = (BusinessObjectEntry) fsbo;
+        bo.setBusinessObjectClass(VendorPhoneNumber.class);
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn("VendorPhoneNumber-vendorPhoneNumber-parentField").anyTimes();
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("VendorPhoneNumber")).andReturn(bo);
+        EasyMock.expect(persistenceStructureService.isPersistable(VendorPhoneNumber.class)).andReturn(true);
+        EasyMock.expect(persistenceStructureService.getTableName(VendorPhoneNumber.class)).andReturn("SpecialTableName");
+        EasyMock.expect(persistenceStructureService.getColumnNameForFieldName(VendorPhoneNumber.class, "vendorPhoneNumber")).andReturn("SpecialFieldName");
+        EasyMock.replay(dataDictionaryService, dataDictionary, persistenceStructureService);
+
+        dataDictionaryMigrationService.addCascadeParentDTO(VendorPhoneNumber.class, "vendorPhoneNumber", fieldDTO);
+
+        EasyMock.verify(dataDictionaryService, dataDictionary, persistenceStructureService);
+        CascadeParentDTO cascadeParentDTO = fieldDTO.getCascadeParent();
+        Assert.assertNotNull(cascadeParentDTO);
+        Assert.assertEquals("SpecialFieldName", cascadeParentDTO.getFieldCode());
+        Assert.assertEquals("SpecialTableName", cascadeParentDTO.getTableCode());
+    }
+
+    @Test
+    public void testAddCascadeParentDTO_NotPersistable() {
+        FieldDTO fieldDTO = new FieldDTO();
+        Object fsbo = new FinancialSystemBusinessObjectEntry();
+        BusinessObjectEntry bo = (BusinessObjectEntry) fsbo;
+        bo.setBusinessObjectClass(VendorPhoneNumber.class);
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn("VendorPhoneNumber-vendorPhoneNumber-parentField").anyTimes();
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("VendorPhoneNumber")).andReturn(bo);
+        EasyMock.expect(persistenceStructureService.isPersistable(VendorPhoneNumber.class)).andReturn(false);
+        EasyMock.replay(dataDictionaryService, dataDictionary, persistenceStructureService);
+
+        dataDictionaryMigrationService.addCascadeParentDTO(VendorPhoneNumber.class, "vendorPhoneNumber", fieldDTO);
+
+        EasyMock.verify(dataDictionaryService, dataDictionary, persistenceStructureService);
+        CascadeParentDTO cascadeParentDTO = fieldDTO.getCascadeParent();
+        Assert.assertNull(cascadeParentDTO);
+    }
+
+    @Test
+    public void testAddCascadeParentDTO_NoFullParentFieldName() {
+        FieldDTO fieldDTO = new FieldDTO();
+        Object fsbo = new FinancialSystemBusinessObjectEntry();
+        BusinessObjectEntry bo = (BusinessObjectEntry) fsbo;
+        bo.setBusinessObjectClass(VendorPhoneNumber.class);
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn(null).anyTimes();
+        EasyMock.replay(dataDictionaryService, dataDictionary);
+
+        dataDictionaryMigrationService.addCascadeParentDTO(VendorPhoneNumber.class, "vendorPhoneNumber", fieldDTO);
+
+        EasyMock.verify(dataDictionaryService, dataDictionary);
+        CascadeParentDTO cascadeParentDTO = fieldDTO.getCascadeParent();
+        Assert.assertNull(cascadeParentDTO);
+    }
+
+    @Test
+    public void testAddCascadeParentDTO_NoParentTableClass() {
+        FieldDTO fieldDTO = new FieldDTO();
+        Object fsbo = new FinancialSystemBusinessObjectEntry();
+        BusinessObjectEntry bo = (BusinessObjectEntry) fsbo;
+        EasyMock.expect(dataDictionary.findParent(VendorPhoneNumber.class, "vendorPhoneNumber", dataDictionaryMigrationService.getBeanNameReverseExceptions()))
+            .andReturn("VendorPhoneNumber-vendorPhoneNumber-parentField").anyTimes();
+        EasyMock.expect(dataDictionaryService.getDictionaryObject("VendorPhoneNumber")).andReturn(bo);
+        EasyMock.replay(dataDictionaryService, dataDictionary);
+
+        dataDictionaryMigrationService.addCascadeParentDTO(VendorPhoneNumber.class, "vendorPhoneNumber", fieldDTO);
+
+        EasyMock.verify(dataDictionaryService, dataDictionary);
+        CascadeParentDTO cascadeParentDTO = fieldDTO.getCascadeParent();
+        Assert.assertNull(cascadeParentDTO);
     }
 
     private Optional<TableDTO> retrieveTableByCode(List<TableDTO> subTables, String code) {
@@ -911,6 +1082,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(businessObjectEntry.getAttributeDefinition("goodToBeOnTheRoadBackHome")).andReturn(null);
         EasyMock.expect(businessObjectEntry.getObjectLabel()).andReturn("Account").anyTimes();
         EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
+        EasyMock.expect(dataDictionary.findParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(null).anyTimes();
     }
 
     private void initializeExpectationsForVendorWithFields() {
@@ -950,6 +1122,7 @@ public class DataDictionaryMigrationServiceImplTest {
         EasyMock.expect(persistenceStructureService.isPersistable(VendorDetail.class)).andReturn(true);
         EasyMock.expect(dataDictionary.getBusinessObjectEntry(VendorDetail.class.getName())).andReturn(businessObjectEntry).anyTimes();
         EasyMock.expect(dataDictionary.isParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(false).anyTimes();
+        EasyMock.expect(dataDictionary.findParent(EasyMock.anyObject(), EasyMock.anyString(), EasyMock.anyObject())).andReturn(null).anyTimes();
         EasyMock.expect(businessObjectEntry.getObjectLabel()).andReturn("Vendor");
         EasyMock.expect(persistenceStructureService.getTableName(VendorDetail.class)).andReturn("PUR_VNDR_DTL_T");
         initializeExpectationsForVendorWithFields();

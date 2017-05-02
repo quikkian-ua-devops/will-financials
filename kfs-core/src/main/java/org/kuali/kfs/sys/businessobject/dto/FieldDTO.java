@@ -28,7 +28,7 @@ public class FieldDTO {
     private boolean required;
     private String fieldType;
     private boolean cascadeSource;
-    private CascadeParentDTO cascadeParentDTO;
+    private CascadeParentDTO cascadeParent;
 
     public String getCode() {
         return code;
@@ -86,12 +86,12 @@ public class FieldDTO {
         this.cascadeSource = cascadeSource;
     }
 
-    public CascadeParentDTO getCascadeParentDTO() {
-        return cascadeParentDTO;
+    public CascadeParentDTO getCascadeParent() {
+        return cascadeParent;
     }
 
-    public void setCascadeParentDTO(CascadeParentDTO cascadeParentDTO) {
-        this.cascadeParentDTO = cascadeParentDTO;
+    public void setCascadeParent(CascadeParentDTO cascadeParent) {
+        this.cascadeParent = cascadeParent;
     }
 
     @Override

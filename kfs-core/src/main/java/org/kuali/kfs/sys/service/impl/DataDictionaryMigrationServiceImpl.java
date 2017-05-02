@@ -47,6 +47,7 @@ import org.kuali.kfs.sys.batch.DataDictionaryFilter;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredEntity;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredField;
 import org.kuali.kfs.sys.batch.DataDictionaryFilteredTable;
+import org.kuali.kfs.sys.businessobject.dto.CascadeParentDTO;
 import org.kuali.kfs.sys.businessobject.dto.ConcernDTO;
 import org.kuali.kfs.sys.businessobject.dto.EntityDTO;
 import org.kuali.kfs.sys.businessobject.dto.FieldDTO;
@@ -56,6 +57,7 @@ import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.core.api.util.type.KualiPercent;
 import org.kuali.rice.krad.bo.BusinessObject;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
@@ -81,7 +83,8 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
     private List<DataDictionaryFilteredTable> filteredTables = new ArrayList<>();
     private List<DataDictionaryFilteredField> filteredFields = new ArrayList<>();
     private List<String> concerns = new ArrayList<>();
-    private Map<String, String> beanNameExceptions = new HashMap<>();
+    private Map beanNameExceptions = new HashMap();
+    private Map beanNameReverseExceptions = new HashMap();
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DataDictionaryMigrationServiceImpl.class);
 
@@ -473,7 +476,65 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
         fieldDTO.setRequired(attributeDefinition.isRequired());
         fieldDTO.setFieldType(determineFieldType(tableClass, fieldName));
         fieldDTO.setCascadeSource(dataDictionaryService.getDataDictionary().isParent(tableClass, fieldName, beanNameExceptions));
+        if (!fieldDTO.isCascadeSource()) {
+            addCascadeParentDTO(tableClass, fieldName, fieldDTO);
+        }
         return fieldDTO;
+    }
+
+    protected void addCascadeParentDTO(Class<? extends PersistableBusinessObject> tableClass, String fieldName, FieldDTO fieldDTO) {
+        String fullParentFieldName = findParent(tableClass, fieldName);
+        if (fullParentFieldName != null) {
+            String[] parentFieldNameParts = fullParentFieldName.split("-");
+            try {
+                Class<? extends BusinessObject> parentTableClass = findParentTableClass(parentFieldNameParts[0]);
+                if (parentTableClass != null && persistenceStructureService.isPersistable(parentTableClass)) {
+                    String tableCode = persistenceStructureService.getTableName((Class<? extends PersistableBusinessObject>) parentTableClass);
+                    String fieldCode = persistenceStructureService.getColumnNameForFieldName(parentTableClass, parentFieldNameParts[1]);
+                    if (fieldCode == null) {
+                        LOG.warn("NEW ISSUE: Unable to find fieldCode for parent: " + fullParentFieldName);
+                    }
+                    CascadeParentDTO cascadeParentDTO = new CascadeParentDTO();
+                    cascadeParentDTO.setTableCode(tableCode);
+                    cascadeParentDTO.setFieldCode(fieldCode);
+                    fieldDTO.setCascadeParent(cascadeParentDTO);
+                }
+            } catch (NoSuchBeanDefinitionException exception) {
+                LOG.warn("Could not find bean definition for " + parentFieldNameParts[0]);
+            } catch (ClassCastException cce) {
+                LOG.error("Failed to cast " + fullParentFieldName);
+            }
+        }
+    }
+
+    protected Class<? extends BusinessObject> findParentTableClass(String parentTableClassname) {
+        Object dictionaryObject = dataDictionaryService.getDictionaryObject(parentTableClassname);
+        if (dictionaryObject == null) {
+            LOG.error("Failed to find class for  " + parentTableClassname);
+            return null;
+        }
+        if (BusinessObjectEntry.class.isAssignableFrom(dictionaryObject.getClass())) {
+            BusinessObjectEntry parentTableBO = (BusinessObjectEntry) dictionaryObject;
+            return parentTableBO.getBusinessObjectClass();
+        } else if (DocumentEntry.class.isAssignableFrom(dictionaryObject.getClass())) {
+            DocumentEntry parentTableDoc = (DocumentEntry) dictionaryObject;
+            return parentTableDoc.getDocumentClass();
+        }
+        return null;
+    }
+
+    protected String findParent(Class<? extends PersistableBusinessObject> tableClass, String fieldName) {
+        String fullParentFieldName = dataDictionaryService.getDataDictionary().findParent(tableClass, fieldName, beanNameExceptions);
+        if (fullParentFieldName == null) {
+            LOG.warn("Failed to find parent for  " + tableClass.getSimpleName() + "-" + fieldName);
+            return null;
+        }
+        String[] parentFieldNameParts = fullParentFieldName.split("-");
+        String parentFieldName = StringUtils.join(parentFieldNameParts, "-", 0, 2);
+        if (beanNameReverseExceptions.containsKey(parentFieldName)) {
+            parentFieldName = (String)beanNameExceptions.get(parentFieldName);
+        }
+        return parentFieldName;
     }
 
     protected String determineFieldType(Class<? extends PersistableBusinessObject> tableClass, String fieldName) {
@@ -593,5 +654,13 @@ public class DataDictionaryMigrationServiceImpl implements DataDictionaryMigrati
 
     public void setBeanNameExceptions(Map<String, String> beanNameExceptions) {
         this.beanNameExceptions = beanNameExceptions;
+    }
+
+    public Map getBeanNameReverseExceptions() {
+        return beanNameReverseExceptions;
+    }
+
+    public void setBeanNameReverseExceptions(Map beanNameReverseExceptions) {
+        this.beanNameReverseExceptions = beanNameReverseExceptions;
     }
 }

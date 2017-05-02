@@ -2625,6 +2625,11 @@
                 <entry key="VendorHeader-vendorW8BenReceivedIndicator" value="VendorHeader-vendorW8ReceivedIndicator"/>
             </map>
         </property>
+        <property name="beanNameReverseExceptions">
+            <map>
+                <entry key="LaborBenefitRateCategory-code" value="LaborBenefitRateCategory-laborBenefitRateCategoryCode"/>
+            </map>
+        </property>
     </bean>
 
     <import resource="spring-sys-bus-exports.xml"/>

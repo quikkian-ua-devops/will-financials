@@ -52,7 +52,10 @@ public class DataDictionaryIndex implements Runnable {
     // keyed by a class object, and the value is a set of classes that may block the class represented by the key from inactivation
     private Map<Class, Set<InactivationBlockingMetadata>> inactivationBlockersForClass;
 
+    // Set of parent attribute names - easy to lookup attributes who have children
     private Set<String> parentAttributes;
+    // Child bean name is key with the parent bean name as value - easy to lookup a child's parent
+    private Map<String, String> childAttributesParent;
 
     public DataDictionaryIndex(DefaultListableBeanFactory ddBeans) {
         this.ddBeans = ddBeans;
@@ -218,25 +221,45 @@ public class DataDictionaryIndex implements Runnable {
 
     private void buildAttributeParentSet() {
         parentAttributes = new HashSet<>();
+        childAttributesParent = new HashMap<>();
 
         for (String beanName : ddBeans.getBeanNamesForType(AttributeDefinition.class)) {
             BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
             if (beanDefinition != null && beanDefinition.getParentName() != null) {
-                addParentBeanDefinitionType(beanName);
+                addParentBeanDefinitionType(beanName, beanName);
             }
         }
     }
 
-    private void addParentBeanDefinitionType(String beanName) {
+    private void addParentBeanDefinitionType(String beanName, String initialBeanName) {
         BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
         if (beanDefinition.getParentName().endsWith("-parentBean")) {
-            addParentBeanDefinitionType(beanDefinition.getParentName());
+            addParentBeanDefinitionType(beanDefinition.getParentName(), initialBeanName);
         } else {
             parentAttributes.add(beanDefinition.getParentName());
+
+            String parentName = isTopLevelAttribute(beanDefinition.getParentName()) ? beanName : beanDefinition.getParentName();
+            if (!parentName.contains("-parentBean")) {
+                childAttributesParent.put(initialBeanName, parentName);
+            }
         }
     }
 
     public boolean hasChildren(String fieldName) {
         return parentAttributes.contains(fieldName);
+    }
+
+    public String findParent(String fieldName) {
+        if (!childAttributesParent.containsKey(fieldName)) {
+            LOG.warn("No parent found for attribute: " + fieldName);
+        }
+        return childAttributesParent.get(fieldName);
+    }
+
+    public boolean isTopLevelAttribute(String attributeName) {
+        return (attributeName.equals("AttributeDefinition")|| attributeName.startsWith("GenericAttributes") || attributeName.startsWith("CommonAttributes") ||
+            attributeName.startsWith("AccountAttribute") || attributeName.startsWith("SubAccountAttribute") || attributeName.startsWith("SubObjectAttribute") ||
+            attributeName.startsWith("ObjectCodeAttribute") || attributeName.startsWith("ChartAttribute") ||
+            attributeName.equals("ExternalizableAttributeDefinitionProxy"));
     }
 }

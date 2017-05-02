@@ -778,10 +778,7 @@ public class DataDictionary {
     }
 
     public boolean isParent(Class<? extends PersistableBusinessObject> tableClass, String fieldName, Map<String, String> beanNameExceptions) {
-        String beanName = tableClass.getSimpleName() + "-" + fieldName;
-        if (beanNameExceptions.containsKey(beanName)) {
-            beanName = beanNameExceptions.get(beanName);
-        }
+        String beanName = beanNameFromFieldName(tableClass, fieldName, beanNameExceptions);
 
         try {
             BeanDefinition beanDefinition = ddBeans.getBeanDefinition(beanName);
@@ -797,14 +794,23 @@ public class DataDictionary {
         return false;
     }
 
+    private String beanNameFromFieldName(Class<? extends PersistableBusinessObject> tableClass, String fieldName, Map<String, String> beanNameExceptions) {
+        String beanName = tableClass.getSimpleName() + "-" + fieldName;
+        if (beanNameExceptions.containsKey(beanName)) {
+            beanName = beanNameExceptions.get(beanName);
+        }
+        return beanName;
+    }
+
     private boolean isValidPotentialParentBeanDefinition(BeanDefinition beanDefinition) {
         if (beanDefinition == null) {
             return false;
         }
 
-        String parentName = beanDefinition.getParentName();
-        return (parentName.equals("AttributeDefinition")|| parentName.startsWith("GenericAttributes") || parentName.startsWith("CommonAttributes") ||
-            parentName.startsWith("AccountAttribute") || parentName.startsWith("SubAccountAttribute") || parentName.startsWith("SubObjectAttribute") ||
-            parentName.startsWith("ObjectCodeAttribute") || parentName.startsWith("ChartAttribute"));
+        return ddIndex.isTopLevelAttribute(beanDefinition.getParentName());
+    }
+
+    public String findParent(Class<? extends PersistableBusinessObject> tableClass, String fieldName, Map<String, String> beanNameExceptions) {
+        return ddIndex.findParent(beanNameFromFieldName(tableClass, fieldName, beanNameExceptions));
     }
 }
