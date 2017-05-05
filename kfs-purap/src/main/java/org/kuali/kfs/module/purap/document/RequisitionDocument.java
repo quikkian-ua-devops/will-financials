@@ -302,7 +302,7 @@ public class RequisitionDocument extends PurchasingDocumentBase implements Copya
     }
 
     /**
-     * Checks whether copying of this document should be allowed. Copying is not allowed if this is a B2B requistion, and more than
+     * Checks whether copying of this document should be allowed. Copying is not allowed if this is a B2B requisition, and more than
      * a set number of days have passed since the document's creation.
      *
      * @return True if copying of this requisition is allowed.
@@ -488,33 +488,6 @@ public class RequisitionDocument extends PurchasingDocumentBase implements Copya
     public void doRouteLevelChange(DocumentRouteLevelChange change) {
         LOG.debug("handleRouteLevelChange() started");
         super.doRouteLevelChange(change);
-/*
-  FIXME: Remove this code
-        try {
-            String newNodeName = change.getNewNodeName();
-            if (StringUtils.isNotBlank(newNodeName)) {
-                ReportCriteriaDTO reportCriteriaDTO = new ReportCriteriaDTO(Long.valueOf(getDocumentNumber()));
-                reportCriteriaDTO.setTargetNodeName(newNodeName);
-                if (SpringContext.getBean(KualiWorkflowInfo.class).documentWillHaveAtLeastOneActionRequest(reportCriteriaDTO, new String[] { KewApiConstants.ACTION_REQUEST_APPROVE_REQ, KewApiConstants.ACTION_REQUEST_COMPLETE_REQ }, false)) {
-                    NodeDetails currentNode = NodeDetailEnum.getNodeDetailEnumByName(newNodeName);
-                    if (ObjectUtils.isNotNull(currentNode)) {
-                        if (StringUtils.isNotBlank(currentNode.getAwaitingStatusCode())) {
-                            updateStatusAndSave(currentNode.getAwaitingStatusCode());
-                        }
-                    }
-                }
-                else {
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug("Document with id " + getDocumentNumber() + " will not stop in route node '" + newNodeName + "'");
-                    }
-                }
-            }
-        }
-        catch (WorkflowException e) {
-            String errorMsg = "Workflow Error found checking actions requests on document with id " + getDocumentNumber() + ". *** WILL NOT UPDATE PURAP STATUS ***";
-            LOG.warn(errorMsg, e);
-        }
-        */
     }
 
     /**

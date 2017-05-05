@@ -280,18 +280,6 @@ public abstract class PurchasingDocumentBase extends PurchasingAccountsPayableDo
      */
     @Override
     public void loadReceivingAddress() {
-        /*
-        Map criteria = new HashMap();
-        criteria.put(KFSPropertyConstants.CHART_OF_ACCOUNTS_CODE, this.getChartOfAccountsCode());
-        criteria.put(KFSPropertyConstants.ORGANIZATION_CODE, this.getOrganizationCode());
-        criteria.put(PurapPropertyConstants.RCVNG_ADDR_DFLT_IND, true);
-        criteria.put(PurapPropertyConstants.RCVNG_ADDR_ACTIVE, true);
-        List<ReceivingAddress> addresses = (List)SpringContext.getBean(BusinessObjectService.class).findMatching(ReceivingAddress.class, criteria);
-        if (addresses != null && addresses.size()>0 )
-            this.templateReceivingAddress(addresses.get(0));
-        else // if no address is found, fill with null
-            this.templateReceivingAddress(null);
-        */
         String chartCode = getChartOfAccountsCode();
         String orgCode = getOrganizationCode();
         ReceivingAddress address = SpringContext.getBean(ReceivingAddressService.class).findUniqueDefaultByChartOrg(chartCode, orgCode);
@@ -363,8 +351,6 @@ public abstract class PurchasingDocumentBase extends PurchasingAccountsPayableDo
         }
         super.populateDocumentForRouting();
     }
-
-    // GETTERS AND SETTERS
 
     /**
      * @see org.kuali.kfs.module.purap.document.PurchasingDocument.getItemParser().
