@@ -27,7 +27,7 @@
 <kul:tab tabTitle="Account Summary" defaultOpen="false" tabErrorKey="${PurapConstants.ACCOUNT_SUMMARY_TAB_ERRORS}">
 
 	<div class="tab-container" align="center" valign="middle">
-        <c:if test="${KualiForm.document.inquiryRendered}">
+        <c:if test="${!KualiForm.document.inquiryRendered}">
 	        <div>
 	            Object Code and Sub-Object Code inquiries and descriptions have been removed because this is a prior year document.
             </div>
