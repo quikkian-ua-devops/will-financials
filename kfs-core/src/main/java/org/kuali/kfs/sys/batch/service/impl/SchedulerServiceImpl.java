@@ -178,7 +178,6 @@ public class SchedulerServiceImpl implements SchedulerService {
      * modules arn't loaded or if institutions don't schedule some dependencies
      */
     protected void dropDependenciesNotScheduled() {
-            //kkronenb there could be dragons here
             Map<String, JobDescriptor> descriptors = SpringContext.getBeansOfType(JobDescriptor.class);
 
             for (String jobName : descriptors.keySet()) {

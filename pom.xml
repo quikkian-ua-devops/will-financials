@@ -548,11 +548,11 @@
         </dependency>
 
         <!-- explicitly including jaxen to change version number from what maven would have resolved it to -->
-        <!--<dependency>-->
-            <!--<groupId>jaxen</groupId>-->
-            <!--<artifactId>jaxen</artifactId>-->
-            <!--<version>${jaxen.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>${jaxen.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>joda-time</groupId>
@@ -696,11 +696,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.cxf</groupId>-->
-            <!--<artifactId>cxf-rt-transports-http-jetty</artifactId>-->
-            <!--<version>${cxf.version}</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -754,86 +749,6 @@
             <version>${struts.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tiles</groupId>-->
-            <!--<artifactId>tiles-core</artifactId>-->
-            <!--<version>${tiles.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-beanutils</groupId>-->
-                    <!--<artifactId>commons-beanutils</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tiles</groupId>-->
-            <!--<artifactId>tiles-api</artifactId>-->
-            <!--<version>${tiles.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-beanutils</groupId>-->
-                    <!--<artifactId>commons-beanutils</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tiles</groupId>-->
-            <!--<artifactId>tiles-servlet</artifactId>-->
-            <!--<version>${tiles.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-beanutils</groupId>-->
-                    <!--<artifactId>commons-beanutils</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tiles</groupId>-->
-            <!--<artifactId>tiles-jsp</artifactId>-->
-            <!--<version>${tiles.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-beanutils</groupId>-->
-                    <!--<artifactId>commons-beanutils</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tiles</groupId>-->
-            <!--<artifactId>tiles-template</artifactId>-->
-            <!--<version>${tiles.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-beanutils</groupId>-->
-                    <!--<artifactId>commons-beanutils</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
@@ -876,19 +791,6 @@
             <version>${persistence.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.jasig.cas.client</groupId>-->
-            <!--<artifactId>cas-client-core</artifactId>-->
-            <!--<version>${cas-client-core.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                    <!--<groupId>commons-logging</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -900,12 +802,6 @@
             <artifactId>jdom</artifactId>
             <version>${jdom.version}</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.kuali.common</groupId>-->
-            <!--<artifactId>kuali-mvn</artifactId>-->
-            <!--<version>${kuali-mvn.version}</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.objenesis</groupId>
@@ -937,19 +833,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-java</artifactId>-->
-            <!--<version>${selenium-java.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-logging</groupId>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>

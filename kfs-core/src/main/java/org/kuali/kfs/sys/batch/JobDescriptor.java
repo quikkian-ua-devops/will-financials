@@ -67,8 +67,6 @@ public class JobDescriptor implements BeanNameAware {
      * @return the org.quartz.JobDetail corresponding to this instance
      */
     public JobDetail getJobDetail() {
-       // return new JobDetail(name, group, Job.class, false, durable, false);
-        // kkronenb dragons
         JobDetail detail = newJob().withIdentity(name, group)
                                     .storeDurably(durable)
                                     .requestRecovery(false)

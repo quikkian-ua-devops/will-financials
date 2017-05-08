@@ -201,13 +201,12 @@ public class SchedulerServiceImplTest extends KualiTestBase {
             if (jobDetail == null) {
                 fail("Unable to retrieve JobDetail object for " + groupName + " : " + jobName);
             }
-//            if (jobDetail.getJobDataMap() == null) {
-//                //kkronenb dragons
-//                JobBuilder builder = JobBuilder.newJob();
-//                builder.usingJobData(new JobDataMap());
-//                builder.withIdentity(jobName,groupName);
-//                jobDetail = builder.build();
-//            }
+            if (jobDetail.getJobDataMap() == null) {
+                JobBuilder builder = JobBuilder.newJob();
+                builder.usingJobData(new JobDataMap());
+                builder.withIdentity(jobName,groupName);
+                jobDetail = builder.build();
+            }
             jobDetail.getJobDataMap().put(SchedulerService.JOB_STATUS_PARAMETER, SchedulerService.SCHEDULED_JOB_STATUS_CODE);
             scheduler.addJob(jobDetail, true);
 

@@ -22,7 +22,6 @@ import org.kuali.rice.core.api.config.property.Config;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.core.impl.config.property.ConfigLogger;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -30,11 +29,11 @@ import java.util.Properties;
 /**
  * Configures a property placeholder in Spring which will allow access to the properties configured in the workflow configuration.
  */
-public class ConfigPropertyPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
+public class ConfigPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
     protected static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ConfigPropertyPlaceholderConfigurer.class);
 
     public ConfigPropertyPlaceholderConfigurer() {
-       // setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
+        setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
     }
 
     @Override
