@@ -374,7 +374,7 @@ public class PaymentDetailAction extends KualiAction {
      * @param user            the user that canceled the disbursement
      * @return true if disbursement successfully reissued/canceled, false otherwise
      */
-    private boolean performReIssueDisbursement(int paymentDetailId, String changeText, Person user) {
+    protected boolean performReIssueDisbursement(int paymentDetailId, String changeText, Person user) {
         Map keyMap = new HashMap();
         keyMap.put(PdpPropertyConstants.PaymentDetail.PAYMENT_ID, paymentDetailId);
 
