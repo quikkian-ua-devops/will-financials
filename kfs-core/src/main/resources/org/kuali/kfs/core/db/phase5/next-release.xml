@@ -27,8 +27,8 @@
         <dropColumn tableName="krsb_qrtz_triggers" columnName="is_volatile"/>
         <dropColumn tableName="krsb_qrtz_fired_triggers" columnName="is_volatile"/>
         <addColumn tableName="krsb_qrtz_job_details">
-            <column name="is_nonconcurrent" type="bool"/>
-            <column name="is_update_data" type="bool"/>
+            <column name="is_nonconcurrent" type="varchar(1)"/>
+            <column name="is_update_data" type="varchar(1)"/>
         </addColumn>
         <update tableName="krsb_qrtz_job_details">
             <column name="is_nonconcurrent" valueComputed="is_stateful"/>
@@ -36,8 +36,8 @@
         </update>
         <dropColumn tableName="krsb_qrtz_job_details" columnName="is_stateful"/>
         <addColumn tableName="krsb_qrtz_fired_triggers">
-            <column name="is_nonconcurrent" type="bool"/>
-            <column name="is_update_data" type="bool"/>
+            <column name="is_nonconcurrent" type="varchar(1)"/>
+            <column name="is_update_data" type="varchar(1)"/>
         </addColumn>
         <update tableName="krsb_qrtz_fired_triggers">
             <column name="is_nonconcurrent" valueComputed="is_stateful"/>
