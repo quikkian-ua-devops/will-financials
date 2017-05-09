@@ -203,7 +203,7 @@
         <powermock.version>1.6.6</powermock.version>
 
         <kfs.help.version>current-SNAPSHOT</kfs.help.version>
-        <rice.version>2.6.0-1705.0002-SNAPSHOT</rice.version>
+        <rice.version>2.6.0</rice.version>
 
         <oracle.jdbc.version>10.2.0.3.0</oracle.jdbc.version>
         <oracle.jdbc.artifactId>ojdbc14</oracle.jdbc.artifactId>
