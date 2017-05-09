@@ -19,7 +19,7 @@
  -->
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
                    logicalFilePath="org/kuali/kfs/core/db/phase5/post-rel-2017-04-27.xml" >
 
     <changeSet id="FINI-3567" author="KFS701" context="bootstrap,demo,unit">
@@ -160,15 +160,18 @@
         <dropPrimaryKey tableName="krsb_qrtz_scheduler_state"/>
         <addPrimaryKey tableName="krsb_qrtz_scheduler_state" columnNames="instance_name, sched_name"/>
 
+    </changeSet>
+    <changeSet id="FINI-3567_createTable" author="KFS701">
+
         <createTable tableName="krsb_qrtz_simprop_triggers">
             <column name="SCHED_NAME" type="VARCHAR(120)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TRIGGER_NAME" type="VARCHAR(200)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TRIGGER_GROUP" type="VARCHAR(200)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="STR_PROP_1" type="VARCHAR(512)"/>
             <column name="STR_PROP_2" type="VARCHAR(512)"/>
@@ -179,12 +182,17 @@
             <column name="LONG_PROP_2" type="NUMBER"/>
             <column name="DEC_PROP_1" type="NUMERIC(13,4)"/>
             <column name="DEC_PROP_2" type="NUMERIC(13,4)"/>
-            <column name="BOOL_PROP_1" type="BOOL"/>
-            <column name="BOOL_PROP_2" type="BOOL"/>
+            <column name="BOOL_PROP_1" type="VARCHAR(1)"/>
+            <column name="BOOL_PROP_2" type="VARCHAR(1)"/>
         </createTable>
-        <addPrimaryKey tableName="krsb_qrtz_simprop_triggers" columnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP"/>
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="FINI-3567_createFK" author="KFS701">
         <addForeignKeyConstraint baseTableName="krsb_qrtz_simprop_triggers" baseColumnNames="SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP" constraintName="KRSB_QRTZ_SIMPROP_TRIGGERS_TR1"
-                                 referencedTableName="krsb_QRTZ_TRIGGERS" referencedColumnNames="TRIGGER_NAME,TRIGGER_GROUP,SCHED_NAME"/>
+                                 referencedTableName="KRSB_QRTZ_TRIGGERS" referencedColumnNames="TRIGGER_NAME,TRIGGER_GROUP,SCHED_NAME"/>
     </changeSet>
 
 </databaseChangeLog>
