@@ -109,17 +109,10 @@
         <dropPrimaryKey tableName="krsb_qrtz_job_details" constraintName="PRIMARY"/>
         <addPrimaryKey tableName="krsb_qrtz_job_details" columnNames="job_name, job_group, sched_name"/>
 
-        <addForeignKeyConstraint baseTableName="krsb_qrtz_job_listeners" baseColumnNames="job_name, job_group" constraintName="KRSB_QUARTZ_JOB_LISTENERS_TR1"
-                                 referencedTableName="krsb_qrtz_job_details" referencedColumnNames="job_name, job_group"/>
-
         <dropForeignKeyConstraint baseTableName="krsb_qrtz_trigger_listeners" constraintName="KRSB_QRTZ_TRIGGER_LISTENE_TR1"/>
 
         <dropPrimaryKey tableName="krsb_qrtz_triggers"/>
         <addPrimaryKey tableName="krsb_qrtz_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
-
-        <addForeignKeyConstraint baseTableName="krsb_qrtz_trigger_listeners" baseColumnNames="TRIGGER_NAME, TRIGGER_GROUP" constraintName="KRSB_QRTZ_TRIGGER_LISTENE_TR1"
-                                 referencedTableName="krsb_qrtz_triggers"
-                                 referencedColumnNames="TRIGGER_NAME, TRIGGER_GROUP"/>
 
         <dropPrimaryKey tableName="krsb_qrtz_blob_triggers"/>
         <addPrimaryKey tableName="krsb_qrtz_blob_triggers" columnNames="trigger_name, trigger_group, sched_name"/>
