@@ -1,3 +1,189 @@
+************************* 2017-05-11 *************************
+commit 0081819eb8a278d7cfb2210fa9324da69ab435a5
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-05-10 08:22:17 -0600
+
+    FINP-1561 correct liquibase for oracle
+
+:100644 100644 e80baca... 25f2f43... M	kfs-core/src/main/resources/org/kuali/kfs/core/db/phase5/next-release.xml
+
+commit 7f40c7d4961ec17d327c7465b02acec0421b549a
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-05-09 12:39:49 -0600
+
+    FINP-1558 correct liquibase
+
+:100644 100644 f54b016... e80baca... M	kfs-core/src/main/resources/org/kuali/kfs/core/db/phase5/next-release.xml
+
+commit 42ed0dbcb762fe09aa852273f1090169c08d5ba9
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-05-09 12:27:57 -0600
+
+    FINP-1558 correct liquibase
+
+:100644 100644 ce667d6... f54b016... M	kfs-core/src/main/resources/org/kuali/kfs/core/db/phase5/next-release.xml
+
+commit ce405cb1a5bad9264493600f315663a633684a65
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-05-09 08:03:08 -0600
+
+    Update to final rice version
+
+:100644 100644 edc8f00... 3311ad9... M	pom.xml
+
+commit 865dc30544e70e60dc60601e030a838112992b6b
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-05-08 13:30:42 -0600
+
+    fix code review items
+
+:100644 100644 ec04427... f5e51ad... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/JobDescriptor.java
+:100644 100644 daed673... dc8f3b4... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/service/impl/SchedulerServiceImpl.java
+:100644 100644 aaacdef... 50f77c6... M	kfs-core/src/main/java/org/kuali/kfs/sys/context/ConfigPropertyPlaceholderConfigurer.java
+:100644 100644 e0c5fe8... 630ded8... M	kfs-core/src/main/resources/kfs-RiceSpringBeans.xml
+:100644 100644 059a227... 2b7a9e9... M	kfs-core/src/test/java/org/kuali/kfs/sys/batch/service/SchedulerServiceImplTest.java
+:100644 100644 2b10c38... 1573c86... M	kfs-kns/src/main/java/org/kuali/kfs/krad/web/bind/UifViewBeanWrapper.java
+:100644 100644 83443f7... edc8f00... M	pom.xml
+
+commit 43a97246489caa1bc1b78e4b6abccc1bc87796ef
+Author: kkronenb <kevin@kuali.co>
+Date:   2017-04-03 16:09:42 -0600
+
+    FINP-1547: upgrade to rice 2.6 and spring4
+
+:100644 100644 98a7023... b626914... M	kfs-cam/src/main/java/org/kuali/kfs/module/cam/document/dataaccess/impl/DepreciationBatchDaoJdbc.java
+:100644 100644 d18f12a... bd314ec... M	kfs-core/src/main/java/org/kuali/kfs/coa/dataaccess/impl/PriorYearAccountDaoJdbcImpl.java
+:100644 100644 e958900... 937b9e5... M	kfs-core/src/main/java/org/kuali/kfs/coa/dataaccess/impl/PriorYearOrganizationDaoJdbc.java
+:100644 100644 0d335c1... e637294... M	kfs-core/src/main/java/org/kuali/kfs/gl/batch/dataaccess/impl/LedgerEntryBalanceCachingDaoJdbc.java
+:100644 100644 0bd540b... 165d358... M	kfs-core/src/main/java/org/kuali/kfs/gl/batch/dataaccess/impl/OrganizationReversionUnitOfWorkDaoJdbc.java
+:100644 100644 ad30c7a... 1db999d... M	kfs-core/src/main/java/org/kuali/kfs/gl/batch/dataaccess/impl/YearEndDaoJdbc.java
+:100644 100644 179d7e7... 09fc26c... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/AccountBalanceConsolidationDaoJdbc.java
+:100644 100644 df7038f... a5e550d... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/AccountBalanceDaoJdbcBase.java
+:100644 100644 5b871df... a3d2895... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/AccountBalanceLevelDaoJdbc.java
+:100644 100644 c9ba191... 90c9385... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/AccountBalanceObjectDaoJdbc.java
+:100644 100644 a5eadbf... 515b66b... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/BalancingDaoJdbc.java
+:100644 100644 194139c... cfae86f... M	kfs-core/src/main/java/org/kuali/kfs/gl/dataaccess/impl/SufficientFundRebuildDaoJdbc.java
+:100644 100644 6549239... d8be525... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/BatchJobStatus.java
+:100644 100644 0bb4357... 9f39740... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/CronTriggerDescriptor.java
+:100644 100644 6534ebe... 4d571e3... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/Job.java
+:100644 100644 7a84877... ec04427... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/JobDescriptor.java
+:100644 100644 fe03326... 79fd0b7... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/JobListener.java
+:100644 100644 9c3e540... be01c3e... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/SchedulerDummy.java
+:100644 100644 216a833... 2a67308... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/SchedulerFactoryBean.java
+:100644 100644 378042d... 93b60aa... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/SimpleTriggerDescriptor.java
+:100644 100644 9650605... 10abc34... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/TriggerDescriptor.java
+:100644 100644 2dabcea... daed673... M	kfs-core/src/main/java/org/kuali/kfs/sys/batch/service/impl/SchedulerServiceImpl.java
+:100644 100644 50f77c6... aaacdef... M	kfs-core/src/main/java/org/kuali/kfs/sys/context/ConfigPropertyPlaceholderConfigurer.java
+:100644 100644 6ff0dfb... 60caeef... M	kfs-core/src/main/java/org/kuali/kfs/sys/spring/datadictionary/KualiBeanDefinitionParserBase.java
+:100644 000000 8f98253... 0000000... D	kfs-core/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java
+:100644 100644 630ded8... e0c5fe8... M	kfs-core/src/main/resources/kfs-RiceSpringBeans.xml
+:100644 100644 36df865... ce667d6... M	kfs-core/src/main/resources/org/kuali/kfs/core/db/phase5/next-release.xml
+:100644 100644 171ae8c... d7aa218... M	kfs-core/src/main/resources/org/kuali/rice/db/phase5/next-release.xml
+:100644 100644 f9c5a63... d561bdb... M	kfs-core/src/test/java/org/kuali/kfs/fp/document/authorization/DisbursementVoucherDocumentPresentationControllerTest.java
+:100644 100644 3d63b56... a384824... M	kfs-core/src/test/java/org/kuali/kfs/sys/batch/BatchConfigurationTest.java
+:100644 100644 62144f8... 059a227... M	kfs-core/src/test/java/org/kuali/kfs/sys/batch/service/SchedulerServiceImplTest.java
+:000000 100644 0000000... d1d4290... A	kfs-core/src/test/java/org/kuali/kfs/sys/context/CustomDateEditorRegistrar.java
+:100644 100644 4c7997b... dbd4b8f... M	kfs-core/src/test/java/org/kuali/kfs/sys/context/DataDictionaryConfigurationTest.java
+:100644 100644 f588374... e721df0... M	kfs-core/src/test/java/org/kuali/kfs/sys/dataaccess/impl/PreferencesDaoJdbcTest.java
+:100644 100644 37f79e4... 65da3e1... M	kfs-core/src/test/java/org/kuali/kfs/sys/document/workflow/MockWorkflowDocument.java
+:100644 100644 98e8960... c272b0d... M	kfs-core/src/test/resources/org/kuali/kfs/gl/spring-gl-test.xml
+:100644 100644 710069a... af51d1a... M	kfs-ec/src/main/resources/org/kuali/kfs/module/ec/spring-ec.xml
+:100644 100644 a7700c4... 306c68c... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionary.java
+:100644 100644 33a041e... df3d53d... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionaryIndex.java
+:100644 000000 ca4046c... 0000000... D	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DefaultListableBeanFactory.java
+:100644 100644 ac278bf... 2520883... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/UifDictionaryIndex.java
+:100644 100644 2b9799b... 2b10c38... M	kfs-kns/src/main/java/org/kuali/kfs/krad/web/bind/UifViewBeanWrapper.java
+:100644 100644 8c671b6... 791e9f2... M	kfs-kns/src/main/resources/META-INF/common-config-defaults.xml
+:100644 100644 1d57141... 7bc1fd4... M	kfs-ld/src/main/java/org/kuali/kfs/module/ld/batch/dataaccess/impl/LaborLedgerEntryBalanceCachingDaoJdbc.java
+:100644 100644 84bc29f... 263d2dc... M	kfs-ld/src/main/java/org/kuali/kfs/module/ld/dataaccess/impl/LaborBalancingDaoJdbc.java
+:100644 100644 4652792... fea26c5... M	kfs-ld/src/main/java/org/kuali/kfs/module/ld/dataaccess/impl/LaborClearGeneralLedgerEntryDaoJdbc.java
+:100644 100644 5b9dd5d... 5b2345a... M	kfs-purap/src/test/java/org/kuali/kfs/module/purap/document/authorization/PaymentRequestDocumentPresentationControllerTest.java
+:100644 100644 2e8cbd6... b70b6c1... M	kfs-purap/src/test/java/org/kuali/kfs/module/purap/document/validation/impl/PaymentRequestDocumentRuleTest.java
+:100644 100644 9b273e3... c6e005b... M	kfs-web/src/main/webapp/WEB-INF/web.xml
+:100644 100644 ca4cde1... 83443f7... M	pom.xml
+
+commit 53779259fa51bb18396bb0e07ec24270e731a46b
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-05 15:34:56 -0500
+
+    FINP-1553: remove missed tem properties
+
+:100644 100644 3a5f478... 5b10fe5... M	kfs-core/src/main/config/envs/kfs-tst.properties
+:100644 100644 f4fa0cc... 98862ed... M	kfs-core/src/main/resources/kfs-default-config.properties
+:100644 100644 88e070c... 115cf41... M	kfs-core/src/test/resources/test-configuration.properties
+
+commit 0c77dba10ece021f3ea2016417213894f6bc1ebc
+Author: wliang <wliang@uci.edu>
+Date:   2017-05-06 00:38:30 -0700
+
+    make PaymentDetailAction.performReIssueDisbursement protected
+
+:100644 100644 7e0f090... 2b694fb... M	kfs-core/src/main/java/org/kuali/kfs/pdp/web/struts/PaymentDetailAction.java
+
+commit 356380f2065649b0b473a7f730ba377068bf1399
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-05 11:20:33 -0500
+
+    FINI-3786: remove sonar config
+
+:100644 100644 a02b276... ca4cde1... M	pom.xml
+
+commit ab382a09c73a805ae00d21946f16b60362b64afa
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-05 09:25:32 -0500
+
+    FINP-1551: fix summary logic re: old obj codes
+
+:100644 100644 881cb99... 30777b0... M	kfs-web/src/main/webapp/WEB-INF/tags/module/purap/summaryaccounts.tag
+
+commit f39dfbda92d5ff8a77aa3ad0e19fef7792890b8a
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-04 21:02:05 -0500
+
+    Clean up some stuff I stumbled on
+
+:100644 100644 d4d7bc2... 67619ef... M	kfs-purap/src/main/java/org/kuali/kfs/module/purap/document/PurchasingDocumentBase.java
+:100644 100644 1032dc7... 23efa02... M	kfs-purap/src/main/java/org/kuali/kfs/module/purap/document/RequisitionDocument.java
+
+commit 1d20162837f3afed0dc0a02f971c438b15ab2a94
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-04 19:49:15 -0500
+
+    FINP-1515: removed invalid test
+    
+    delete the test cuz props aren't available to jsp, which is what we
+    want... and no good way to unit test for that
+
+:100644 000000 f096e25... 0000000... D	kfs-core/src/test/java/org/kuali/kfs/sys/service/KualiConfigurationServiceTest.java
+
+commit f149f6be92ba3ef0e826bccbe7a9abe568e32445
+Author: lmarkes <lesley@kuali.co>
+Date:   2017-05-04 09:18:36 -0500
+
+    FINP-1549 clean up bc/tem refs
+
+:100644 100644 10220f9... 2e1c98c... M	kfs-web/src/main/webapp/jsp/sys/kfsTldHeader.jsp
+
+commit d53f4358f290fc75bbd46469b773f795c0c0a310
+Author: Travis Foxley <travisfoxley@gmail.com>
+Date:   2017-05-02 10:17:26 -0700
+
+    FINI-3589 parent/child relationships in dd migration
+    
+    * FINI-3589 add parent/relationships to dd migration
+    
+    * FINI-3589 fix naming to map more easily on the receiving end
+    
+    * FINI-3589 write tests for updates to datadictionary migration
+    
+    * FINI-3589 remove unnecessary change to PersistenceStructureServiceOjbImpl
+
+:100644 100644 8f088d9... 6691595... M	kfs-core/src/main/java/org/kuali/kfs/sys/businessobject/dto/FieldDTO.java
+:100644 100644 b29d92c... 9f74c20... M	kfs-core/src/main/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImpl.java
+:100644 100644 e78d9b0... 9eb22e5... M	kfs-core/src/main/resources/org/kuali/kfs/sys/spring-sys.xml
+:100644 100644 d197b9a... 351f72a... M	kfs-core/src/test/java/org/kuali/kfs/sys/service/impl/DataDictionaryMigrationServiceImplTest.java
+:100644 100644 aed9f87... a7700c4... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionary.java
+:100644 100644 a1257d5... 33a041e... M	kfs-kns/src/main/java/org/kuali/kfs/krad/datadictionary/DataDictionaryIndex.java
 ************************* 2017-04-27 *************************
 commit b19b24e56040f854f8c44de8cc854587aab5e42a
 Author: jsissom <jsissom@kuali.co>
