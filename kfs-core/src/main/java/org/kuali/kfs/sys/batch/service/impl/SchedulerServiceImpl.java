@@ -45,17 +45,13 @@ import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
-import org.quartz.TriggerKey;
 import org.quartz.UnableToInterruptJobException;
-import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.matchers.GroupMatcher;
-import org.quartz.utils.Key;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -83,7 +79,7 @@ public class SchedulerServiceImpl implements SchedulerService {
      */
     protected Map<String, JobDescriptor> externalizedJobDescriptors;
 
-    protected static final List<String> jobStatuses = new ArrayList<String>();
+    protected static final List<String> jobStatuses = new ArrayList<>();
 
     static {
         jobStatuses.add(SCHEDULED_JOB_STATUS_CODE);
@@ -99,7 +95,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void initialize() {
-        LOG.info("Initializing the schedule");
+        LOG.debug("initialize() started");
+
         jobListener.setSchedulerService(this);
         try {
             scheduler.getListenerManager().addJobListener(jobListener);
@@ -175,7 +172,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     /**
      * Remove dependencies that are not scheduled. Important for modularization if some
-     * modules arn't loaded or if institutions don't schedule some dependencies
+     * modules aren't loaded or if institutions don't schedule some dependencies
      */
     protected void dropDependenciesNotScheduled() {
             Map<String, JobDescriptor> descriptors = SpringContext.getBeansOfType(JobDescriptor.class);
@@ -185,7 +182,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
                 if (jobDescriptor != null && jobDescriptor.getGroup().equals(SCHEDULED_GROUP) && jobDescriptor.getDependencies() != null) {
                     // dependenciesToBeRemoved so to avoid ConcurrentModificationException
-                    ArrayList<Entry<String, String>> dependenciesToBeRemoved = new ArrayList<Entry<String, String>>();
+                    ArrayList<Entry<String, String>> dependenciesToBeRemoved = new ArrayList<>();
                     Set<Entry<String, String>> dependenciesSet = jobDescriptor.getDependencies().entrySet();
                     for (Entry<String, String> dependency : dependenciesSet) {
                         String dependencyJobName = dependency.getKey();
@@ -202,6 +199,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void initializeJob(String jobName, Job job) {
+        LOG.debug("initializeJob() started");
+
         job.setSchedulerService(this);
         job.setParameterService(parameterService);
         job.setSteps(BatchSpringContext.getJobDescriptor(jobName).getSteps());
@@ -210,6 +209,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public boolean hasIncompleteJob() {
+        LOG.debug("hasIncompleteJob() started");
+
         StringBuilder log = new StringBuilder("The schedule has incomplete jobs.");
         boolean hasIncompleteJob = false;
         for (String scheduledJobName : getJobNamesForScheduleJob()) {
@@ -237,6 +238,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public boolean isPastScheduleCutoffTime() {
+        LOG.debug("isPastScheduleCutoffTime() started");
+
         return isPastScheduleCutoffTime(dateTimeService.getCurrentCalendar(), true);
     }
 
@@ -292,6 +295,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void processWaitingJobs() {
+        LOG.debug("processWaitingJobs() started");
+
         for (String scheduledJobName : getJobNamesForScheduleJob()) {
             JobDetail jobDetail = getScheduledJobDetail(scheduledJobName);
             if (isPending(jobDetail)) {
@@ -307,6 +312,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void logScheduleResults() {
+        LOG.debug("logScheduleResults() started");
+
         StringBuilder scheduleResults = new StringBuilder("The schedule completed.");
         for (String scheduledJobName : getJobNamesForScheduleJob()) {
             JobDetail jobDetail = getScheduledJobDetail(scheduledJobName);
@@ -319,6 +326,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public boolean shouldNotRun(JobDetail jobDetail) {
+        LOG.debug("shouldNotRun() started");
+
         if (SCHEDULED_GROUP.equals(jobDetail.getKey().getGroup())) {
             if (isCancelled(jobDetail)) {
                 LOG.info("Telling listener not to run job, because it has been cancelled: " + jobDetail.getKey().getName());
@@ -344,11 +353,15 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void runJob(String jobName, String requestorEmailAddress) {
+        LOG.debug("runJob() started");
+
         runJob(jobName, 0, 0, new Date(), requestorEmailAddress);
     }
 
     @Override
     public void runJob(String jobName, int startStep, int stopStep, Date startTime, String requestorEmailAddress) {
+        LOG.debug("runJob() started");
+
         runJob(UNSCHEDULED_GROUP, jobName, startStep, stopStep, startTime, requestorEmailAddress);
     }
 
@@ -391,6 +404,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public boolean isJobRunning(String jobName) {
+        LOG.debug("isJobRunning() started");
+
         List<JobExecutionContext> runningJobs = getRunningJobs();
         for (JobExecutionContext jobCtx : runningJobs) {
             if (jobCtx.getJobDetail().getKey().getName().equals(jobName)) {
@@ -469,10 +484,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     protected boolean shouldCancelJob(JobDetail jobDetail) {
-        LOG.info("shouldCancelJob:::::: " + jobDetail.getKey().getName()+"-"+jobDetail.getKey().getGroup());
         if (jobDetail == null) {
             return true;
         }
+        LOG.info("shouldCancelJob:::::: " + jobDetail.getKey().getName()+"-"+jobDetail.getKey().getGroup());
+
         for (String dependencyJobName : getJobDependencies(jobDetail.getKey().getName()).keySet()) {
             LOG.info("dependencyJobName:::::" + dependencyJobName);
             JobDetail dependencyJobDetail = getScheduledJobDetail(dependencyJobName);
@@ -492,10 +508,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     protected boolean isDependencySatisfiedNegatively(JobDetail dependentJobDetail, JobDetail dependencyJobDetail) {
-        LOG.info("isDependencySatisfiedNegatively::::  dependentJobDetail::: " + dependencyJobDetail.getKey().getName()+"-"+dependencyJobDetail.getKey().getGroup() + " dependencyJobDetail    " + dependencyJobDetail.getKey().getName()+"-"+dependencyJobDetail.getKey().getGroup());
         if (dependentJobDetail == null || dependencyJobDetail == null) {
             return true;
         }
+
+        LOG.info("isDependencySatisfiedNegatively::::  dependentJobDetail::: " + dependencyJobDetail.getKey().getName()+"-"+dependencyJobDetail.getKey().getGroup() + " dependencyJobDetail    " + dependencyJobDetail.getKey().getName()+"-"+dependencyJobDetail.getKey().getGroup());
         return (isFailed(dependencyJobDetail) || isCancelled(dependencyJobDetail)) && !isSoftDependency(dependentJobDetail.getKey().getName(), dependencyJobDetail.getKey().getName());
     }
 
@@ -530,6 +547,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public String getStatus(JobDetail jobDetail) {
+        LOG.debug("getStatus() started");
+
         if (jobDetail == null) {
             return FAILED_JOB_STATUS_CODE;
         }
@@ -557,7 +576,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public List<BatchJobStatus> getJobs() {
-        ArrayList<BatchJobStatus> jobs = new ArrayList<BatchJobStatus>();
+        LOG.debug("getJobs() started");
+
+        ArrayList<BatchJobStatus> jobs = new ArrayList<>();
         try {
             for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.anyGroup())) {
                     try {
@@ -577,6 +598,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public BatchJobStatus getJob(String groupName, String jobName) {
+        LOG.debug("getJob() started");
+
         for (BatchJobStatus job : getJobs()) {
             if (job.getName().equals(jobName) && job.getGroup().equals(groupName)) {
                 return job;
@@ -587,7 +610,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public List<BatchJobStatus> getJobs(String groupName) {
-        ArrayList<BatchJobStatus> jobs = new ArrayList<BatchJobStatus>();
+        LOG.debug("getJobs() started");
+
+        ArrayList<BatchJobStatus> jobs = new ArrayList<>();
         try {
             for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.groupEquals(groupName))) {
                 try {
@@ -607,6 +632,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public List<JobExecutionContext> getRunningJobs() {
+        LOG.debug("getRunningJobs() started");
+
         try {
             List<JobExecutionContext> jobContexts = scheduler.getCurrentlyExecutingJobs();
             return jobContexts;
@@ -627,6 +654,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void removeScheduled(String jobName) {
+        LOG.debug("removeScheduled() started");
+
         try {
             scheduler.deleteJob(new JobKey(jobName, SCHEDULED_GROUP));
         } catch (SchedulerException ex) {
@@ -636,8 +665,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void addScheduled(JobDetail job) {
-        try {
+        LOG.debug("addScheduled() started");
 
+        try {
             JobBuilder builder = JobBuilder.newJob();
             builder.usingJobData(job.getJobDataMap());
             builder.withIdentity(job.getKey().getName(), SCHEDULED_GROUP);
@@ -652,6 +682,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void addUnscheduled(JobDetail job) {
+        LOG.debug("addUnscheduled() started");
+
         try {
             JobBuilder builder = JobBuilder.newJob();
             builder.usingJobData(job.getJobDataMap());
@@ -668,6 +700,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public List<String> getSchedulerGroups() {
+        LOG.debug("getSchedulerGroups() started");
+
         try {
             return scheduler.getJobGroupNames();
         } catch (SchedulerException ex) {
@@ -682,6 +716,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void interruptJob(String jobName) {
+        LOG.debug("interruptJob() started");
+
         List<JobExecutionContext> runningJobs = getRunningJobs();
         for (JobExecutionContext jobCtx : runningJobs) {
             if (jobName.equals(jobCtx.getJobDetail().getKey().getName())) {
@@ -697,6 +733,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public Date getNextStartTime(BatchJobStatus job) {
+        LOG.debug("getNextStartTime() started");
+
         try {
             List<? extends Trigger> triggers = scheduler.getTriggersOfJob(new JobKey(job.getName(), job.getGroup()));
             Date nextDate = new Date(Long.MAX_VALUE);
@@ -719,6 +757,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public Date getNextStartTime(String groupName, String jobName) {
+        LOG.debug("getNextStartTime() started");
+
         BatchJobStatus job = getJob(groupName, jobName);
 
         return getNextStartTime(job);
@@ -748,6 +788,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void reinitializeScheduledJobs() {
+        LOG.debug("reinitializeScheduledJobs() started");
+
         try {
             for (String scheduledJobName : getJobNamesForScheduleJob()) {
                 updateStatus(SCHEDULED_GROUP, scheduledJobName, null);
@@ -759,6 +801,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public boolean cronConditionMet(String cronExpressionString) {
+        LOG.debug("cronConditionMet() started");
+
         boolean cronConditionMet = false;
 
         CronExpression cronExpression;
