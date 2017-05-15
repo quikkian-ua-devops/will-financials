@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-   - The Kuali Financial System, a comprehensive financial management system for higher education.
-   -
-   - Copyright 2005-2017 Kuali, Inc.
-   -
-   - This program is free software: you can redistribute it and/or modify
-   - it under the terms of the GNU Affero General Public License as
-   - published by the Free Software Foundation, either version 3 of the
-   - License, or (at your option) any later version.
-   -
-   - This program is distributed in the hope that it will be useful,
-   - but WITHOUT ANY WARRANTY; without even the implied warranty of
-   - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   - GNU Affero General Public License for more details.
-   -
-   - You should have received a copy of the GNU Affero General Public License
-   - along with this program.  If not, see <http://www.gnu.org/licenses/>.
- -->
+
+    The Kuali Financial System, a comprehensive financial management system for higher education.
+
+    Copyright 2005-2017 Kuali, Inc.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -37,8 +39,8 @@
     <artifactId>kfs</artifactId>
     <version>current-SNAPSHOT</version>
     <name>Kuali Financial System</name>
-    <description>Kuali Financials</description>
-    <inceptionYear>2004</inceptionYear>
+    <description>a comprehensive financial management system for higher education.</description>
+    <inceptionYear>2005</inceptionYear>
     <packaging>pom</packaging>
     <scm>
         <developerConnection>scm:git:git@github.com:kualico/financials.git</developerConnection>
@@ -66,18 +68,11 @@
         <project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm z</maven.build.timestamp.format>
 
-        <!-- release properties -->
-        <kuali.release.arguments>-DskipTests</kuali.release.arguments>
-        <kuali.release.goals>deploy</kuali.release.goals>
-        <kuali.release.prepare.goals>clean</kuali.release.prepare.goals>
-
-        <!-- build properties -->
-        <build.environment>dev</build.environment>
-
         <rice.web.sources>${project.build.directory}/generated-web-sources/rice-web-sources</rice.web.sources>
         <help.web.sources>${project.build.directory}/generated-web-sources/help-web-sources</help.web.sources>
         <!-- Setting this to true excludes help file processing, significantly speeding the build -->
         <help.skip></help.skip>
+        <license.skip></license.skip>
         <rice.web.excludes>
             kr/,
             krad/,
@@ -320,6 +315,119 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Creating current year element -->
+            <plugin>
+                <groupId>org.codehaus.groovy.maven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                import java.util.Date
+                                import java.text.MessageFormat
+                                def vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
+                                project.properties['currentYear'] = vartimestamp
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <header>AGPL-3.txt</header>
+                    <properties>
+                        <owner>Kuali, Inc.</owner>
+                        <license.currentYear>${currentYear}</license.currentYear>
+                    </properties>
+                    <aggregate>true</aggregate>
+                    <excludes>
+                        <!-- Directory excludes -->
+                        <exclude>**/.idea/**</exclude>
+
+                        <!-- js plugin folders -->
+                        <exclude>**/datatables/**</exclude>
+                        <exclude>**/easyXDM/**</exclude>
+                        <exclude>**/jscalendar-1.0/**</exclude>
+                        <exclude>**/plugins/cookie/**</exclude>
+                        <exclude>**/plugins/dirtyform/**</exclude>
+                        <exclude>**/plugins/easing/**</exclude>
+                        <exclude>**/plugins/easydrag/**</exclude>
+                        <exclude>**/plugins/fancybox/**</exclude>
+                        <exclude>**/plugins/globalize/**</exclude>
+                        <exclude>**/plugins/jgrowl/**</exclude>
+                        <exclude>**/plugins/jqform/**</exclude>
+                        <exclude>**/plugins/jquery/**</exclude>
+                        <exclude>**/plugins/jqueryUI/**</exclude>
+                        <exclude>**/plugins/json/**</exclude>
+                        <exclude>**/plugins/jstree/**</exclude>
+                        <exclude>**/plugins/prettify/**</exclude>
+                        <exclude>**/plugins/scrollto/**</exclude>
+                        <exclude>**/plugins/tooltip/**</exclude>
+                        <exclude>**/plugins/validate/**</exclude>
+                        <exclude>**/plugins/watermark/**</exclude>
+
+                        <!-- File excludes -->
+                        <exclude>LICENSE</exclude>
+
+                        <exclude>**/jquery.*</exclude>
+                        <exclude>**/smartspinner.*</exclude>
+                        <exclude>**/node_modules/**</exclude>
+
+                        <!-- File type excludes -->
+                        <exclude>**/*.pdf</exclude>
+                        <exclude>**/*.swf</exclude>
+                        <exclude>**/.gitignore</exclude>
+                        <exclude>**/rice.keystore</exclude>
+                        <exclude>**/*.psd</exclude>
+                        <exclude>**/README.md</exclude>
+                        <exclude>**/*.readme</exclude>
+                        <exclude>**/*.tmp</exclude>
+                        <exclude>**/org.apache.cxf.Logger</exclude>
+                        <exclude>**/jquery*.js</exclude>
+                        <exclude>**/*.developer</exclude>
+                        <exclude>**/authorized_keys</exclude>
+                        <exclude>**/*.txt</exclude>
+                        <exclude>**/*.iml</exclude>
+                        <exclude>**/OJB*.properties</exclude>
+                        <exclude>**/AGPL-3.txt</exclude>
+                        <exclude>**/*.dat</exclude>
+                        <exclude>**/*.csv</exclude>
+                        <exclude>**/*.schemas</exclude>
+                        <exclude>**/*.handlers</exclude>
+                        <exclude>**/*.woff2</exclude>
+                        <exclude>**/*.otf</exclude>
+                        <exclude>**/*BatchInputFileWithNoExtension</exclude>
+                        <exclude>**/*.bundle.js</exclude>
+                        <exclude>**/*.npmrc</exclude>
+                        <exclude>**/*.babelrc</exclude>
+
+                    </excludes>
+                    <mapping>
+                        <tag>DYNASCRIPT_STYLE</tag>
+                        <jrxml>XML_STYLE</jrxml>
+                        <jsx>SLASHSTAR_STYLE</jsx>
+                        <inc>DYNASCRIPT_STYLE</inc>
+                    </mapping>
+                    <skip>${license.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
         <resources>
             <resource>
