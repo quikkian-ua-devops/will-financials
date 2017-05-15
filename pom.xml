@@ -340,7 +340,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <header>kfs-core/src/main/resources/org/kuali/AGPL-3.txt</header>
+                    <header>AGPL-3.txt</header>
                     <properties>
                         <owner>Kuali, Inc.</owner>
                         <license.currentYear>${currentYear}</license.currentYear>
