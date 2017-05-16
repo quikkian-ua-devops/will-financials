@@ -19,4 +19,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd" logicalFilePath="org/kuali/kfs/module/ar/db/phase5/post-rel-2017-05-11.xml"/>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd" logicalFilePath="org/kuali/kfs/module/ar/db/phase5/post-rel-2017-05-11.xml">
+
+    <changeSet id="FINP-1567ar" author="KFS701" context="demo">
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-AR' and cmpnt_cd = 'ContractsGrantsInvoice' and parm_nm='FROM_EMAIL_ADDRESS'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-AR' and cmpnt_cd = 'LockboxLoadStep' and parm_nm='SUMMARY_AND_ERROR_NOTIFICATION_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+    </changeSet>
+
+</databaseChangeLog>

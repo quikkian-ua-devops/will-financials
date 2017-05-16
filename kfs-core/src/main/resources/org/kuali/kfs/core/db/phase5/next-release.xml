@@ -19,4 +19,70 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd" logicalFilePath="org/kuali/kfs/core/db/phase5/post-rel-2017-05-11.xml"/>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd" logicalFilePath="org/kuali/kfs/core/db/phase5/post-rel-2017-05-11.xml">
+
+    <changeSet id="FINP-1567" author="KFS701" context="demo">
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-COA' and cmpnt_cd = 'Account' and parm_nm = 'DERIVED_ROLE_MEMBER_INACTIVATION_NOTIFICATION_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-FP' and cmpnt_cd = 'DisbursementVoucher' and parm_nm = 'IMMEDIATE_EXTRACT_NOTIFICATION_FROM_EMAIL_ADDRESS'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-FP' and cmpnt_cd = 'DisbursementVoucher' and parm_nm = 'IMMEDIATE_EXTRACT_NOTIFICATION_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-FP' and cmpnt_cd = 'ProcurementCardCreateDocumentsStep' and parm_nm = 'PCARD_BATCH_SUMMARY_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-GL' and cmpnt_cd = 'EnterpriseFeedStep' and parm_nm = 'INVALID_FILE_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'All' and parm_nm = 'ERROR_EXCEEDS_NOTE_LIMIT_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'All' and parm_nm = 'TAX_CANCEL_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'All' and parm_nm = 'TAX_GROUP_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'ExtractAchPaymentsStep' and parm_nm = 'ACH_SUMMARY_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'LoadPaymentsStep' and parm_nm = 'HARD_EDIT_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'LoadPaymentsStep' and parm_nm = 'SOFT_EDIT_TO_EMAIL_ADDRESSES'</where>
+        </update>
+
+        <update tableName="KRCR_PARM_T">
+            <column name="VAL">kfs.notification.batch@kuali.org</column>
+            <where>nmspc_cd = 'KFS-PDP' and cmpnt_cd = 'CSendAchAdviceNotificationsStep' and parm_nm = 'ACH_SUMMARY_CC_EMAIL_ADDRESSES'</where>
+        </update>
+
+    </changeSet>
+
+</databaseChangeLog>
