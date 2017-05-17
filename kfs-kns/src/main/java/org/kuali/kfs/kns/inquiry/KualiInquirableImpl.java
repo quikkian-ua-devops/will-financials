@@ -443,7 +443,6 @@ public class KualiInquirableImpl extends InquirableImpl implements Inquirable {
             return getHyperLink(inquiryBusinessObjectClass, fieldList,
                 UrlFactory.parameterizeUrl(KRADConstants.INQUIRY_ACTION, parameters));
         } catch (Exception ex) {
-            LOG.error("Unable to determine inquiry link for BO Class: " + businessObject.getClass() + " and property " + attributeName, ex);
             LOG.debug("Unable to determine inquiry link for BO Class: " + businessObject.getClass() + " and property " + attributeName, ex);
             return new AnchorHtmlData();
         }
