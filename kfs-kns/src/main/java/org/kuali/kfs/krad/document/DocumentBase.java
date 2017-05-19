@@ -490,7 +490,7 @@ public abstract class DocumentBase extends PersistableBusinessObjectBase impleme
     /**
      * This method logs errors.
      */
-    protected void logErrors() {
+    public void logErrors() {
         if (LOG.isInfoEnabled()) {
             if (GlobalVariables.getMessageMap().hasErrors()) {
 
