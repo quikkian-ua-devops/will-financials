@@ -167,8 +167,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * Creates a PaymentGroup to pay the passed in DisbursementVoucher
-     *
-     * @see org.kuali.kfs.fp.document.service.DisbursementVoucherPaymentService#createPaymentGroup(org.kuali.kfs.fp.document.DisbursementVoucherDocument, java.sql.Date)
      */
     @Override
     public PaymentGroup createPaymentGroup(DisbursementVoucherDocument document, Date processRunDate) {
@@ -258,7 +256,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
      * batch and process run date given.
      *
      * @param document       The disbursement voucher document to retrieve payment information from to populate the PaymentDetail.
-     * @param batch          The batch file associated with the payment.
      * @param processRunDate The date of the payment detail invoice.
      * @return A fully populated PaymentDetail instance.
      */
@@ -456,12 +453,7 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
         // Get the original, raw form, note text from the DV document.
         final String text = document.getDisbVchrCheckStubText();
         if (!StringUtils.isBlank(text)) {
-            pnt = this.getPaymentSourceHelperService().buildNoteForCheckStubText(text, line);
-            // Logging...
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Creating check stub text note: " + pnt.getCustomerNoteText());
-            }
-            pd.addNote(pnt);
+            pd.addNotes(getPaymentSourceHelperService().buildNotesForCheckStubText(text, line));
         }
 
         return pd;
@@ -469,30 +461,21 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * Uses the value in the KFS-FP / DisbursementVoucher / PRE_DISBURSEMENT_EXTRACT_ORGANIZATION parameter
-     *
-     * @see org.kuali.kfs.sys.document.PaymentSource#getPreDisbursementCustomerProfileUnit()
      */
     @Override
     public String getPreDisbursementCustomerProfileUnit() {
-        final String unit = getParameterService().getParameterValueAsString(DisbursementVoucherDocument.class, KFSParameterKeyConstants.PdpExtractBatchParameters.PDP_ORG_CODE);
-        return unit;
+        return getParameterService().getParameterValueAsString(DisbursementVoucherDocument.class, KFSParameterKeyConstants.PdpExtractBatchParameters.PDP_ORG_CODE);
     }
 
 
     /**
      * Uses the value in the KFS-FP / DisbursementVoucher / PRE_DISBURSEMENT_EXTRACT_SUB_UNIT
-     *
-     * @see org.kuali.kfs.sys.document.PaymentSource#getPreDisbursementCustomerProfileSubUnit()
      */
     @Override
     public String getPreDisbursementCustomerProfileSubUnit() {
-        final String subUnit = getParameterService().getParameterValueAsString(DisbursementVoucherDocument.class, KFSParameterKeyConstants.PdpExtractBatchParameters.PDP_SBUNT_CODE);
-        return subUnit;
+        return getParameterService().getParameterValueAsString(DisbursementVoucherDocument.class, KFSParameterKeyConstants.PdpExtractBatchParameters.PDP_SBUNT_CODE);
     }
 
-    /**
-     * @see org.kuali.kfs.sys.batch.service.PaymentSourceToExtractService#markAsExtracted(org.kuali.rice.krad.document.Document, java.sql.Date)
-     */
     @Override
     public void markAsExtracted(DisbursementVoucherDocument document, Date sqlProcessRunDate, KualiInteger paymentGroupId) {
         try {
@@ -507,8 +490,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * The amount check total amount from the given DV
-     *
-     * @see org.kuali.kfs.sys.batch.service.PaymentSourceToExtractService#getPaymentAmount(org.kuali.rice.krad.document.Document)
      */
     @Override
     public KualiDecimal getPaymentAmount(DisbursementVoucherDocument document) {
@@ -553,8 +534,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * Returns DVCA
-     *
-     * @see org.kuali.kfs.sys.document.PaymentSource#getAchCheckDocumentType()
      */
     @Override
     public String getAchCheckDocumentType(DisbursementVoucherDocument document) {
@@ -573,8 +552,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * Returns the value of the KFS-FP / Disbursement Voucher / IMMEDIATE_EXTRACT_NOTIFICATION_FROM_EMAIL_ADDRESS parameter
-     *
-     * @see org.kuali.kfs.sys.document.PaymentSource#getImmediateExtractEMailFromAddress()
      */
     @Override
     public String getImmediateExtractEMailFromAddress() {
@@ -583,8 +560,6 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
 
     /**
      * Returns the value of the KFS-FP / Disbursement Voucher / IMMEDIATE_EXTRACT_NOTIFICATION_TO_EMAIL_ADDRESSES parameter
-     *
-     * @see org.kuali.kfs.sys.document.PaymentSource#getImmediateExtractEmailToAddresses()
      */
     @Override
     public List<String> getImmediateExtractEmailToAddresses() {
@@ -603,123 +578,62 @@ public class DisbursementVoucherExtractionHelperServiceImpl implements PaymentSo
         return KualiDecimal.ZERO.isLessThan(getPaymentAmount(paymentSource));
     }
 
-    /**
-     * @return the injected implementation of the BusinessObjectService
-     */
     public BusinessObjectService getBusinessObjectService() {
         return businessObjectService;
     }
 
-    /**
-     * Injects an implementation of the BusinessObjectService
-     *
-     * @param businessObjectService the implementation of the BusinessObjectService to inject
-     */
     public void setBusinessObjectService(BusinessObjectService businessObjectService) {
         this.businessObjectService = businessObjectService;
     }
 
-    /**
-     * @return the injected implementation of the GeneralLedgerPendingEntryService
-     */
     public GeneralLedgerPendingEntryService getGeneralLedgerPendingEntryService() {
         return generalLedgerPendingEntryService;
     }
 
-    /**
-     * Injects an implementation of the GeneralLedgerPendingEntryService
-     *
-     * @param generalLedgerPendingEntryService the implementation of GeneralLedgerPendingEntryService to inject and use
-     */
     public void setGeneralLedgerPendingEntryService(GeneralLedgerPendingEntryService generalLedgerPendingEntryService) {
         this.generalLedgerPendingEntryService = generalLedgerPendingEntryService;
     }
 
-    /**
-     * This method sets the disbursementVoucherDao instance.
-     *
-     * @param disbursementVoucherDao The DisbursementVoucherDao to be set.
-     */
     public void setDisbursementVoucherDao(DisbursementVoucherDao disbursementVoucherDao) {
         this.disbursementVoucherDao = disbursementVoucherDao;
     }
 
-    /**
-     * @return an implementation of the ParameterService
-     */
     public ParameterService getParameterService() {
         return parameterService;
     }
 
-    /**
-     * Sets the implementation of the ParameterService for this service to use
-     *
-     * @param parameterService an implementation of ParameterService
-     */
     public void setParameterService(ParameterService parameterService) {
         this.parameterService = parameterService;
     }
 
-    /**
-     * @return an implementation of the ParameterEvaluatorService
-     */
     public ParameterEvaluatorService getParameterEvaluatorService() {
         return parameterEvaluatorService;
     }
 
-    /**
-     * Sets the implementation of the ParameterEvaluatorService for this service to use
-     *
-     * @param parameterService an implementation of ParameterEvaluatorService
-     */
     public void setParameterEvaluatorService(ParameterEvaluatorService parameterEvaluatorService) {
         this.parameterEvaluatorService = parameterEvaluatorService;
     }
 
-    /**
-     * @return an implementation of the VendorService
-     */
     public VendorService getVendorService() {
         return vendorService;
     }
 
-    /**
-     * Sets the implementation of the VendorService for this service to use
-     *
-     * @param parameterService an implementation of VendorService
-     */
     public void setVendorService(VendorService vendorService) {
         this.vendorService = vendorService;
     }
 
-    /**
-     * @return an implementation of the DocumentService
-     */
     public DocumentService getDocumentService() {
         return documentService;
     }
 
-    /**
-     * Sets the implementation of the DocumentService for this service to use
-     *
-     * @param parameterService an implementation of DocumentService
-     */
     public void setDocumentService(DocumentService documentService) {
         this.documentService = documentService;
     }
 
-    /**
-     * @return an implementation of the PaymentSourceHelperService
-     */
     public PaymentSourceHelperService getPaymentSourceHelperService() {
         return paymentSourceHelperService;
     }
 
-    /**
-     * Sets the implementation of the PaymentSourceHelperService for this service to use
-     *
-     * @param paymentSourceHelperService an implementation of PaymentSourceHelperService
-     */
     public void setPaymentSourceHelperService(PaymentSourceHelperService paymentSourceHelperService) {
         this.paymentSourceHelperService = paymentSourceHelperService;
     }
