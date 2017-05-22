@@ -114,7 +114,7 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
      * Builds an explicit and offset for the wire charge debit. The account associated with the first accounting is used for the
      * debit. The explicit and offset entries for the first accounting line and copied and customized for the wire charge.
      *
-     * @param dvDocument     submitted disbursement voucher document
+     * @param paymentSource  submitted disbursement voucher document
      * @param sequenceHelper helper class to keep track of GLPE sequence
      * @param wireCharge     wireCharge object from current fiscal year
      * @return GeneralLedgerPendingEntry generated wire charge debit
@@ -162,7 +162,7 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
      * Builds an explicit and offset for the wire charge credit. The account and income object code found in the wire charge table
      * is used for the entry.
      *
-     * @param dvDocument     submitted disbursement voucher document
+     * @param paymentSource  submitted disbursement voucher document
      * @param sequenceHelper helper class to keep track of GLPE sequence
      * @param chargeEntry    GLPE charge
      * @param wireCharge     wireCharge object from current fiscal year
@@ -206,7 +206,6 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
      * If bank specification is enabled generates bank offsetting entries for the document amount
      *
      * @param sequenceHelper    helper class to keep track of GLPE sequence
-     * @param paymentMethodCode the payment method of this DV
      */
     @Override
     public boolean generateDocumentBankOffsetEntries(PaymentSource paymentSource, GeneralLedgerPendingEntrySequenceHelper sequenceHelper, String wireTransferOrForeignDraftEntryDocumentType) {
@@ -291,12 +290,10 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
         return lookupUrl;
     }
 
-    /**
-     * @see org.kuali.kfs.sys.batch.service.PaymentSourceExtractionService#buildNoteForCheckStubText(java.lang.String)
-     */
     @Override
-    public PaymentNoteText buildNoteForCheckStubText(String text, int previousLineCount) {
-        PaymentNoteText pnt = null;
+    public List<PaymentNoteText> buildNotesForCheckStubText(String text, int previousLineCount) {
+        List<PaymentNoteText> pnts = new ArrayList<>();
+
         final String maxNoteLinesParam = parameterService.getParameterValueAsString(KfsParameterConstants.PRE_DISBURSEMENT_ALL.class, PdpParameterConstants.MAX_NOTE_LINES);
 
         int maxNoteLines;
@@ -325,9 +322,10 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
 
                         // Make sure we're still under the maximum number of note lines.
                         if (previousLineCount < (maxNoteLines - 3) && !StringUtils.isEmpty(choppedWord)) {
-                            pnt = new PaymentNoteText();
+                            PaymentNoteText pnt = new PaymentNoteText();
                             pnt.setCustomerNoteLineNbr(new KualiInteger(previousLineCount++));
                             pnt.setCustomerNoteText(choppedWord.replaceAll("\\n", "").trim());
+                            pnts.add(pnt);
                         }
                         // We can't add any additional note lines, or we'll exceed the maximum, therefore
                         // just break out of the loop early - there's nothing left to do.
@@ -339,13 +337,14 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
                 // This should be the most common case.  Simply create a new PaymentNoteText,
                 // add the line at the correct line location.
                 else {
-                    pnt = new PaymentNoteText();
+                    PaymentNoteText pnt = new PaymentNoteText();
                     pnt.setCustomerNoteLineNbr(new KualiInteger(previousLineCount++));
                     pnt.setCustomerNoteText(noteLine.replaceAll("\\n", "").trim());
+                    pnts.add(pnt);
                 }
             }
         }
-        return pnt;
+        return pnts;
     }
 
     /**
@@ -412,9 +411,6 @@ public class PaymentSourceHelperServiceImpl implements PaymentSourceHelperServic
         businessObjectService.save(glpe);
     }
 
-    /**
-     * @see org.kuali.kfs.sys.document.service.PaymentSourceHelperService#handleEntryCancellation(org.kuali.kfs.sys.document.PaymentSource)
-     */
     @Override
     public void handleEntryCancellation(PaymentSource paymentSource, PaymentSourceToExtractService<?> extractionService) {
         if (ObjectUtils.isNull(paymentSource.getGeneralLedgerPendingEntries()) || paymentSource.getGeneralLedgerPendingEntries().size() == 0) {

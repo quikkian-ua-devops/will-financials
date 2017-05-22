@@ -25,6 +25,7 @@ import org.kuali.kfs.coa.service.ChartService;
 import org.kuali.kfs.coa.service.OrganizationService;
 import org.kuali.kfs.krad.bo.DocumentHeader;
 import org.kuali.kfs.krad.bo.PersistableBusinessObjectBase;
+import org.kuali.kfs.sys.businessobject.FinancialSystemDocumentHeader;
 import org.kuali.kfs.sys.context.SpringContext;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 
@@ -44,7 +45,7 @@ public class AccountsReceivableDocumentHeader extends PersistableBusinessObjectB
     private Customer customer;
     private Chart processingChartOfAccount;
     private Organization processingOrganization;
-    private DocumentHeader documentHeader;
+    private FinancialSystemDocumentHeader documentHeader;
 
     /**
      * Gets the documentNumber attribute.
@@ -236,29 +237,15 @@ public class AccountsReceivableDocumentHeader extends PersistableBusinessObjectB
         this.processingOrganization = processingOrganization;
     }
 
-    /**
-     * Gets the documentHeader attribute.
-     *
-     * @return Returns the documentHeader.
-     */
-    public DocumentHeader getDocumentHeader() {
+    public FinancialSystemDocumentHeader getDocumentHeader() {
         return documentHeader;
     }
 
-    /**
-     * Sets the documentHeader attribute value.
-     *
-     * @param documentHeader The documentHeader to set.
-     * @deprecated
-     */
     @Deprecated
-    public void setDocumentHeader(DocumentHeader documentHeader) {
+    public void setDocumentHeader(FinancialSystemDocumentHeader documentHeader) {
         this.documentHeader = documentHeader;
     }
 
-    /**
-     * @see org.kuali.rice.krad.bo.BusinessObjectBase#toStringMapper()
-     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected LinkedHashMap toStringMapper_RICE20_REFACTORME() {
         LinkedHashMap m = new LinkedHashMap();

@@ -135,6 +135,18 @@ public class PaymentDetail extends TimestampedBusinessObjectBase {
     }
 
     /**
+     * Wrapper for addNote, loops through the list of notes passed in and calls that.
+     *
+     * @param pnts list of notes to add
+     */
+    public void addNotes(List<PaymentNoteText> pnts) {
+        pnts.stream().forEach(n -> {
+            LOG.debug("addNotes() Creating check stub text note: " + n.getCustomerNoteText());
+            addNote(n);
+        });
+    }
+
+    /**
      * @return total of all account detail amounts
      */
     public KualiDecimal getAccountTotal() {

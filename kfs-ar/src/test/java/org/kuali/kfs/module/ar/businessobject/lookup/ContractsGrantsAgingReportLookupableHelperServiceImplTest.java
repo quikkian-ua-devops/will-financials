@@ -93,7 +93,7 @@ public class ContractsGrantsAgingReportLookupableHelperServiceImplTest extends K
         ContractsGrantsInvoiceDocument cgInvoice = SpringContext.getBean(ContractsGrantsInvoiceCreateDocumentService.class).createCGInvoiceDocumentByAwardInfo(award, awardAccounts, chartCode, orgCode, errorMessages, null, null);
         cgInvoice.getFinancialSystemDocumentHeader().setFinancialDocumentStatusCode(KFSConstants.DocumentStatusCodes.APPROVED);
         cgInvoice.getAccountsReceivableDocumentHeader().setCustomerNumber(customerNumber);
-        cgInvoice.getAccountsReceivableDocumentHeader().setDocumentHeader(cgInvoice.getDocumentHeader());
+        cgInvoice.getAccountsReceivableDocumentHeader().setDocumentHeader(cgInvoice.getFinancialSystemDocumentHeader());
 
         cgInvoice.setBillingDate(new java.sql.Date(new Date().getTime()));
         cgInvoice.getInvoiceGeneralDetail().setAward(award);
