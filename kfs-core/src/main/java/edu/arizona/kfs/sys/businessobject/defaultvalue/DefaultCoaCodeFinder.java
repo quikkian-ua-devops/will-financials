@@ -2,7 +2,7 @@ package edu.arizona.kfs.sys.businessobject.defaultvalue;
 
 import static edu.arizona.kfs.sys.KFSConstants.COAConstants.DEFAULT_COA_CODE;
 
-import org.kuali.rice.krad.valuefinder.ValueFinder;
+import org.kuali.kfs.krad.valuefinder.ValueFinder;
 
 /*
  * BAs tell us "UA" is used almost always, and I'm sick of typing it. If

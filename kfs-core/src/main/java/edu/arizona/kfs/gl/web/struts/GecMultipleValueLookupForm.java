@@ -1,8 +1,8 @@
 package edu.arizona.kfs.gl.web.struts;
 
 
-import org.kuali.rice.kns.lookup.Lookupable;
-import org.kuali.rice.kns.web.struts.form.MultipleValueLookupForm;
+import org.kuali.kfs.kns.lookup.Lookupable;
+import org.kuali.kfs.kns.web.struts.form.MultipleValueLookupForm;
 
 /*
  * Extended for lookupable -- Rice was somehow picking up super's default without this

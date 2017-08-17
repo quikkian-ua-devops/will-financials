@@ -23,10 +23,10 @@ import org.kuali.kfs.sys.document.validation.event.ReviewAccountingLineEvent;
 import org.kuali.kfs.sys.document.validation.event.UpdateAccountingLineEvent;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
-import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.kfs.krad.bo.PersistableBusinessObject;
 import org.kuali.kfs.krad.document.TransactionalDocument;
 import org.kuali.kfs.krad.rules.rule.event.KualiDocumentEvent;
-import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.kfs.krad.util.ObjectUtils;
 
 import edu.arizona.kfs.fp.businessobject.ErrorCertification;
 import edu.arizona.kfs.fp.businessobject.GECSourceAccountingLine;

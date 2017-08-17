@@ -1,6 +1,6 @@
 package edu.arizona.kfs.gl.businessobject.lookup;
 
-import org.kuali.rice.kns.lookup.KualiLookupableImpl;
+import org.kuali.kfs.kns.lookup.KualiLookupableImpl;
 
 
 public class GecLookupableImpl extends KualiLookupableImpl {
