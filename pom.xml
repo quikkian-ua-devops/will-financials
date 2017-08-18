@@ -15,10 +15,9 @@
    - GNU Affero General Public License for more details.
    -
    - You should have received a copy of the GNU Affero General Public License
-   - along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   - along with this program.  If not, see <http://www.gnu.org/licenses />.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>kfs-kns</module>
@@ -38,7 +37,7 @@
     </modules>
     <groupId>org.kuali.kfs</groupId>
     <artifactId>kfs</artifactId>
-    <version>kfs7-ua-release31-SNAPSHOT</version>
+    <version>kfs7-ua-release32-SNAPSHOT</version>
     <name>Kuali Financial System</name>
     <description>Kuali Financials</description>
     <inceptionYear>2004</inceptionYear>
@@ -78,7 +77,7 @@
         <rice.web.sources>${project.build.directory}/generated-web-sources/rice-web-sources</rice.web.sources>
         <help.web.sources>${project.build.directory}/generated-web-sources/help-web-sources</help.web.sources>
         <!-- Setting this to true excludes help file processing, significantly speeding the build -->
-        <help.skip></help.skip>
+        <help.skip />
         <rice.web.excludes>
             kr/,
             krad/,
