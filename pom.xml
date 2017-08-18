@@ -406,6 +406,14 @@
     </build>
 
     <profiles>
+        <!-- jgitflow activates this profile automatically during a release -->
+        <profile>
+            <id>release-profile</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
+            </properties>
+        </profile>
         <profile>
             <id>oracle</id>
             <properties>
