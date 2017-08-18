@@ -74,6 +74,8 @@
         <!-- build properties -->
         <build.environment>dev</build.environment>
 
+        <additionalparam>-Xdoclint:none</additionalparam>
+
         <rice.web.sources>${project.build.directory}/generated-web-sources/rice-web-sources</rice.web.sources>
         <help.web.sources>${project.build.directory}/generated-web-sources/help-web-sources</help.web.sources>
         <!-- Setting this to true excludes help file processing, significantly speeding the build -->
@@ -327,7 +329,6 @@
                       </flowInitContext>
                       <!-- Allow snapshot dependencies -->
                       <allowSnapshots>true</allowSnapshots>
-                      <maven.javadoc.skip>true</maven.javadoc.skip>
                 </configuration>
             </plugin>
             <plugin>
