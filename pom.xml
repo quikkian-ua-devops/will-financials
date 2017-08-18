@@ -328,6 +328,7 @@
                       </flowInitContext>
                       <!-- Allow snapshot dependencies -->
                       <allowSnapshots>true</allowSnapshots>
+                      <maven.javadoc.skip>true</maven.javadoc.skip>
                 </configuration>
             </plugin>
             <plugin>
